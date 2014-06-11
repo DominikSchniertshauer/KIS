@@ -21,16 +21,34 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 			// Funktion für erfolgreichen Request	
 			function(response){
 				if(password == response.Password){
-					alert("Erfolgreich eingeloggt.")
-					shell.setContent(sap.ui.getCore().byId("index")); 
+					alert("Erfolgreich eingeloggt.");
+					shell.setAppTitle("Logged in as: "+response.Username);
+					shell.addWorksetItem(new sap.ui.ux3.NavigationItem("index_nav", {key:"index",text:"HOME"}));
+					shell.addWorksetItem(new sap.ui.ux3.NavigationItem("patient_nav", {key:"patient",text:"PATIENT"}));					
+					
+					shell.attachWorksetItemSelected(function(oEvent) {
+						var itemKey = oEvent.getParameter("key");
+						shell.setContent(sap.ui.getCore().byId(itemKey));	
+						
+					});
+					shell.setContent(sap.ui.getCore().byId("index"));
+					
+					var username_label = sap.ui.getCore().byId("username");
+					var firstname_label = sap.ui.getCore().byId("firstname");
+					var lastname_label = sap.ui.getCore().byId("lastname");
+					
+					username_label.setText("Username: "+response.Username);
+					firstname_label.setText("Firstname: "+response.Firstname);
+					lastname_label.setText("Lastname: "+response.Lastname);
+					
 				}
 				else{
-					alert("Es wurde ein falsches Passwort eingegeben.")
+					alert("Es wurde ein falsches Passwort eingegeben.");
 				}
 			// Funktion falls Request fehlgeschlagen - Annahme: Request ist wegen falschem
 			// Usernamen fehlgeschlagen
 			},function(response){
-				alert("Username nicht gefunden.")
+				alert("Username nicht gefunden.");
 			}
 				 );
 		

@@ -13,16 +13,32 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.index", {
 	* @memberOf zy_ss14_t4_sapui5_kis.index
 	*/ 
 	createContent : function(oController) {
-		var layout = new sap.ui.commons.layout.AbsoluteLayout({width:"340px",height:"150px"});
-		layout.addStyleClass("CustomStyle");
+		var layout = new sap.ui.commons.layout.MatrixLayout({
+			id : 'index_layout',
+			layoutFixed : false,
+			});
+		
+		var header_label = new sap.ui.commons.Label("index_header",{text: "Benutzerdaten"});
+		header_label.setDesign(sap.ui.commons.LabelDesign.Bold);
 
-		var description_label = new sap.ui.commons.Label({text:"Username"});
-		var userid_input = new sap.ui.commons.TextField({width:"190px"});
+		var line_divider = new sap.ui.commons.HorizontalDivider("index_divider");
+	
 		
-		description_label.setLabelFor(userid_input);
+		var username_label = new sap.ui.commons.Label("username",{text:"Username"});
+		var lastname_label = new sap.ui.commons.Label("firstname",{text:"Firstname"});
+		var firstname_label = new sap.ui.commons.Label("lastname",{text:"Lastname"});
 		
-		layout.addContent(description_label, {right:"248px",top:"20px"});
-		layout.addContent(userid_input, {left:"110px",top:"20px"});
+		layout.createRow(header_label);
+		layout.createRow(line_divider);
+		layout.createRow(username_label);
+		layout.createRow(firstname_label);
+		layout.createRow(lastname_label);
+	    // var index_panel = new sap.ui.commons.Panel("index_panel",{width: "600px"});
+
+
+	    //Attach the panel to the page
+	   // layout.createRow(index_panel);
+	    
 		return layout;
 	}
 
