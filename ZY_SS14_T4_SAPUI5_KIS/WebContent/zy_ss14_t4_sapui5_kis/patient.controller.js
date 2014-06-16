@@ -11,14 +11,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.patient", {
 		
 	},
 
-	lookup_insnr: function(insnr) {
-		
-		var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
-		oModel.refreshSecurityToken(null, null);
 	
-		oModel.read('/PATIENT');
-	
-	},
 	
 	patient_create: function(){
 		

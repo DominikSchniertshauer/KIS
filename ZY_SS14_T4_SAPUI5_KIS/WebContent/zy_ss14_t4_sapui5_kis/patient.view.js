@@ -18,11 +18,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.patient", {
 			id : 'patient_layout',
 			layoutFixed : false,
 			});
-		
-		var patient_create_layout = new sap.ui.commons.layout.MatrixLayout({
-			id : 'patient_create_layout',
-			layoutFixed : false,
-			});
+	
 	
 		
 		var header_label = new sap.ui.commons.Label("patient_header",{text: "Patientendaten"});
@@ -41,32 +37,11 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.patient", {
 
 		
 		
-		var insnr_input = new sap.ui.commons.TextField('insurance_number');
-		insnr_input.setValue("");
-		insnr_input.setTooltip("Enter a valid insurance number");
-		insnr_input.attachChange(function(){alert('Text changed to :'+ insnr_input.getValue());});
-		
+	
 		
 		function open_create_dialog() {
 			
-			var patient_create_dialog = new sap.ui.commons.Dialog();
-			patient_create_dialog.setTitle("First step");
-			var text = new sap.ui.commons.TextView({text: "Please enter insurance number: "});
-			var input = new sap.ui.commons.TextField('insnr_input');
-			input.setValue("AB123");
-			input.setTooltip("This is a tooltip");
-			//input.attachChange(function(){alert('Text changed to :'+ input.getValue());});
 
-			patient_create_layout.createRow(text);
-			patient_create_layout.createRow(input);
-			patient_create_layout.createRow(new sap.ui.commons.Button({text: "OK", 
-				press:function(){oController.lookup_insnr(input.getValue());
-								 patient_create_dialog.close();}}));
-
-			
-			patient_create_dialog.addContent(patient_create_layout);
-
-			patient_create_dialog.open();
 			
 		};
 	
@@ -101,6 +76,14 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.patient", {
 		          template: new sap.ui.commons.TextField().bindProperty("value", "Lastname"),  
 		          sortProperty: "Lastname"  
 		}));  
+		
+		patient_table.addColumn(  
+			     new sap.ui.table.Column({  
+			          label: new sap.ui.commons.Label({text: "Insurancenumber"}),  
+			          template: new sap.ui.commons.TextField().bindProperty("value", "Insurancenumber"),  
+			          sortProperty: "Insurancenumber"  
+			})); 
+		
 		patient_table.addColumn(  
 		     new sap.ui.table.Column({  
 		          label: new sap.ui.commons.Label({text: "Street"}),  
@@ -108,6 +91,27 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.patient", {
 		          sortProperty: "Street"  
 		}));  
   
+		patient_table.addColumn(  
+			     new sap.ui.table.Column({  
+			          label: new sap.ui.commons.Label({text: "Postalcode"}),  
+			          template: new sap.ui.commons.TextField().bindProperty("value", "Postalcode"),  
+			          sortProperty: "Postalcode"  
+			})); 
+		
+		patient_table.addColumn(  
+			     new sap.ui.table.Column({  
+			          label: new sap.ui.commons.Label({text: "City"}),  
+			          template: new sap.ui.commons.TextField().bindProperty("value", "City"),  
+			          sortProperty: "City"  
+			})); 
+		
+		patient_table.addColumn(  
+			     new sap.ui.table.Column({  
+			          label: new sap.ui.commons.Label({text: "Country"}),  
+			          template: new sap.ui.commons.TextField().bindProperty("value", "Country"),  
+			          sortProperty: "Country"  
+			})); 
+		
 		var oModel = new sap.ui.model.odata.ODataModel(  
 				sap.ui.getCore().byId("path").getText(),  
 		                                                  false);  
@@ -119,7 +123,89 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.patient", {
 		layout.createRow(panel);  
 		
 		return layout;  
-	
-	}
+		
+		 function open_create_dialog (){
+				alert("fuck");
+				var patient_create_layout = new sap.ui.commons.layout.MatrixLayout({
+					id : 'patient_create_layout',
+					layoutFixed : false,
+					});
+				
+				var patient_create_dialog = new sap.ui.commons.Dialog();
+				var text = new sap.ui.commons.TextView({text: "Please enter insurance number: "});
+				var input = new sap.ui.commons.TextField('insnr_input');
+				
+				patient_create_dialog.setTitle("First step");
+				
+				input.setValue("AB123");
+				input.setTooltip("Fill in insurance number");
+				//input.attachChange(function(){alert('Text changed to :'+ input.getValue());});
+		
+				patient_create_layout.createRow(text);
+				patient_create_layout.createRow(input);
+				patient_create_layout.createRow(new sap.ui.commons.Button({text: "OK", 
+					
+					press:function(){lookup_insnr(input.getValue());
+									 patient_create_dialog.close();}}));
+		
+				
+				patient_create_dialog.addContent(patient_create_layout);
+		
+				patient_create_dialog.open();
+			}
+		 
+		 function lookup_insnr(insnr) {
+				
+				var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
+				oModel.refreshSecurityToken(null, null);
+				alert("/PATIENT?$filter=Insurancenumber eq '"+insnr+"'");
+				
+				oModel.read("/PATIENT?$filter=Insurancenumber eq '"+insnr+"'" ,undefined, undefined, true,
+						function(response){
+					alert(response[1].PatientID);
+					if (response.PatiendID != ''){
+						
+						var internal_layout = new sap.ui.commons.layout.MatrixLayout({
+							layoutFixed : false,
+							});
+						
+						var internal_dialog = new sap.ui.commons.Dialog();
+						var text = new sap.ui.commons.TextView({text: "Please enter insurance number: "});
+						var input = new sap.ui.commons.TextField();
+						
+						internal_dialog.setTitle("First step");
+						
+						text.setText();
+						internal_layout.createRow(text);
+						
+						internal_dialog.addContent(internal_layout);
+						
+						internal_dialog.open();
+						
+					} else {
+						var patient_create_layout = new sap.ui.commons.layout.MatrixLayout({
+							layoutFixed : false,
+							});
+						
+						var patient_create_dialog = new sap.ui.commons.Dialog();
+						var text = new sap.ui.commons.TextView({text: "Please enter insurance number: "});
+						var input = new sap.ui.commons.TextField('insnr_input');
+						
+						patient_create_dialog.setTitle("First step");
+						
 
+						patient_create_layout.createRow(input);
+						patient_create_dialog.open();
+					}
+					
+					
+				});
+				
+			}
+	},
+
+	
+		
+		
+	
 });
