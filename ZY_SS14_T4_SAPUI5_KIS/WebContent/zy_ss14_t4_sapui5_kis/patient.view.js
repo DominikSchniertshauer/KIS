@@ -40,9 +40,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.patient", {
 	
 		
 		function open_create_dialog() {
-			
-
-			
+	
 		};
 	
 		var create_button = new sap.ui.commons.Button("patient_create", {
@@ -125,15 +123,13 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.patient", {
 		return layout;  
 		
 		 function open_create_dialog (){
-				alert("fuck");
 				var patient_create_layout = new sap.ui.commons.layout.MatrixLayout({
-					id : 'patient_create_layout',
 					layoutFixed : false,
 					});
 				
 				var patient_create_dialog = new sap.ui.commons.Dialog();
 				var text = new sap.ui.commons.TextView({text: "Please enter insurance number: "});
-				var input = new sap.ui.commons.TextField('insnr_input');
+				var input = new sap.ui.commons.TextField();
 				
 				patient_create_dialog.setTitle("First step");
 				
@@ -158,44 +154,158 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.patient", {
 				
 				var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
 				oModel.refreshSecurityToken(null, null);
-				alert("/PATIENT?$filter=Insurancenumber eq '"+insnr+"'");
 				
+				// Filtern nach Versichertennummer
 				oModel.read("/PATIENT?$filter=Insurancenumber eq '"+insnr+"'" ,undefined, undefined, true,
-						function(response){
-					alert(response[1].PatientID);
-					if (response.PatiendID != ''){
+						function(data, response){
+					
+				// Falls Versichertennummer existent --> Update Layout aufbauen	
+					try {if (data.results[0].PatientID != ''){
 						
 						var internal_layout = new sap.ui.commons.layout.MatrixLayout({
 							layoutFixed : false,
 							});
-						
 						var internal_dialog = new sap.ui.commons.Dialog();
-						var text = new sap.ui.commons.TextView({text: "Please enter insurance number: "});
-						var input = new sap.ui.commons.TextField();
+
+						// Dialog definieren und Felder mit Ergebniswerten füllen
 						
-						internal_dialog.setTitle("First step");
 						
-						text.setText();
-						internal_layout.createRow(text);
+						var firstname_label = new sap.ui.commons.Label({text: "Vorname: "});
+						var firstname_input = new sap.ui.commons.TextField({}).setValue(data.results[0].Firstname);
+						
+						var lastname_label = new sap.ui.commons.Label({text: "Nachname: "});
+						var lastname_input = new sap.ui.commons.TextField().setValue(data.results[0].Lastname);
+						
+						var insurancenumber_label = new sap.ui.commons.Label({text: "Versichertennummer: "});
+						var insurancenumber_input = new sap.ui.commons.TextField().setValue(data.results[0].Insurancenumber);
+						
+						var postalcode_label = new sap.ui.commons.Label({text: "PLZ: "});
+						var postalcode_input = new sap.ui.commons.TextField().setValue(data.results[0].Postalcode);
+						
+						var city_label = new sap.ui.commons.Label({text: "Stadt: "});
+						var city_input = new sap.ui.commons.TextField().setValue(data.results[0].City);
+						
+						var street_label = new sap.ui.commons.Label({text: "Strasse: "});
+						var street_input = new sap.ui.commons.TextField().setValue(data.results[0].Street);
+						
+						
+						var country_label = new sap.ui.commons.Label({text: "Land: "});
+						var country_input = new sap.ui.commons.TextField().setValue(data.results[0].Country);
+
+						var update_button = new sap.ui.commons.Button({text: "Eingaben sichern" });
+
+						internal_dialog.setTitle("Patient bereits vorhanden");
+	
+						internal_layout.createRow(firstname_label, firstname_input);
+						internal_layout.createRow(lastname_label, lastname_input);
+						internal_layout.createRow(insurancenumber_label, insurancenumber_input.setEditable(false));
+						internal_layout.createRow(street_label, street_input);
+						internal_layout.createRow(postalcode_label, postalcode_input);
+						internal_layout.createRow(city_label, city_input);
+						internal_layout.createRow(country_label, country_input);
+						internal_layout.createRow(update_button);
+						
+						// Update ausführen, Daten aus TextFields übergeben
+						update_button.attachPress(function(){
+							
+							// Übergabewerte für oModel.update Funktion
+							var oEntry = {
+							};	
+							
+							oEntry.Mandt = '001';
+							oEntry.PatientID = data.results[0].PatientID;
+							oEntry.Firstname = firstname_input.getValue();
+							oEntry.Lastname = lastname_input.getValue();
+							oEntry.Insurancenumber = insurancenumber_input.getValue();
+							oEntry.Postalcode = postalcode_input.getValue();
+							oEntry.City =  city_input.getValue();
+							oEntry.Street =  street_input.getValue();
+							oEntry.Country = country_input.getValue();
+							
+							var oParams = {};
+						    oParams.fnSuccess = function(){ internal_dialog.close();};
+						    oParams.fnError = function(){internal_dialog.open();};
+						       
+							
+							oModel.update("/PATIENT(Mandt='001',PatientID="+data.results[0].PatientID+")", oEntry, oParams);
+							});
 						
 						internal_dialog.addContent(internal_layout);
 						
 						internal_dialog.open();
 						
-					} else {
-						var patient_create_layout = new sap.ui.commons.layout.MatrixLayout({
+					}} catch(e) {
+						var internal_layout = new sap.ui.commons.layout.MatrixLayout({
 							layoutFixed : false,
 							});
-						
-						var patient_create_dialog = new sap.ui.commons.Dialog();
-						var text = new sap.ui.commons.TextView({text: "Please enter insurance number: "});
-						var input = new sap.ui.commons.TextField('insnr_input');
-						
-						patient_create_dialog.setTitle("First step");
-						
+						var internal_dialog = new sap.ui.commons.Dialog();
 
-						patient_create_layout.createRow(input);
-						patient_create_dialog.open();
+						// Dialog definieren und Felder mit Ergebniswerten füllen
+						
+						
+						var firstname_label = new sap.ui.commons.Label({text: "Vorname: "});
+						var firstname_input = new sap.ui.commons.TextField({});
+						
+						var lastname_label = new sap.ui.commons.Label({text: "Nachname: "});
+						var lastname_input = new sap.ui.commons.TextField();
+						
+						var insurancenumber_label = new sap.ui.commons.Label({text: "Versichertennummer: "});
+						var insurancenumber_input = new sap.ui.commons.TextField().setValue(insnr);
+						
+						var postalcode_label = new sap.ui.commons.Label({text: "PLZ: "});
+						var postalcode_input = new sap.ui.commons.TextField();
+						
+						var city_label = new sap.ui.commons.Label({text: "Stadt: "});
+						var city_input = new sap.ui.commons.TextField();
+						
+						var street_label = new sap.ui.commons.Label({text: "Strasse: "});
+						var street_input = new sap.ui.commons.TextField();
+						
+						
+						var country_label = new sap.ui.commons.Label({text: "Land: "});
+						var country_input = new sap.ui.commons.TextField();
+
+						var update_button = new sap.ui.commons.Button({text: "Eingaben sichern" });
+
+						internal_dialog.setTitle("Patient neu anlegen");
+	
+						internal_layout.createRow(firstname_label, firstname_input);
+						internal_layout.createRow(lastname_label, lastname_input);
+						internal_layout.createRow(insurancenumber_label, insurancenumber_input.setEditable(false));
+						internal_layout.createRow(street_label, street_input);
+						internal_layout.createRow(postalcode_label, postalcode_input);
+						internal_layout.createRow(city_label, city_input);
+						internal_layout.createRow(country_label, country_input);
+						internal_layout.createRow(update_button);
+						
+						// Update ausführen, Daten aus TextFields übergeben
+						update_button.attachPress(function(){
+							
+							// Übergabewerte für oModel.update Funktion
+							var oEntry = {
+							};	
+							
+							oEntry.Mandt = '001';
+							oEntry.PatientID = '1';
+							oEntry.Firstname = firstname_input.getValue();
+							oEntry.Lastname = lastname_input.getValue();
+							oEntry.Insurancenumber = insurancenumber_input.getValue();
+							oEntry.Postalcode = postalcode_input.getValue();
+							oEntry.City =  city_input.getValue();
+							oEntry.Street =  street_input.getValue();
+							oEntry.Country = country_input.getValue();
+							
+							var oParams = {};
+						    oParams.fnSuccess = function(){ internal_dialog.close();};
+						    oParams.fnError = function(){internal_dialog.open();};
+						       
+							
+							oModel.create("/PATIENT", oEntry, oParams);
+						});
+						
+						internal_dialog.addContent(internal_layout);
+						
+						internal_dialog.open();
 					}
 					
 					

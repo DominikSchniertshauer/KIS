@@ -29,6 +29,9 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 					shell.setAppTitle("Logged in as: "+response.Username);
 					shell.addWorksetItem(new sap.ui.ux3.NavigationItem("index_nav", {key:"index",text:"HOME"}));
 					shell.addWorksetItem(new sap.ui.ux3.NavigationItem("patient_nav", {key:"patient",text:"PATIENT"}));					
+					shell.addWorksetItem(new sap.ui.ux3.NavigationItem("disease_nav", {key:"disease",text:"KRANKHEITEN"}));	
+					shell.addWorksetItem(new sap.ui.ux3.NavigationItem("disease_plan_nav", {key:"disease_plan",text:"BEHANDLUNGSPLÄNE"}));	
+					shell.addWorksetItem(new sap.ui.ux3.NavigationItem("medication_nav", {key:"medication",text:"MEDIKAMENTE"}));
 					
 					shell.attachWorksetItemSelected(function(oEvent) {
 						var itemKey = oEvent.getParameter("key");
