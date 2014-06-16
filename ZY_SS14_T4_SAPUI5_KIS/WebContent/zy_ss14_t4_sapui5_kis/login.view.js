@@ -17,7 +17,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.login", {
 		var layout = new sap.ui.commons.layout.AbsoluteLayout({width:"340px",height:"150px"});
 		layout.addStyleClass("CustomStyle");
 
-		var description_label = new sap.ui.commons.Label({text:"Username"});
+		var description_label = new sap.ui.commons.Label({text:"User ID"});
 		var userid_input = new sap.ui.commons.TextField({width:"190px"});
 		
 		description_label.setLabelFor(userid_input);

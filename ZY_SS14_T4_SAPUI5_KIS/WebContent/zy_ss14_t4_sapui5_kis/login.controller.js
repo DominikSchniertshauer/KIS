@@ -6,14 +6,18 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 * @memberOf zy_ss14_t4_sapui5_kis.login
 */
 	onInit: function() {
-		var oModel = new sap.ui.model.odata.ODataModel( "/proxy/http/i67lp1.informatik.tu-muenchen.de:8000/sap/opu/odata/sap/ZY_SS14_T4_SEGW_KIS_SRV/USER(Mandt='001',UserID=1)",false);
+		var path = new sap.ui.commons.Label("path",{text:"proxy/http/i67lp1.informatik.tu-muenchen.de:8000/sap/opu/odata/sap/ZY_SS14_T4_SEGW_KIS_SRV"});
+		//var path = new sap.ui.commons.Label("path",{text:"/sap/opu/odata/sap/ZY_SS14_T4_SEGW_KIS_SRV"});
+
+		
+		var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
 		sap.ui.getCore().setModel(oModel);
 		
 	},
 	
 	validateLogin: function(userid, password){
 		
-		var oModel = new sap.ui.model.odata.ODataModel( "proxy/http/i67lp1.informatik.tu-muenchen.de:8000/sap/opu/odata/sap/ZY_SS14_T4_SEGW_KIS_SRV",false);
+		var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
 		oModel.refreshSecurityToken(null, null);
 
 		
@@ -36,19 +40,33 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 					var username_label = sap.ui.getCore().byId("username");
 					var firstname_label = sap.ui.getCore().byId("firstname");
 					var lastname_label = sap.ui.getCore().byId("lastname");
+					var role_image = sap.ui.getCore().byId("role");
 					
 					username_label.setText("Username: "+response.Username);
 					firstname_label.setText("Firstname: "+response.Firstname);
 					lastname_label.setText("Lastname: "+response.Lastname);
 					
+					if (response.RoleID == 1)
+						role_image.setSrc("images/doctor.png");
+					if (response.RoleID == 2)
+						role_image.setSrc("images/nurse.png");
+					
+					var hospi_table = sap.ui.getCore().byId("hospi");
+	
+					var id_filter = new sap.ui.model.Filter("UserID", sap.ui.model.FilterOperator.EQ, userid);
+					hospi_table.setModel(oModel);  
+					hospi_table.bindRows(   {path: "/HOSPI",
+
+						    filters: id_filter });  
+
 				}
 				else{
 					alert("Es wurde ein falsches Passwort eingegeben.");
 				}
 			// Funktion falls Request fehlgeschlagen - Annahme: Request ist wegen falschem
 			// Usernamen fehlgeschlagen
-			},function(response){
-				alert("Username nicht gefunden.");
+			},function(err){
+				sap.ui.commons.MessageBox.alert(err.message);
 			}
 				 );
 		

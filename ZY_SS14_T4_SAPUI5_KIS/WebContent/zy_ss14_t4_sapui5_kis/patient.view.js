@@ -52,10 +52,12 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.patient", {
 		}));  
   
 		var oModel = new sap.ui.model.odata.ODataModel(  
-		                              "proxy/http/i67lp1.informatik.tu-muenchen.de:8000/sap/opu/odata/sap/ZY_SS14_T4_SEGW_KIS_SRV",  
+				sap.ui.getCore().byId("path").getText(),  
 		                                                  false);  
+		var f1 = new  sap.ui.model.odata.Filter('Firstname', [{operator:"EQ",value1:"JOHN"}]);  
+		
 		patient_table.setModel(oModel);  
-		patient_table.bindRows("/PATIENT");  
+		patient_table.bindRows({path: '/PATIENT',filters: [f1] });  
 		panel.addContent(patient_table);    
 		layout.createRow(panel);  
 		
