@@ -12,6 +12,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.patient", {
 	* Since the Controller is given to this method, its event handlers can be attached right away. 
 	* @memberOf zy_ss14_t4_sapui5_kis.patient
 	*/ 
+	
 	createContent : function(oController) {
 		var layout = new sap.ui.commons.layout.MatrixLayout({
 			id : 'patient_layout',
@@ -54,10 +55,9 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.patient", {
 		var oModel = new sap.ui.model.odata.ODataModel(  
 				sap.ui.getCore().byId("path").getText(),  
 		                                                  false);  
-		var f1 = new  sap.ui.model.odata.Filter('Firstname', [{operator:"EQ",value1:"JOHN"}]);  
 		
 		patient_table.setModel(oModel);  
-		patient_table.bindRows({path: '/PATIENT',filters: [f1] });  
+		patient_table.bindRows('/PATIENT');  
 		panel.addContent(patient_table);    
 		layout.createRow(panel);  
 		

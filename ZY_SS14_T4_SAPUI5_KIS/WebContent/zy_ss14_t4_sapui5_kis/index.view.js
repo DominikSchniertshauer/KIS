@@ -71,34 +71,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.index", {
 		          template: new sap.ui.commons.TextField().bindProperty("value", "Disease"),  
 		          sortProperty: "Disease"  
 		}));  
-		
-		var oDataset = new sap.viz.ui5.data.FlattenedDataset({
-
-			// a Bar Chart requires exactly one dimension (x-axis) 
-			dimensions : [ 
-				{
-					axis : 1, // must be one for the x-axis, 2 for y-axis
-					name : 'Disease', 
-					value : "{Disease}"
-				} 
-			],
-
-			// it can show multiple measures, each results in a new set of bars in a new color 
-			measures : [ 
-			    // measure 1
-				{
-					name : 'Profit', // 'name' is used as label in the Legend 
-					value : '{profit}' // 'value' defines the binding for the displayed value   
-				}
-			],
 			
-			// 'data' is used to bind the whole data collection that is to be displayed in the chart 
-			data : {
-				path : "/businessData"
-			}
-			
-		});
-		
 		
 		left_layout.createRow(role_image);
 		left_layout.createRow(line_divider2);
