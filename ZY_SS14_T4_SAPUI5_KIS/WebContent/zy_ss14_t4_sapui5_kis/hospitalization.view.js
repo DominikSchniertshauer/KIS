@@ -20,7 +20,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 			});
 		
 		
-		var header_label = new sap.ui.commons.Label("hospitalization_plan_header",{text: "Aktuell existierende Krankenhausaufenthalte"});
+		var header_label = new sap.ui.commons.Label("hospitalization_plan_header",{text: "Aufenthalt anlegen"});
 		header_label.setDesign(sap.ui.commons.LabelDesign.Bold);
 
 		var line_divider = new sap.ui.commons.HorizontalDivider("hospitalization_plan_divider");
@@ -50,7 +50,8 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 	    	
 		});
 		var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
-
+//		var hospi_table = sap.ui.getCore().byId("hospi");
+		
 		var patient_comb_label = new sap.ui.commons.Label({text:"Schritt 1: Patient waehlen/ erstellen" });
 		var patient_comb_temp = new sap.ui.core.ListItem({text:"{Lastname}", additionalText:"{Firstname}"});
 		var patient_comb = new sap.ui.commons.ComboBox({
@@ -60,9 +61,18 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 				template: patient_comb_temp
 			}
 		});
+		var patient_search_button = new sap.ui.commons.Button({
+	        text : "Patient suchen",
+	        icon : "sap-icon://wounds-doc",
+	        width : "210px",
+	        press : function() {open_create_dialog();
+			}
+	    	
+		});
 		var patient_create_button = new sap.ui.commons.Button({
 	        text : "Patient neu anlegen",
-	        icon : "sap-icon://syringe",
+	        icon : "sap-icon://wounds-doc",
+	        width : "210px",
 	        press : function() {open_create_dialog();
 			}
 	    	
@@ -77,9 +87,18 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 				template: conditn_comb_temp
 			}
 		});
+		var conditn_search_button = new sap.ui.commons.Button({
+	        text : "Diagnose suchen",
+	        icon : "sap-icon://electrocardiogram",
+	        width : "210px",
+	        press : function() {open_create_dialog();
+			}
+	    	
+		});
 		var conditn_create_button = new sap.ui.commons.Button({
 	        text : "Diagnose neu anlegen",
 	        icon : "sap-icon://electrocardiogram",
+	        width : "210px",
 	        press : function() {open_create_dialog();
 			}
 	    	
@@ -94,9 +113,18 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 				template: treatpl_comb_temp
 			}
 		});
+		var treatpl_search_button = new sap.ui.commons.Button({
+	        text : "Behandlungsplan suchen",
+	        icon : "sap-icon://clinical-order",
+	        width : "210px",
+	        press : function() {open_create_dialog();
+			}
+	    	
+		});
 		var treatpl_create_button = new sap.ui.commons.Button({
 	        text : "Behandlungsplan neu anlegen",
 	        icon : "sap-icon://clinical-order",
+	        width : "210px",
 	        press : function() {open_create_dialog();
 			}
 	    	
@@ -111,19 +139,29 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 				template: bed_comb_temp
 			}
 		});
+		var bed_search_button = new sap.ui.commons.Button({
+	        text : "Bett suchen",
+	        icon : "sap-icon://bed",
+	        width : "210px",
+	        press : function() {open_create_dialog();
+			}
+	    	
+		});
 		var bed_create_button = new sap.ui.commons.Button({
 	        text : "Bett neu anlegen",
 	        icon : "sap-icon://bed",
+	        width : "210px",
 	        press : function() {open_create_dialog();
 			}
 	    	
 		});
 		
-		layout.createRow(patient_comb_label, patient_comb, patient_create_button);
-		layout.createRow(conditn_comb_label, conditn_comb, conditn_create_button);
-		layout.createRow(treatpl_comb_label, treatpl_comb, treatpl_create_button);
-		layout.createRow(bed_comb_label, bed_comb, bed_create_button);		
-
+		layout.createRow(patient_comb_label, patient_comb, patient_search_button, patient_create_button);
+		layout.createRow(conditn_comb_label, conditn_comb, conditn_search_button, conditn_create_button);
+		layout.createRow(treatpl_comb_label, treatpl_comb, treatpl_search_button, treatpl_create_button);
+		layout.createRow(bed_comb_label, bed_comb, bed_search_button, bed_create_button);		
+//		layout.createRow(new sap.ui.commons.HorizontalDivider());
+//		layout.createRow(hospi_table);
 
 		
 		return layout;

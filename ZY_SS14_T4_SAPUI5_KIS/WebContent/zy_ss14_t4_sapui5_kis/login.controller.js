@@ -65,7 +65,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 					hospi_table.bindRows(   {path: "/HOSPI",
 
 						    filters: id_filter });  
-
+					
 				}
 				else{
 					alert("Es wurde ein falsches Passwort eingegeben.");

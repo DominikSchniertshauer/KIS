@@ -146,7 +146,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.patient", {
 				
 				patient_create_dialog.setTitle("First step");
 				
-				input.setValue("AB123");
+				input.setValue("");
 				input.setTooltip("Fill in insurance number");
 				//input.attachChange(function(){alert('Text changed to :'+ input.getValue());});
 		
