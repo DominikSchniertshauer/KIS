@@ -25,9 +25,9 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 			// Funktion für erfolgreichen Request	
 			function(response){
 				if(password == response.Password){
-					alert("Erfolgreich eingeloggt.");
 					shell.setAppTitle("Logged in as: "+response.Username);
 					shell.addWorksetItem(new sap.ui.ux3.NavigationItem("index_nav", {key:"index",text:"HOME"}));
+					shell.addWorksetItem(new sap.ui.ux3.NavigationItem("hospitalization_nav", {key:"hospitalization",text:"Krankenhausaufenthalt"}));
 					shell.addWorksetItem(new sap.ui.ux3.NavigationItem("patient_nav", {key:"patient",text:"PATIENT"}));					
 					shell.addWorksetItem(new sap.ui.ux3.NavigationItem("disease_nav", {key:"disease",text:"KRANKHEITEN"}));	
 					shell.addWorksetItem(new sap.ui.ux3.NavigationItem("disease_plan_nav", {key:"disease_plan",text:"BEHANDLUNGSPLÄNE"}));	

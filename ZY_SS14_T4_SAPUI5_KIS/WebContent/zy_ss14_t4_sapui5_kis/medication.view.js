@@ -17,8 +17,93 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.medication", {
 			id : 'medication_layout',
 			layoutFixed : false,
 			});
-
+	   /** 
+	   * Create Buttons:
+	   */
+		var create_button = new sap.ui.commons.Button("medication_create", {
+	        text : "Neues Medikament anlegen",
+	        icon : "sap-icon://wounds-doc",
+	        press : function() {open_create_dialog();
+			}
+	    	
+		});
 		
+		function open_create_dialog (){
+			var medication_layout = new sap.ui.commons.layout.MatrixLayout({
+				layoutFixed : false,
+				});
+			var medication_dialog = new sap.ui.commons.Dialog();
+			var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
+
+			/**
+			* Define fields and a button to insert a medication  
+			*/
+			var name_label = new sap.ui.commons.Label({text: "Medikament: "});
+			var name_input = new sap.ui.commons.TextField({});
+			
+			var description_label = new sap.ui.commons.Label({text: "Beschreibung: "});
+			var description_input = new sap.ui.commons.TextField({})
+			
+			var update_button = new sap.ui.commons.Button({text: "Medikament anlegen" });
+
+			medication_dialog.setTitle("Neues Medikament anlegen");
+
+			medication_layout.createRow(name_label, name_input);
+			medication_layout.createRow(description_label, description_input);
+			medication_layout.createRow(update_button);
+			
+			
+			// Update ausführen, Daten aus TextFields übergeben
+			update_button.attachPress(function(){
+				
+			// Übergabewerte für oModel.update Funktion
+			var oEntry = {};	
+				
+				oEntry.Mandt 		= '001';
+				oEntry.MedicationID = '1';
+				oEntry.Name 		= name_input.getValue();
+				oEntry.Description	= description_input.getValue();
+				
+				
+				var oParams = {};
+			    oParams.fnSuccess = function(){ 
+			    	
+			    	medication_dialog.close(); 		
+			    	
+ 
+			    
+			    };
+			    oParams.fnError = function(){medication_dialog.open();};
+			       
+				
+				oModel.create("/MEDICTN", oEntry, null, oParams.fnSuccess(), oParams.fnError());
+				
+				medication_table.bindRows('/MEDICTN'); 
+
+			});
+
+			medication_dialog.addContent(medication_layout);
+			
+			medication_dialog.open();
+			}
+		
+		var update_button = new sap.ui.commons.Button("medication_update", {
+	        text : "Existierendes Medikament ändern",
+	        icon : "sap-icon://activity-individual",
+	        press : function() {
+
+	        }
+		});
+		
+	   /**
+	   * Place buttons to the form
+	   */
+		layout.createRow(create_button);
+		layout.createRow(update_button);
+		
+		/**
+		* Define header description
+		*/
 		var header_label = new sap.ui.commons.Label("medication_header",{text: "Auflistung aller verfuegbaren Medikamente" });
 		header_label.setDesign(sap.ui.commons.LabelDesign.Bold);
 
@@ -29,30 +114,40 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.medication", {
 		
 		var panel = new sap.ui.commons.Panel('medication_panel');  
 		
-		var medication_table = new sap.ui.table.Table();  
+		 /**
+		 * Create table to display all available medications 
+		 */
+		var medication_table = new sap.ui.table.Table( { 
+											selectionMode: sap.ui.table.SelectionMode.Single,
+			
+											rowSelectionChange: function(oEvent){
+												var currentRowContext = oEvent.getParameter("rowContext").getPath();
+												var model = medication_table.getModel();
+												var data = model.getProperty(currentRowContext);
+								
+												sap.ui.commons.MessageBox.alert(data['MedicationID']);
+											}
+		});
+		
 		medication_table.addColumn(  
 		     new sap.ui.table.Column({  
 		          label: new sap.ui.commons.Label({text: "Name"}),  
 		          template: new sap.ui.commons.TextField().bindProperty("value", "Name"),  
-		          sortProperty: "Name"  
+		          sortProperty: "Name", 
 		}));  
-		
+	
 		medication_table.addColumn(  
 		     new sap.ui.table.Column({  
 		          label: new sap.ui.commons.Label({text: "Description"}),  
 		          template: new sap.ui.commons.TextField().bindProperty("value", "Description"),  
-		          sortProperty: "Description"  
+		          sortProperty: "Description",
+		         
 		}));  
 		
-//		medication_table.attachRowSelect(function(oEvent){
-//			var currentRowContext = oEvent.getParameter("rowContext").getPath();
-//			var model = medication_table.getModel();
-//			var data = mode.getProperty(sPath);
-//			Alert(data['Name']);
-//			
-//			
-//		});
-  
+
+		/**
+		* Fill table with data: 
+		*/
 		var oModel = new sap.ui.model.odata.ODataModel(  
 				sap.ui.getCore().byId("path").getText(), false);  
 		
