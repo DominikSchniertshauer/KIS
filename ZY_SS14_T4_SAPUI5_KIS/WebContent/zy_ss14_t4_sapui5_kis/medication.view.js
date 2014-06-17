@@ -22,7 +22,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.medication", {
 	   */
 		var create_button = new sap.ui.commons.Button("medication_create", {
 	        text : "Neues Medikament anlegen",
-	        icon : "sap-icon://wounds-doc",
+	        icon : "sap-icon://syringe",
 	        press : function() {open_create_dialog();
 			}
 	    	
@@ -42,7 +42,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.medication", {
 			var name_input = new sap.ui.commons.TextField({});
 			
 			var description_label = new sap.ui.commons.Label({text: "Beschreibung: "});
-			var description_input = new sap.ui.commons.TextField({})
+			var description_input = new sap.ui.commons.TextField({});
 			
 			var update_button = new sap.ui.commons.Button({text: "Medikament anlegen" });
 
@@ -89,7 +89,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.medication", {
 		
 		var update_button = new sap.ui.commons.Button("medication_update", {
 	        text : "Existierendes Medikament ändern",
-	        icon : "sap-icon://activity-individual",
+	        icon : "sap-icon://syringe",
 	        press : function() {
 
 	        }
