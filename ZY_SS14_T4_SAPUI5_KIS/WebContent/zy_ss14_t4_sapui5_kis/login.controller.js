@@ -28,7 +28,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 					shell.setAppTitle("Logged in as: "+response.Username);
 					shell.addWorksetItem(new sap.ui.ux3.NavigationItem("index_nav", {key:"index",text:"HOME"}));
 					shell.addWorksetItem(new sap.ui.ux3.NavigationItem("hospitalization_nav", {key:"hospitalization",text:"Krankenhausaufenthalt"}));
-					shell.addWorksetItem(new sap.ui.ux3.NavigationItem("aktuelles_nav", {key:"patient",text:"AKTUELLES", 
+					shell.addWorksetItem(new sap.ui.ux3.NavigationItem("aktuelles_nav", {key:"patient",text:"Verwaltung", 
 						subItems:[new sap.ui.ux3.NavigationItem("patient_nav", {key:"patient",text:"PATIENT"}),
 						          new sap.ui.ux3.NavigationItem("disease_nav", {key:"disease",text:"KRANKHEITEN"}),
 						          new sap.ui.ux3.NavigationItem("disease_plan_nav", {key:"disease_plan",text:"BEHANDLUNGSPLAENE"}),
@@ -49,9 +49,9 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 					var lastname_label = sap.ui.getCore().byId("lastname");
 					var role_image = sap.ui.getCore().byId("role");
 					
-					username_label.setText("Username: "+response.Username);
-					firstname_label.setText("Firstname: "+response.Firstname);
-					lastname_label.setText("Lastname: "+response.Lastname);
+					username_label.setText("Benutzername: "+response.Username);
+					firstname_label.setText("Vorname: "+response.Firstname);
+					lastname_label.setText("Familienname: "+response.Lastname);
 					
 					if (response.RoleID == 1)
 						role_image.setSrc("images/doctor.png");

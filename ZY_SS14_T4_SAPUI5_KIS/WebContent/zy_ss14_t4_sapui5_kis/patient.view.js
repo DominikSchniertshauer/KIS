@@ -31,7 +31,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.patient", {
 	
 		var panel = new sap.ui.commons.Panel('rPannel');              
 		var title = new sap.ui.commons.Title('rTitle');     
-		title.setText('List of all patients');     
+		title.setText('Liste von allen Patienten');     
 		panel.setTitle(title);    
 		
 
@@ -44,7 +44,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.patient", {
 		};
 	
 		var create_button = new sap.ui.commons.Button("patient_create", {
-	        text : "Register new patient",
+	        text : "Neuen Patienten anlegen",
 	        icon : "sap-icon://wounds-doc",
 	        press : function() {open_create_dialog();
 			}
@@ -52,13 +52,26 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.patient", {
 		});
 		
 		var update_button = new sap.ui.commons.Button("patient_update", {
-	        text : "Update patient master data",
+	        text : "Patientendaten aktualisieren",
 	        icon : "sap-icon://activity-individual",
 	        press : function() {;}
 		});
 		
-		layout.createRow(create_button);
-		layout.createRow(update_button);
+		
+		/**
+		* Create Toolbar 
+		*/
+
+		var oToolbar = new sap.ui.commons.Toolbar("tb");
+		
+		oToolbar.setStandalone(false);
+		oToolbar.setDesign(sap.ui.commons.ToolbarDesign.Flat);	
+		oToolbar.setWidth("500px");
+		
+		oToolbar.addItem(create_button);
+		oToolbar.addItem(update_button);
+		
+		layout.createRow(oToolbar);
 		
 		var patient_table = new sap.ui.table.Table();  
 		patient_table.addColumn(  

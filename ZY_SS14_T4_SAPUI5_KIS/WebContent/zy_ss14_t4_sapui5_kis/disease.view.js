@@ -19,7 +19,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.disease", {
 			});
 
 		
-		var header_label = new sap.ui.commons.Label("disease_header",{text: "Aktuell existierende Krankheit"});
+		var header_label = new sap.ui.commons.Label("disease_header",{text: "Krankheiten"});
 		header_label.setDesign(sap.ui.commons.LabelDesign.Bold);
 
 		var line_divider = new sap.ui.commons.HorizontalDivider("disease_divider");
@@ -27,19 +27,25 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.disease", {
 		layout.createRow(header_label);
 		layout.createRow(line_divider);
 		
+		
+		
 		var panel = new sap.ui.commons.Panel('disease_panel');  
+		var title = new sap.ui.commons.Title('disease_title');     
+		title.setText('Liste von allen Krankheiten');     
+		panel.setTitle(title);  
 		
 		var disease_table = new sap.ui.table.Table();  
 		disease_table.addColumn(  
 		     new sap.ui.table.Column({  
 		          label: new sap.ui.commons.Label({text: "Name"}),  
 		          template: new sap.ui.commons.TextField().bindProperty("value", "Name"),  
-		          sortProperty: "Name"  
+		          sortProperty: "Name", 
+		          width: "250px"
 		}));  
 		
 		disease_table.addColumn(  
 		     new sap.ui.table.Column({  
-		          label: new sap.ui.commons.Label({text: "Description"}),  
+		          label: new sap.ui.commons.Label({text: "Symptome"}),  
 		          template: new sap.ui.commons.TextField().bindProperty("value", "Description"),  
 		          sortProperty: "Description"  
 		}));  

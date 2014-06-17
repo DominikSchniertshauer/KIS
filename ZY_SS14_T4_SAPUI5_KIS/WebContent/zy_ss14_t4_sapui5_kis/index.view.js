@@ -52,7 +52,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.index", {
 		var lastname_label = new sap.ui.commons.Label("lastname",{text:""});
 		
 		var hospi_table = new sap.ui.table.Table("hospi"); 
-		hospi_table.setTitle("Assigned patients");
+		hospi_table.setTitle("Zugeordnete Patienten");
 		hospi_table.addColumn(  
 		     new sap.ui.table.Column({  
 		          label: new sap.ui.commons.Label({text: "Patient"}),  

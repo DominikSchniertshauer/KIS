@@ -17,6 +17,8 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.medication", {
 			id : 'medication_layout',
 			layoutFixed : false,
 			});
+		
+		
 	   /** 
 	   * Create Buttons:
 	   */
@@ -28,6 +30,8 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.medication", {
 	    	
 		});
 		
+		
+	
 		function open_create_dialog (){
 			var medication_layout = new sap.ui.commons.layout.MatrixLayout({
 				layoutFixed : false,
@@ -41,7 +45,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.medication", {
 			var name_label = new sap.ui.commons.Label({text: "Medikament: "});
 			var name_input = new sap.ui.commons.TextField({});
 			
-			var description_label = new sap.ui.commons.Label({text: "Beschreibung: "});
+			var description_label = new sap.ui.commons.Label({text: "Symptome "});
 			var description_input = new sap.ui.commons.TextField({});
 			
 			var update_button = new sap.ui.commons.Button({text: "Medikament anlegen" });
@@ -88,23 +92,30 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.medication", {
 			}
 		
 		var update_button = new sap.ui.commons.Button("medication_update", {
-	        text : "Existierendes Medikament ändern",
+	        text : "Existierendes Medikament aendern",
 	        icon : "sap-icon://syringe",
 	        press : function() {
 
 	        }
 		});
 		
-	   /**
-	   * Place buttons to the form
-	   */
-		layout.createRow(create_button);
-		layout.createRow(update_button);
+		/**
+		* Create Toolbar 
+		*/
+
+		var oToolbar2 = new sap.ui.commons.Toolbar("tb2");
 		
+		oToolbar2.setStandalone(false);
+		oToolbar2.setDesign(sap.ui.commons.ToolbarDesign.Flat);	
+		oToolbar2.setWidth("500px");
+		
+		oToolbar2.addItem(create_button);
+		oToolbar2.addItem(update_button);
+
 		/**
 		* Define header description
 		*/
-		var header_label = new sap.ui.commons.Label("medication_header",{text: "Auflistung aller verfuegbaren Medikamente" });
+		var header_label = new sap.ui.commons.Label("medication_header",{text: "Medikamente" });
 		header_label.setDesign(sap.ui.commons.LabelDesign.Bold);
 
 		var line_divider = new sap.ui.commons.HorizontalDivider("medication_divider");
@@ -112,7 +123,16 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.medication", {
 		layout.createRow(header_label);
 		layout.createRow(line_divider);
 		
-		var panel = new sap.ui.commons.Panel('medication_panel');  
+		
+		   /**
+		   * Place buttons to the form
+		   */
+			layout.createRow(oToolbar2);
+		var title = new sap.ui.commons.Title('medication_title');     
+		title.setText('Liste von allen Medikamenten'); 
+		var panel = new sap.ui.commons.Panel('medication_panel');
+		panel.setTitle(title); 
+
 		
 		 /**
 		 * Create table to display all available medications 
@@ -138,7 +158,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.medication", {
 	
 		medication_table.addColumn(  
 		     new sap.ui.table.Column({  
-		          label: new sap.ui.commons.Label({text: "Description"}),  
+		          label: new sap.ui.commons.Label({text: "Beschreibung"}),  
 		          template: new sap.ui.commons.TextField().bindProperty("value", "Description"),  
 		          sortProperty: "Description",
 		         

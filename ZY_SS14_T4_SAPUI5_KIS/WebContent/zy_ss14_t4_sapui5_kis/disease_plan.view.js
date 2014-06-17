@@ -19,7 +19,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.disease_plan", {
 			});
 
 		
-		var header_label = new sap.ui.commons.Label("disease_plan_header",{text: "Aktuell existierende Behandlungspläne"});
+		var header_label = new sap.ui.commons.Label("disease_plan_header",{text: "Behandlungsplaene"});
 		header_label.setDesign(sap.ui.commons.LabelDesign.Bold);
 
 		var line_divider = new sap.ui.commons.HorizontalDivider("disease_plan_divider");
@@ -27,14 +27,18 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.disease_plan", {
 		layout.createRow(header_label);
 		layout.createRow(line_divider);
 		
+		var title = new sap.ui.commons.Title('disease_plan_title');     
+		title.setText('Liste von allen Behandlungsplaenen'); 
 		var panel = new sap.ui.commons.Panel('disease_plan_panel');  
+		panel.setTitle(title); 
 		
 		var disease_plan_table = new sap.ui.table.Table();  
 		disease_plan_table.addColumn(  
 		     new sap.ui.table.Column({  
 		          label: new sap.ui.commons.Label({text: "Behandlungsplan ID"}),  
 		          template: new sap.ui.commons.TextField().bindProperty("value", "TreatPlanID"),  
-		          sortProperty: "TreatPlanID"  
+		          sortProperty: "TreatPlanID",
+		          width: "100px"
 		}));  
 		
 		disease_plan_table.addColumn(  
@@ -46,7 +50,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.disease_plan", {
 		
 		disease_plan_table.addColumn(  
 			     new sap.ui.table.Column({  
-			          label: new sap.ui.commons.Label({text: "Dauer"}),  
+			          label: new sap.ui.commons.Label({text: "Dauer (Tage)"}),  
 			          template: new sap.ui.commons.TextField().bindProperty("value", "Duration"),  
 			          sortProperty: "Duration"  
 			})); 
