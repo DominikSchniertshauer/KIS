@@ -17,7 +17,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.login", {
 		var layout = new sap.ui.commons.layout.AbsoluteLayout({width:"340px",height:"150px"});
 		layout.addStyleClass("CustomStyle");
 
-		var description_label = new sap.ui.commons.Label({text:"User ID"});
+		var description_label = new sap.ui.commons.Label({text:"Benutzer ID"});
 		var userid_input = new sap.ui.commons.TextField({width:"190px"});
 		
 		description_label.setLabelFor(userid_input);
@@ -25,13 +25,13 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.login", {
 		layout.addContent(description_label, {right:"248px",top:"20px"});
 		layout.addContent(userid_input, {left:"110px",top:"20px"});
 
-		description_label = new sap.ui.commons.Label({text:"Password"});
+		description_label = new sap.ui.commons.Label({text:"Passwort"});
 		var password_input = new sap.ui.commons.PasswordField({width:"190px"});
 		description_label.setLabelFor(password_input);
 		layout.addContent(description_label, {right:"248px",top:"62px"});
 		layout.addContent(password_input, {left:"110px",top:"62px"});
 
-		var login_button = new sap.ui.commons.Button({text:"Login",width:"133px"});
+		var login_button = new sap.ui.commons.Button({text:"Anmelden",width:"133px"});
 		login_button.attachPress(function(){oController.validateLogin(userid_input.getValue(), password_input.getValue());});
 		layout.addContent(login_button, {left:"110px",top:"104px"});
 		//alert("Loggin in as '"+username_input.getValue()+"' and password '"+password_input.getValue()+"'.")

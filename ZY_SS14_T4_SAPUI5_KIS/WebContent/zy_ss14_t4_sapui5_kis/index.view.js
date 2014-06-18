@@ -33,7 +33,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.index", {
 			
 			});
 		
-		var left_header_label = new sap.ui.commons.Label("index_header",{text: "Userdata"});
+		var left_header_label = new sap.ui.commons.Label("index_header",{text: "Benutzerdaten"});
 		left_header_label.setDesign(sap.ui.commons.LabelDesign.Bold);
 		
 		var right_header_label = new sap.ui.commons.Label("right_header",{text: "Dashboard"});
@@ -61,17 +61,17 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.index", {
 		}));  
 		hospi_table.addColumn(  
 		     new sap.ui.table.Column("treatmentplan",{
-		          label: new sap.ui.commons.Label({text: "Treatment Plan"}),  
+		          label: new sap.ui.commons.Label({text: "Behandlungsplan"}),  
 		          template: new sap.ui.commons.TextField().bindProperty("value", "Treatmentplan"),  
 		          sortProperty: "Treatmentplan"  
 		}));  
 		hospi_table.addColumn(  
 		     new sap.ui.table.Column({  
-		          label: new sap.ui.commons.Label({text: "Disease"}),  
+		          label: new sap.ui.commons.Label({text: "Krankheit"}),  
 		          template: new sap.ui.commons.TextField().bindProperty("value", "Disease"),  
 		          sortProperty: "Disease"  
 		}));  
-			
+	
 		
 		left_layout.createRow(role_image);
 		left_layout.createRow(line_divider2);

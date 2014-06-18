@@ -76,49 +76,49 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.patient", {
 		var patient_table = new sap.ui.table.Table();  
 		patient_table.addColumn(  
 		     new sap.ui.table.Column({  
-		          label: new sap.ui.commons.Label({text: "Firstname"}),  
+		          label: new sap.ui.commons.Label({text: "Vorname"}),  
 		          template: new sap.ui.commons.TextField().bindProperty("value", "Firstname"),  
 		          sortProperty: "Firstname"  
 		}));  
 		
 		patient_table.addColumn(  
 		     new sap.ui.table.Column({  
-		          label: new sap.ui.commons.Label({text: "Lastname"}),  
+		          label: new sap.ui.commons.Label({text: "Familienname"}),  
 		          template: new sap.ui.commons.TextField().bindProperty("value", "Lastname"),  
 		          sortProperty: "Lastname"  
 		}));  
 		
 		patient_table.addColumn(  
 			     new sap.ui.table.Column({  
-			          label: new sap.ui.commons.Label({text: "Insurancenumber"}),  
+			          label: new sap.ui.commons.Label({text: "Versicherungsnummer"}),  
 			          template: new sap.ui.commons.TextField().bindProperty("value", "Insurancenumber"),  
 			          sortProperty: "Insurancenumber"  
 			})); 
 		
 		patient_table.addColumn(  
 		     new sap.ui.table.Column({  
-		          label: new sap.ui.commons.Label({text: "Street"}),  
+		          label: new sap.ui.commons.Label({text: "Strasse"}),  
 		          template: new sap.ui.commons.TextField().bindProperty("value", "Street"),  
 		          sortProperty: "Street"  
 		}));  
   
 		patient_table.addColumn(  
 			     new sap.ui.table.Column({  
-			          label: new sap.ui.commons.Label({text: "Postalcode"}),  
+			          label: new sap.ui.commons.Label({text: "Postleitzahl"}),  
 			          template: new sap.ui.commons.TextField().bindProperty("value", "Postalcode"),  
 			          sortProperty: "Postalcode"  
 			})); 
 		
 		patient_table.addColumn(  
 			     new sap.ui.table.Column({  
-			          label: new sap.ui.commons.Label({text: "City"}),  
+			          label: new sap.ui.commons.Label({text: "Stadt"}),  
 			          template: new sap.ui.commons.TextField().bindProperty("value", "City"),  
 			          sortProperty: "City"  
 			})); 
 		
 		patient_table.addColumn(  
 			     new sap.ui.table.Column({  
-			          label: new sap.ui.commons.Label({text: "Country"}),  
+			          label: new sap.ui.commons.Label({text: "Land"}),  
 			          template: new sap.ui.commons.TextField().bindProperty("value", "Country"),  
 			          sortProperty: "Country"  
 			})); 
@@ -141,13 +141,13 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.patient", {
 					});
 				
 				var patient_create_dialog = new sap.ui.commons.Dialog();
-				var text = new sap.ui.commons.TextView({text: "Please enter insurance number: "});
+				var text = new sap.ui.commons.TextView({text: "Bitte geben Sie die Versichertennummer ein: "});
 				var input = new sap.ui.commons.TextField();
 				
-				patient_create_dialog.setTitle("First step");
+				patient_create_dialog.setTitle("Erster Schritt");
 				
 				input.setValue("");
-				input.setTooltip("Fill in insurance number");
+				input.setTooltip("Versicherungsnummer eingeben");
 				//input.attachChange(function(){alert('Text changed to :'+ input.getValue());});
 		
 				patient_create_layout.createRow(text);

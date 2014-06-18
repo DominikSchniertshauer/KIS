@@ -38,7 +38,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.disease_plan", {
 		          label: new sap.ui.commons.Label({text: "Behandlungsplan ID"}),  
 		          template: new sap.ui.commons.TextField().bindProperty("value", "TreatPlanID"),  
 		          sortProperty: "TreatPlanID",
-		          width: "100px"
+		          width: "130px"
 		}));  
 		
 		disease_plan_table.addColumn(  

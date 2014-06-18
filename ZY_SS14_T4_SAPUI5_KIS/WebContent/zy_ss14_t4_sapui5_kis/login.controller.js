@@ -25,7 +25,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 			// Funktion für erfolgreichen Request	
 			function(response){
 				if(password == response.Password){
-					shell.setAppTitle("Logged in as: "+response.Username);
+					shell.setAppTitle("Angemeldet als: "+response.Username);
 					shell.addWorksetItem(new sap.ui.ux3.NavigationItem("index_nav", {key:"index",text:"HOME"}));
 					shell.addWorksetItem(new sap.ui.ux3.NavigationItem("hospitalization_nav", {key:"hospitalization",text:"Krankenhausaufenthalt"}));
 					shell.addWorksetItem(new sap.ui.ux3.NavigationItem("aktuelles_nav", {key:"patient",text:"Verwaltung", 
@@ -62,9 +62,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 	
 					var id_filter = new sap.ui.model.Filter("UserID", sap.ui.model.FilterOperator.EQ, userid);
 					hospi_table.setModel(oModel);  
-					hospi_table.bindRows(   {path: "/HOSPI",
-
-						    filters: id_filter });  
+					hospi_table.bindRows(   {path: "/HOSPI", filters: id_filter });  
 					
 				}
 				else{

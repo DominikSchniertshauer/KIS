@@ -147,19 +147,12 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 			}
 	    	
 		});
-		var bed_create_button = new sap.ui.commons.Button({
-	        text : "Bett neu anlegen",
-	        icon : "sap-icon://bed",
-	        width : "210px",
-	        press : function() {open_create_dialog();
-			}
-	    	
-		});
+
 		
 		layout.createRow(patient_comb_label, patient_comb, patient_search_button, patient_create_button);
 		layout.createRow(conditn_comb_label, conditn_comb, conditn_search_button, conditn_create_button);
 		layout.createRow(treatpl_comb_label, treatpl_comb, treatpl_search_button, treatpl_create_button);
-		layout.createRow(bed_comb_label, bed_comb, bed_search_button, bed_create_button);		
+		layout.createRow(bed_comb_label, bed_comb, bed_search_button, null);		
 //		layout.createRow(new sap.ui.commons.HorizontalDivider());
 //		layout.createRow(hospi_table);
 
