@@ -23,8 +23,10 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 		
 		oModel.read("USER(Mandt='001',UserID="+userid+")",undefined, undefined, true, 
 			// Funktion für erfolgreichen Request	
+
 			function(response){
 				if(password == response.Password){
+					
 					shell.setAppTitle("Angemeldet als: "+response.Username);
 					shell.addWorksetItem(new sap.ui.ux3.NavigationItem("index_nav", {key:"index",text:"HOME"}));
 					shell.addWorksetItem(new sap.ui.ux3.NavigationItem("hospitalization_nav", {key:"hospitalization",text:"Krankenhausaufenthalt"}));
@@ -75,6 +77,36 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 			}
 				 );
 		
+		
+		function createCookie(name,value,days) {
+			if (days) {
+				var date = new Date();
+				date.setTime(date.getTime()+(days*24*60*60*1000));
+				var expires = "; expires="+date.toGMTString();
+			}
+			else var expires = "";
+			document.cookie = name+"="+value+expires+"; path=/";
+		};
+		
+		function readCookie (name) {
+			var nameEQ = name + "=";
+			var ca = document.cookie.split(';');
+			for(var i=0;i < ca.length;i++) {
+				var c = ca[i];
+				while (c.charAt(0)==' ') c = c.substring(1,c.length);
+				if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+			}
+			return null;
+		};
+		
+	},
+	
+	
+
+
+
+	 eraseCookie: function(name) {
+		createCookie(name,"",-1);
 	},
 /**
 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered

@@ -7,13 +7,15 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.login", {
 	getControllerName : function() {
 		return "zy_ss14_t4_sapui5_kis.login";
 	},
-
+	
 	/** Is initially called once after the Controller has been instantiated. It is the place where the UI is constructed. 
 	* Since the Controller is given to this method, its event handlers can be attached right away. 
 	* @memberOf zy_ss14_t4_sapui5_kis.login
 	*/ 
 	createContent : function(oController) {
-		document.cookie="";
+		
+		
+		
 		var layout = new sap.ui.commons.layout.AbsoluteLayout({width:"340px",height:"150px"});
 		layout.addStyleClass("CustomStyle");
 
@@ -35,7 +37,8 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.login", {
 		login_button.attachPress(function(){oController.validateLogin(userid_input.getValue(), password_input.getValue());});
 		layout.addContent(login_button, {left:"110px",top:"104px"});
 		//alert("Loggin in as '"+username_input.getValue()+"' and password '"+password_input.getValue()+"'.")
-	
+		
+		
 		
 //		
 //		user_table.addColumn(new sap.ui.table.Column({
