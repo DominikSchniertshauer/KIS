@@ -5,10 +5,35 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
 * @memberOf zy_ss14_t4_sapui5_kis.hospitalization
 */
-//	onInit: function() {
-//
-//	},
+	onInit: function() {
+	
+	var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
+	sap.ui.getCore().setModel(oModel);
+	},
 
+	create_patient: function(insnr){
+		
+		var field;
+		var fields = ["firstname", "lastname", "street", "postalcode", "city", "country"];
+
+		if(insnr.length == 10){
+			for(var i in fields){
+				field = sap.ui.getCore().byId(fields[i]+"_input");
+				field.setEditable(true);
+			}
+		}
+		else{
+			
+			for(var i in fields){
+				field = sap.ui.getCore().byId(fields[i]+"_input");
+				field.setEditable(false);
+			}
+			
+			alert("Versicherungsnummer muss 10 Zeichen haben");
+			
+		}
+	},
+	
 /**
 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
 * (NOT before the first rendering! onInit() is used for that one!).

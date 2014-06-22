@@ -15,19 +15,20 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 		
 	},
 	
-	validateLogin: function(userid, password){
+	validateLogin: function(username, password){
 		
 		var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
 		oModel.refreshSecurityToken(null, null);
 
 		
-		oModel.read("USER(Mandt='001',UserID="+userid+")",undefined, undefined, true, 
+		oModel.read("USER?$filter=Username eq '"+username+"'",undefined, undefined, true, 
 			// Funktion für erfolgreichen Request	
 
-			function(response){
-				if(password == response.Password){
+				
+			function(data, response){
+				if(password == data.results[0].Password){
 					
-					shell.setAppTitle("Angemeldet als: "+response.Username);
+					shell.setAppTitle("Angemeldet als: "+data.results[0].Username);
 					shell.addWorksetItem(new sap.ui.ux3.NavigationItem("index_nav", {key:"index",text:"HOME"}));
 					shell.addWorksetItem(new sap.ui.ux3.NavigationItem("hospitalization_nav", {key:"hospitalization",text:"Krankenhausaufenthalt",
 						subItems:[new sap.ui.ux3.NavigationItem("hospitalization_overview_nav", {key:"hospitalization_overview",text:"Uebersicht"}),
@@ -54,18 +55,18 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 					var lastname_label = sap.ui.getCore().byId("lastname");
 					var role_image = sap.ui.getCore().byId("role");
 					
-					username_label.setText("Benutzername: "+response.Username);
-					firstname_label.setText("Vorname: "+response.Firstname);
-					lastname_label.setText("Familienname: "+response.Lastname);
+					username_label.setText("Benutzername: "+data.results[0].Username);
+					firstname_label.setText("Vorname: "+data.results[0].Firstname);
+					lastname_label.setText("Familienname: "+data.results[0].Lastname);
 					
-					if (response.RoleID == 1)
+					if (data.results[0].RoleID == 1)
 						role_image.setSrc("images/doctor.png");
-					if (response.RoleID == 2)
+					if (data.results[0].RoleID == 2)
 						role_image.setSrc("images/nurse.png");
 					
 					var hospi_table = sap.ui.getCore().byId("hospi");
 	
-					var id_filter = new sap.ui.model.Filter("UserID", sap.ui.model.FilterOperator.EQ, userid);
+					var id_filter = new sap.ui.model.Filter("UserID", sap.ui.model.FilterOperator.EQ, data.results[0].UserID);
 					hospi_table.setModel(oModel);  
 					hospi_table.bindRows(   {path: "/HOSPI", filters: id_filter });  
 					
