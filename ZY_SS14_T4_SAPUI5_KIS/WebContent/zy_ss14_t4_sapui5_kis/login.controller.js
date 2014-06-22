@@ -29,7 +29,10 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 					
 					shell.setAppTitle("Angemeldet als: "+response.Username);
 					shell.addWorksetItem(new sap.ui.ux3.NavigationItem("index_nav", {key:"index",text:"HOME"}));
-					shell.addWorksetItem(new sap.ui.ux3.NavigationItem("hospitalization_nav", {key:"hospitalization",text:"Krankenhausaufenthalt"}));
+					shell.addWorksetItem(new sap.ui.ux3.NavigationItem("hospitalization_nav", {key:"hospitalization",text:"Krankenhausaufenthalt",
+						subItems:[new sap.ui.ux3.NavigationItem("hospitalization_overview_nav", {key:"hospitalization_overview",text:"Uebersicht"}),
+						          new sap.ui.ux3.NavigationItem("hospitalization_new_nav", {key:"hospitalization_new",text:"Patient einweisen"})
+								 ]}));
 					shell.addWorksetItem(new sap.ui.ux3.NavigationItem("aktuelles_nav", {key:"patient",text:"Verwaltung", 
 						subItems:[new sap.ui.ux3.NavigationItem("patient_nav", {key:"patient",text:"PATIENT"}),
 						          new sap.ui.ux3.NavigationItem("disease_nav", {key:"disease",text:"KRANKHEITEN"}),
