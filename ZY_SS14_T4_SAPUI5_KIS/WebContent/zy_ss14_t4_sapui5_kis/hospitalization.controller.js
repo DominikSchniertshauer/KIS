@@ -12,20 +12,99 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 	},
 
 	create_patient: function(insnr){
-		
-		var field;
-		var fields = ["firstname", "lastname", "street", "postalcode", "city", "country"];
+		var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
 
+		var field;
+		var fields = ["Firstname", "Lastname", "Street", "Postalcode", "City", "Country"];
+		var oEntry = {
+		};	
+		
 		if(insnr.length == 10){
-			for(var i in fields){
-				field = sap.ui.getCore().byId(fields[i]+"_input");
-				field.setEditable(true);
-			}
+			
+			oModel.read("/PATIENT?$filter=Insurancenumber eq '"+insnr+"'" ,undefined, undefined, true,
+					function(data, response){
+				
+				try {
+					if (data.results[0].PatientID != ''){
+					
+					for(var i in fields){
+						field = sap.ui.getCore().byId(fields[i]+"_input");
+						field.setEditable(true);
+						
+						
+						if(fields[i] == 'Firstname'){
+							field.setValue(data.results[0].Firstname);
+//							oEntry.Firstname = field.getValue();
+						}
+						if(fields[i] == 'Lastname'){
+							field.setValue(data.results[0].Lastname);
+//							oEntry.Lastname = field.getValue();
+						}
+						if(fields[i] == 'Street'){
+							field.setValue(data.results[0].Street);
+//							oEntry.Street = field.getValue();
+						}
+						if(fields[i] == 'Postalcode'){
+							field.setValue(data.results[0].Postalcode);
+//							oEntry.City = field.getValue();
+						}
+						if(fields[i] == 'City'){
+							field.setValue(data.results[0].City);
+//							oEntry.City = field.getValue();
+						}
+						if(fields[i] == 'Country'){
+							field.setValue(data.results[0].Country);
+//							oEntry.City = field.getValue();
+						}
+						
+						}
+						
+					}
+
+						
+						
+					
+						var oParams = {};
+					    oParams.fnSuccess = function(){ internal_dialog.close();};
+					    oParams.fnError = function(){internal_dialog.open();};
+					       
+						
+						
+					
+			
+					
+				} catch(e) {
+
+					for(var i in fields){
+						field = sap.ui.getCore().byId(fields[i]+"_input");
+						field.setEditable(true);
+						field.setValue("");
+						
+						
+						}
+				
+					// Update ausführen, Daten aus TextFields übergeben
+						
+						// Übergabewerte für oModel.update Funktion
+						var oEntry = {
+						};	
+						
+						
+						var oParams = {};
+					    oParams.fnSuccess = function(){ internal_dialog.close();};
+					    oParams.fnError = function(){internal_dialog.open();};	
+				}
+				
+				
+			});
+			
+		
 		}
 		else{
 			
 			for(var i in fields){
 				field = sap.ui.getCore().byId(fields[i]+"_input");
+				field.setValue("");
 				field.setEditable(false);
 			}
 			

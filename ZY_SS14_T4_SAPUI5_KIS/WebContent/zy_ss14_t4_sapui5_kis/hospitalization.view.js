@@ -48,22 +48,22 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 				 template: insnr_comb_temp}});
 	//		
 		var firstname_label = new sap.ui.commons.Label({text: "Vorname: "});
-		var firstname_input = new sap.ui.commons.TextField("firstname_input").setValue("Test");
+		var firstname_input = new sap.ui.commons.TextField("Firstname_input").setValue("Test");
 		
 		var lastname_label = new sap.ui.commons.Label({text: "Nachname: "});
-		var lastname_input = new sap.ui.commons.TextField("lastname_input");
+		var lastname_input = new sap.ui.commons.TextField("Lastname_input");
 	
 		var postalcode_label = new sap.ui.commons.Label({text: "PLZ: "});
-		var postalcode_input = new sap.ui.commons.TextField("postalcode_input");
+		var postalcode_input = new sap.ui.commons.TextField("Postalcode_input");
 		
 		var city_label = new sap.ui.commons.Label({text: "Stadt: "});
-		var city_input = new sap.ui.commons.TextField("city_input");
+		var city_input = new sap.ui.commons.TextField("City_input");
 		
 		var street_label = new sap.ui.commons.Label({text: "Strasse: "});
-		var street_input = new sap.ui.commons.TextField("street_input");
+		var street_input = new sap.ui.commons.TextField("Street_input");
 		
 		var country_label = new sap.ui.commons.Label({text: "Land: "});
-		var country_input = new sap.ui.commons.TextField("country_input");
+		var country_input = new sap.ui.commons.TextField("Country_input");
 		
 		var patient_panel_layout = new sap.ui.commons.layout.MatrixLayout({
 			layoutFixed : false,
