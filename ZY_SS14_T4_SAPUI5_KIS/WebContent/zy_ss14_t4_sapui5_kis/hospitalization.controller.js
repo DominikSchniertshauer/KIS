@@ -58,7 +58,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 		
 		var button = sap.ui.getCore().byId("Patient_lock_button");
 		button.setStyle(null);
-		button.setIcon("sap-icon://accept");
+		button.setIcon("");
 		button.setText("Daten pruefen.");
 		fixed = false;
 
