@@ -34,7 +34,45 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization_overview", {
 		title.setText('Liste von allen aktuellen Hospitalisierungen');     
 		panel.setTitle(title);  
 		
-		var hospi2_table = new sap.ui.table.Table(); 
+		var hospi2_table = new sap.ui.table.Table({
+			id: "Mandt",
+		}); 
+		hospi2_table.addColumn(  
+			     new sap.ui.table.Column({  
+			          label: new sap.ui.commons.Label({text: "Mandt"}),  
+			          template: new sap.ui.commons.TextField().bindProperty("value", "Mandt"),  
+			          sortProperty: "Mandt"  
+			}));  
+		hospi2_table.addColumn(  
+			     new sap.ui.table.Column({  
+			          label: new sap.ui.commons.Label({text: "HospiID"}),  
+			          template: new sap.ui.commons.TextField().bindProperty("value", "HospitaliznID"),  
+			          sortProperty: "HospitaliznID"  
+			}));  
+		hospi2_table.addColumn(  
+			     new sap.ui.table.Column({  
+			          label: new sap.ui.commons.Label({text: "UserID"}),  
+			          template: new sap.ui.commons.TextField().bindProperty("value", "UserID"),  
+			          sortProperty: "UserID"  
+			}));  
+		hospi2_table.addColumn(  
+			     new sap.ui.table.Column({  
+			          label: new sap.ui.commons.Label({text: "PatentID"}),  
+			          template: new sap.ui.commons.TextField().bindProperty("value", "PatientID"),  
+			          sortProperty: "PatientID"  
+			}));  
+		hospi2_table.addColumn(  
+			     new sap.ui.table.Column({  
+			          label: new sap.ui.commons.Label({text: "Employee"}),  
+			          template: new sap.ui.commons.TextField().bindProperty("value", "Employee"),  
+			          sortProperty: "Employee"  
+			}));  
+		hospi2_table.addColumn(  
+			     new sap.ui.table.Column({  
+			          label: new sap.ui.commons.Label({text: "TreatID"}),  
+			          template: new sap.ui.commons.TextField().bindProperty("value", "TreatPlanID"),  
+			          sortProperty: "TreatPlanID"  
+			}));  
 		hospi2_table.addColumn(  
 		     new sap.ui.table.Column({  
 		          label: new sap.ui.commons.Label({text: "Patient"}),  
@@ -48,6 +86,12 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization_overview", {
 		          sortProperty: "Treatmentplan"  
 		}));  
 		hospi2_table.addColumn(  
+			     new sap.ui.table.Column({  
+			          label: new sap.ui.commons.Label({text: "KrankID"}),  
+			          template: new sap.ui.commons.TextField().bindProperty("value", "ConditionID"),  
+			          sortProperty: "ConditionID"  
+			}));  
+		hospi2_table.addColumn(  
 		     new sap.ui.table.Column({  
 		          label: new sap.ui.commons.Label({text: "Krankheit"}),  
 		          template: new sap.ui.commons.TextField().bindProperty("value", "Disease"),  
@@ -57,13 +101,19 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization_overview", {
 		var oModel = new sap.ui.model.odata.ODataModel(  
 				sap.ui.getCore().byId("path").getText(), false);  
 		
+		
+		
 		hospi2_table.setModel(oModel);  
 		hospi2_table.bindRows('/HOSPI');  
 		
 		panel.addContent(hospi2_table);    
 		layout.createRow(panel);  
 		
+		
 		return layout;  
 	}
 
 });
+
+
+
