@@ -11,21 +11,153 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 	sap.ui.getCore().setModel(oModel);
 	},
 
-	create_patient: function(insnr){
-		
-		var field;
-		var fields = ["firstname", "lastname", "street", "postalcode", "city", "country"];
+	lock_patient: function(fields){
+	var field;	
+	var fields_filled = true;
+	var fixed = false; 
+	
+	var text = sap.ui.getCore().byId("Patient_lock_button").getText();
 
-		if(insnr.length == 10){
+	if(text == "Daten pruefen."){
+		for(var i in fields){
+			field = sap.ui.getCore().byId(fields[i]+"_input");
+			if(field.getValue() == ""){
+				fields_filled = false;
+				var label = sap.ui.getCore().byId("Patient_lock_label");
+				label.setText("");
+
+			}
+		}
+		if(!fields_filled)
+			alert("Bitte alle Felder ausfuellen.");
+		else{
+			var button = sap.ui.getCore().byId("Patient_lock_button");
+			button.setStyle(sap.ui.commons.ButtonStyle.Accept);
+			button.setIcon("sap-icon://accept");
+			button.setText("Daten korrekt.");
+			
 			for(var i in fields){
 				field = sap.ui.getCore().byId(fields[i]+"_input");
-				field.setEditable(true);
+				field.setEnabled(false);
 			}
+			field = sap.ui.getCore().byId("Insurancenumber_input");
+			field.setEnabled(false);
+				
+		}
+		fixed = true;
+
+	} else{
+		
+		for(var i in fields){
+			field = sap.ui.getCore().byId(fields[i]+"_input");
+			field.setEnabled(true);
+		}
+		
+		field = sap.ui.getCore().byId("Insurancenumber_input");
+		field.setEnabled(true);
+		
+		var button = sap.ui.getCore().byId("Patient_lock_button");
+		button.setStyle(null);
+		button.setIcon("");
+		button.setText("Daten pruefen.");
+		fixed = false;
+
+	}			
+				
+		
+		
+	},
+	
+	create_patient: function(insnr, fields){
+		var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
+
+		var field;
+		var oEntry = {
+		};	
+		
+		if(insnr.length == 10){
+			
+			oModel.read("/PATIENT?$filter=Insurancenumber eq '"+insnr+"'" ,undefined, undefined, true,
+					function(data, response){
+				
+				try {
+					if (data.results[0].PatientID != ''){
+					
+					for(var i in fields){
+						field = sap.ui.getCore().byId(fields[i]+"_input");
+						field.setEditable(true);
+						
+						
+						if(fields[i] == 'Firstname'){
+							field.setValue(data.results[0].Firstname);
+//							oEntry.Firstname = field.getValue();
+						}
+						if(fields[i] == 'Lastname'){
+							field.setValue(data.results[0].Lastname);
+//							oEntry.Lastname = field.getValue();
+						}
+						if(fields[i] == 'Street'){
+							field.setValue(data.results[0].Street);
+//							oEntry.Street = field.getValue();
+						}
+						if(fields[i] == 'Postalcode'){
+							field.setValue(data.results[0].Postalcode);
+//							oEntry.City = field.getValue();
+						}
+						if(fields[i] == 'City'){
+							field.setValue(data.results[0].City);
+//							oEntry.City = field.getValue();
+						}
+						if(fields[i] == 'Country'){
+							field.setValue(data.results[0].Country);
+//							oEntry.City = field.getValue();
+						}
+						
+						}
+						
+					}
+
+						
+						
+					
+						var oParams = {};
+					    oParams.fnSuccess = function(){ internal_dialog.close();};
+					    oParams.fnError = function(){internal_dialog.open();};
+					       
+						
+						
+					
+			
+					
+				} catch(e) {
+
+					for(var i in fields){
+						field = sap.ui.getCore().byId(fields[i]+"_input");
+						field.setEditable(true);
+						field.setValue("");
+						
+						
+						}
+				
+						var oEntry = {
+						};	
+												
+						var oParams = {};
+					    oParams.fnSuccess = function(){ internal_dialog.close();};
+					    oParams.fnError = function(){internal_dialog.open();};	
+				
+				}
+				
+				
+			});
+			
+		
 		}
 		else{
 			
 			for(var i in fields){
 				field = sap.ui.getCore().byId(fields[i]+"_input");
+				field.setValue("");
 				field.setEditable(false);
 			}
 			
