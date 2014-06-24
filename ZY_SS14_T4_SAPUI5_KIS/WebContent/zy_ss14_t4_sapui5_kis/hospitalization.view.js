@@ -43,7 +43,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 		var insurancenumber_label = new sap.ui.commons.Label({text: "Versichertennummer: "});
 		var insnr_comb_temp = new sap.ui.core.ListItem({text:"{Insurancenumber}", additionalText:"{Lastname}"});
 		
-		var insurancenumber_input = new sap.ui.commons.ComboBox(
+		var insurancenumber_input = new sap.ui.commons.ComboBox("Insurancenumber_input",
 				{items: {path: "/PATIENT",
 				 template: insnr_comb_temp}});
 	//		
@@ -65,6 +65,12 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 		var country_label = new sap.ui.commons.Label({text: "Land: "});
 		var country_input = new sap.ui.commons.TextField("Country_input");
 		
+		var fields = ["Firstname", "Lastname", "Street", "Postalcode", "City", "Country"];
+
+		
+		var patient_lock_button = new sap.ui.commons.Button("Patient_lock_button", {text: "Daten pruefen."}).attachPress(function(){oController.lock_patient(fields);});
+		var patient_lock_label = new sap.ui.commons.Label("Patient_lock_label", {text: ""});
+
 		var patient_panel_layout = new sap.ui.commons.layout.MatrixLayout({
 			layoutFixed : false,
 			});
@@ -75,7 +81,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 		patient_panel_layout.createRow(postalcode_label, postalcode_input.setEditable(false));
 		patient_panel_layout.createRow(city_label, city_input.setEditable(false));
 		patient_panel_layout.createRow(country_label, country_input.setEditable(false));
-		
+		patient_panel_layout.createRow(patient_lock_button, patient_lock_label);
 		patient_panel.addContent(patient_panel_layout);
 		
 		layout.createRow(patient_panel);
@@ -86,7 +92,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 		/** 
 	   * Create Buttons:
 	   */
-		insurancenumber_input.attachChange(null, function(){oController.create_patient(insurancenumber_input.getValue());});
+		insurancenumber_input.attachChange(null, function(){oController.create_patient(insurancenumber_input.getValue(), fields);});
 
 		
 	

@@ -11,11 +11,67 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 	sap.ui.getCore().setModel(oModel);
 	},
 
-	create_patient: function(insnr){
+	lock_patient: function(fields){
+	var field;	
+	var fields_filled = true;
+	var fixed = false; 
+	
+	var text = sap.ui.getCore().byId("Patient_lock_button").getText();
+
+	if(text == "Daten pruefen."){
+		for(var i in fields){
+			field = sap.ui.getCore().byId(fields[i]+"_input");
+			if(field.getValue() == ""){
+				fields_filled = false;
+				var label = sap.ui.getCore().byId("Patient_lock_label");
+				label.setText("");
+
+			}
+		}
+		if(!fields_filled)
+			alert("Bitte alle Felder ausfuellen.");
+		else{
+			var button = sap.ui.getCore().byId("Patient_lock_button");
+			button.setStyle(sap.ui.commons.ButtonStyle.Accept);
+			button.setIcon("sap-icon://accept");
+			button.setText("Daten korrekt.");
+			
+			for(var i in fields){
+				field = sap.ui.getCore().byId(fields[i]+"_input");
+				field.setEnabled(false);
+			}
+			field = sap.ui.getCore().byId("Insurancenumber_input");
+			field.setEnabled(false);
+				
+		}
+		fixed = true;
+
+	} else{
+		
+		for(var i in fields){
+			field = sap.ui.getCore().byId(fields[i]+"_input");
+			field.setEnabled(true);
+		}
+		
+		field = sap.ui.getCore().byId("Insurancenumber_input");
+		field.setEnabled(true);
+		
+		var button = sap.ui.getCore().byId("Patient_lock_button");
+		button.setStyle(null);
+		button.setIcon("sap-icon://accept");
+		button.setText("Daten pruefen.");
+		fixed = false;
+
+	}			
+				
+		
+		
+	},
+	
+	create_patient: function(insnr, fields){
 		var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
 
 		var field;
-		var fields = ["Firstname", "Lastname", "Street", "Postalcode", "City", "Country"];
 		var oEntry = {
 		};	
 		
@@ -83,16 +139,13 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 						
 						}
 				
-					// Update ausführen, Daten aus TextFields übergeben
-						
-						// Übergabewerte für oModel.update Funktion
 						var oEntry = {
 						};	
-						
-						
+												
 						var oParams = {};
 					    oParams.fnSuccess = function(){ internal_dialog.close();};
 					    oParams.fnError = function(){internal_dialog.open();};	
+				
 				}
 				
 				
