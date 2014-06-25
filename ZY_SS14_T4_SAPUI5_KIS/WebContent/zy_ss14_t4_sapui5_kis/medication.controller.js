@@ -64,6 +64,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.medication", {
 		    
             oModel.create("/MEDICTN", oEntry, oParams.fnSuccess(), oParams.fnError());
 
+            var medication_table = sap.ui.getCore().byId("tblMedication");
 			medication_table.bindRows('/MEDICTN'); 
 
 		});
@@ -123,6 +124,8 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.medication", {
 				
 				//oModel.update("/MEDICTN", oEntry, null, oParams.fnSuccess(), oParams.fnError());
 				oModel.update("/MEDICTN(Mandt='001',MedicationID="+data['MedicationID']+")", oEntry, oParams);
+				
+				var medication_table = sap.ui.getCore().byId("tblMedication");
 				medication_table.bindRows('/MEDICTN'); 
 
 			});		

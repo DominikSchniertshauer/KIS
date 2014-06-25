@@ -17,8 +17,46 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.disease_plan", {
 			id : 'disease_plan_layout',
 			layoutFixed : false,
 			});
-
 		
+		var data;
+
+	   /** 
+	   * Create Buttons:
+	   */
+		var create_button = new sap.ui.commons.Button("disease_plan_create", {
+	        text : "Neuen Behandlungsplan anlegen",
+	        icon : "sap-icon://syringe",
+	        press : function() { 
+	        	oController.open_create_dialog();
+			}
+	    	
+		});
+
+		var update_button = new sap.ui.commons.Button("disease_plan_update", {
+	        text : "Existierenden Behandlungsplan aktualisieren",
+	        icon : "sap-icon://syringe",
+	        press : function() {
+	        	oController.open_update_dialog(data);
+	        }
+		});
+		
+		
+		/**
+		* Create Toolbar 
+		*/
+
+		var oToolbarDiseasePlan = new sap.ui.commons.Toolbar("tbDiseasePlan");
+		
+		oToolbarDiseasePlan.setStandalone(false);
+		oToolbarDiseasePlan.setDesign(sap.ui.commons.ToolbarDesign.Flat);	
+		oToolbarDiseasePlan.setWidth("570px");
+		
+		oToolbarDiseasePlan.addItem(create_button);
+		oToolbarDiseasePlan.addItem(update_button);
+		
+		/**
+		* Define header description
+		*/
 		var header_label = new sap.ui.commons.Label("disease_plan_header",{text: "Behandlungsplaene"});
 		header_label.setDesign(sap.ui.commons.LabelDesign.Bold);
 
@@ -27,12 +65,25 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.disease_plan", {
 		layout.createRow(header_label);
 		layout.createRow(line_divider);
 		
+		/**
+		* Place buttons to the form
+		*/
+		layout.createRow(oToolbarDiseasePlan);
 		var title = new sap.ui.commons.Title('disease_plan_title');     
 		title.setText('Liste von allen Behandlungsplaenen'); 
 		var panel = new sap.ui.commons.Panel('disease_plan_panel');  
 		panel.setTitle(title); 
 		
-		var disease_plan_table = new sap.ui.table.Table();  
+		 /**
+		 * Create table to display all available medications 
+		 */
+		var disease_plan_table = new sap.ui.table.Table({
+				selectionMode: sap.ui.table.SelectionMode.Single,
+				rowSelectionChange: function(oEvent){
+					var currentRowContext = oEvent.getParameter("rowContext").getPath();
+					var model = medication_table.getModel();
+					data = model.getProperty(currentRowContext);
+				}});  
 		disease_plan_table.addColumn(  
 		     new sap.ui.table.Column({  
 		          label: new sap.ui.commons.Label({text: "Behandlungsplan ID"}),  
@@ -55,6 +106,9 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.disease_plan", {
 			          sortProperty: "Duration"  
 			})); 
   
+		/**
+		* Fill table with data: 
+		*/
 		var oModel = new sap.ui.model.odata.ODataModel(  
 				sap.ui.getCore().byId("path").getText(), false);  
 		

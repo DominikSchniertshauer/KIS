@@ -180,7 +180,6 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 				
 				}
 				
-				
 			});
 			
 		
