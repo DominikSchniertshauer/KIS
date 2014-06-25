@@ -49,7 +49,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.disease_plan", {
 		
 		oToolbarDiseasePlan.setStandalone(false);
 		oToolbarDiseasePlan.setDesign(sap.ui.commons.ToolbarDesign.Flat);	
-		oToolbarDiseasePlan.setWidth("500px");
+		oToolbarDiseasePlan.setWidth("570px");
 		
 		oToolbarDiseasePlan.addItem(create_button);
 		oToolbarDiseasePlan.addItem(update_button);

@@ -194,13 +194,97 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.patient", {
 					internal_dialog.addContent(internal_layout);
 					
 					internal_dialog.open();
-				}
+				};
 				
 				
 			});
 			
-		}
+		};
 	},
+	
+	open_update_dialog: function(data) {
+		var patient_layout = new sap.ui.commons.layout.MatrixLayout({
+			layoutFixed : false,
+			});
+		var patient_dialog = new sap.ui.commons.Dialog();
+		var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
+
+		/**
+		* Define fields and a button to insert a disease  
+		*/
+		var firstname_label = new sap.ui.commons.Label({text: "Vorname: "});
+		var firstname_input = new sap.ui.commons.TextField({}).setValue(data['Firstname']);;
+		
+		var lastname_label = new sap.ui.commons.Label({text: "Nachname: "});
+		var lastname_input = new sap.ui.commons.TextField().setValue(data['Lastname']);;
+		
+		var insurancenumber_label = new sap.ui.commons.Label({text: "Versichertennummer: "});
+		var insurancenumber_input = new sap.ui.commons.TextField().setValue(data['Insurancenumber']);
+		
+		var postalcode_label = new sap.ui.commons.Label({text: "PLZ: "});
+		var postalcode_input = new sap.ui.commons.TextField().setValue(data['Postalcode']);
+		
+		var city_label = new sap.ui.commons.Label({text: "Stadt: "});
+		var city_input = new sap.ui.commons.TextField().setValue(data['City']);
+		
+		var street_label = new sap.ui.commons.Label({text: "Strasse: "});
+		var street_input = new sap.ui.commons.TextField().setValue(data['Street']);
+		
+		
+		var country_label = new sap.ui.commons.Label({text: "Land: "});
+		var country_input = new sap.ui.commons.TextField().setValue(data['Country']);
+		
+		var update_button = new sap.ui.commons.Button({text: "Patient aktualisieren" });
+
+		patient_dialog.setTitle("Existierenden Patienten aktualisieren");
+
+		patient_layout.createRow(firstname_label, firstname_input);
+		patient_layout.createRow(lastname_label, lastname_input);
+		patient_layout.createRow(insurancenumber_label, insurancenumber_input.setEditable(false));
+		patient_layout.createRow(street_label, street_input);
+		patient_layout.createRow(postalcode_label, postalcode_input);
+		patient_layout.createRow(city_label, city_input);
+		patient_layout.createRow(country_label, country_input);
+		patient_layout.createRow(update_button);
+		
+		update_button.attachPress(function(){
+			
+			// Übergabewerte für oModel.update Funktion
+			var oEntry = {};	
+				
+				oEntry.Mandt = '001';
+				oEntry.PatientID = data['PatientID'];
+				oEntry.Firstname = firstname_input.getValue();
+				oEntry.Lastname = lastname_input.getValue();
+				oEntry.Insurancenumber = insurancenumber_input.getValue();
+				oEntry.Postalcode = postalcode_input.getValue();
+				oEntry.City =  city_input.getValue();
+				oEntry.Street =  street_input.getValue();
+				oEntry.Country = country_input.getValue();
+				
+				
+				var oParams = {};
+			    oParams.fnSuccess = function(){ 
+			    	
+			    	patient_dialog.close(); 		
+	
+			    };
+			    oParams.fnError = function(){patient_dialog.open();};
+			       
+				
+				//oModel.update("/MEDICTN", oEntry, null, oParams.fnSuccess(), oParams.fnError());
+			    oModel.update("/PATIENT(Mandt='001',PatientID="+data['PatientID']+")", oEntry, oParams);
+				var patient_table = sap.ui.getCore().byId("tblPatient");
+				patient_table.bindRows('/PATIENT'); 
+
+			});		
+
+
+		patient_dialog.addContent(patient_layout);
+		
+		patient_dialog.open();
+	},
+
  
  
 	
