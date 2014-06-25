@@ -32,7 +32,8 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 		patient_panel.setTitle(new sap.ui.core.Title({text: "Schritt 1: Patient waehlen/ anlegen",icon : "sap-icon://wounds-doc"}));
 		
 		var conditn_panel = new sap.ui.commons.Panel("conditn_panel");
-		conditn_panel.setTitle(new sap.ui.core.Title({text: "Schritt 2: Diagnose waehlen"}));
+		conditn_panel.setTitle(new sap.ui.core.Title({text: "Schritt 2: Diagnose waehlen",				 icon : "sap-icon://electrocardiogram",
+}));
 		
 		var hospi_panel = new sap.ui.commons.Panel("hospi_panel");
 		hospi_panel.setTitle(new sap.ui.core.Title({text: "Schritt 3: Behandlungsplan waehlen"}));
@@ -45,7 +46,8 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 		
 		var insurancenumber_input = new sap.ui.commons.ComboBox("Insurancenumber_input",
 				{items: {path: "/PATIENT",
-				 template: insnr_comb_temp}});
+				 template: insnr_comb_temp,
+				 displaySecondaryValues: true}});
 	//		
 		var firstname_label = new sap.ui.commons.Label({text: "Vorname: "});
 		var firstname_input = new sap.ui.commons.TextField("Firstname_input").setValue("Test");
@@ -83,6 +85,26 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 		patient_panel_layout.createRow(country_label, country_input.setEditable(false));
 		patient_panel_layout.createRow(patient_lock_button, patient_lock_label);
 		patient_panel.addContent(patient_panel_layout);
+		
+		var conditn_panel_layout = new sap.ui.commons.layout.MatrixLayout({
+			layoutFixed : false,
+			});
+		
+		var conditn_label = new sap.ui.commons.Label({text: "Krankheit:        "});
+		var conditn_comb_temp = new sap.ui.core.ListItem({text:"{Name}", additionalText:"{Description}"});
+		
+		var conditn_input = new sap.ui.commons.ComboBox("Condition_input",
+				{items: {path: "/CONDITN",
+				 template: conditn_comb_temp,
+				 displaySecondaryValues: true}});
+		
+		
+		conditn_input.attachChange((function(){  oController.check_conditn_exists(conditn_input.getValue());}));
+		
+		
+		
+		conditn_panel_layout.createRow(conditn_label, conditn_input);
+		conditn_panel.addContent(conditn_panel_layout);
 		
 		layout.createRow(patient_panel);
 		layout.createRow(conditn_panel);

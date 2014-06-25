@@ -11,10 +11,41 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 	sap.ui.getCore().setModel(oModel);
 	},
 
+	
+	check_conditn_exists: function(name){
+		
+		var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
+
+		var field;
+		var oEntry = {
+		};	
+		
+			oModel.read("/CONDITN?$filter=Name eq '"+name+"'" ,undefined, undefined, true,
+					function(data, response){
+				
+				try{
+					if (data.results[0].ConditionID != ''){
+								
+				
+					}
+				} catch(e) {
+					alert("neu anlegen dude");
+				}
+						
+						
+					
+						var oParams = {};
+					    oParams.fnSuccess = function(){ internal_dialog.close();};
+					    oParams.fnError = function(){internal_dialog.open();};
+					       
+		
+				
+			});
+			 },
+	
 	lock_patient: function(fields){
 	var field;	
 	var fields_filled = true;
-	var fixed = false; 
 	
 	var text = sap.ui.getCore().byId("Patient_lock_button").getText();
 
@@ -87,15 +118,16 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 						field = sap.ui.getCore().byId(fields[i]+"_input");
 						field.setEditable(true);
 						
-						
 						if(fields[i] == 'Firstname'){
 							field.setValue(data.results[0].Firstname);
 //							oEntry.Firstname = field.getValue();
 						}
+						
 						if(fields[i] == 'Lastname'){
 							field.setValue(data.results[0].Lastname);
 //							oEntry.Lastname = field.getValue();
 						}
+						
 						if(fields[i] == 'Street'){
 							field.setValue(data.results[0].Street);
 //							oEntry.Street = field.getValue();
