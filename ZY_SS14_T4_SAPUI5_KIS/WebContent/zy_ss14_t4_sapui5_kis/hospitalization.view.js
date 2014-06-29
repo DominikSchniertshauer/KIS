@@ -16,9 +16,16 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 
 		var layout = new sap.ui.commons.layout.MatrixLayout({
 			id : 'hospitalization_layout',
-			layoutFixed : false,
+			layoutFixed : true,
 			});
 		
+		var left_layout = new sap.ui.commons.layout.MatrixLayout({
+			layoutFixed : false,
+			});	
+		
+		var right_layout = new sap.ui.commons.layout.MatrixLayout({
+			layoutFixed : false,
+			});
 		
 		var header_label = new sap.ui.commons.Label("hospitalization_plan_header",{text: "Aufenthalt anlegen"});
 		header_label.setDesign(sap.ui.commons.LabelDesign.Bold);
@@ -27,6 +34,10 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 	
 		layout.createRow(header_label);
 		layout.createRow(line_divider);
+		
+		
+		var panel_left = new sap.ui.commons.Panel();
+		var panel_right = new sap.ui.commons.Panel();
 		
 		var patient_panel = new sap.ui.commons.Panel("patient_panel");
 		patient_panel.setTitle(new sap.ui.core.Title({text: "Schritt 1: Patient waehlen/ anlegen",icon : "sap-icon://wounds-doc"}));
@@ -45,9 +56,10 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 		var insnr_comb_temp = new sap.ui.core.ListItem({text:"{Insurancenumber}", additionalText:"{Lastname}"});
 		
 		var insurancenumber_input = new sap.ui.commons.ComboBox("Insurancenumber_input",
-				{items: {path: "/PATIENT",
+				{displaySecondaryValues: true,
+				items: {path: "/PATIENT",
 				 template: insnr_comb_temp,
-				 displaySecondaryValues: true}});
+				 }});
 	//		
 		var firstname_label = new sap.ui.commons.Label({text: "Vorname: "});
 		var firstname_input = new sap.ui.commons.TextField("Firstname_input").setValue("Test");
@@ -85,7 +97,8 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 		patient_panel_layout.createRow(country_label, country_input.setEditable(false));
 		patient_panel_layout.createRow(patient_lock_button, patient_lock_label);
 		patient_panel.addContent(patient_panel_layout);
-		
+
+		// Choose diagnosis
 		var conditn_panel_layout = new sap.ui.commons.layout.MatrixLayout({
 			layoutFixed : false,
 			});
@@ -94,28 +107,53 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 		var conditn_comb_temp = new sap.ui.core.ListItem({text:"{Name}", additionalText:"{Description}"});
 		
 		var conditn_input = new sap.ui.commons.ComboBox("Condition_input",
-				{items: {path: "/CONDITN",
+				{displaySecondaryValues: true, 
+				items: {path: "/CONDITN",
 				 template: conditn_comb_temp,
-				 displaySecondaryValues: true}});
+				 }});
 		
-		
-		conditn_input.attachChange((function(){  oController.check_conditn_exists(conditn_input.getValue());}));
-		
-		
-		
+		var conditn_create_button = new sap.ui.commons.Button({
+	        text : "Diagnose neu anlegen",
+	        icon : "sap-icon://electrocardiogram",
+	        width : "150px",
+	        press : function() {open_create_dialog();
+			}
+	    	
+		});
+		//conditn_input.attachChange((function(){  oController.check_conditn_exists(conditn_input.getValue());}));
+
 		conditn_panel_layout.createRow(conditn_label, conditn_input);
 		conditn_panel.addContent(conditn_panel_layout);
 		
-		layout.createRow(patient_panel);
-		layout.createRow(conditn_panel);
-		layout.createRow(hospi_panel);
-		layout.createRow(bed_panel);
-
+		// Choose Treatmentplan
+		
+	
 		/** 
 	   * Create Buttons:
 	   */
 		insurancenumber_input.attachChange(null, function(){oController.create_patient(insurancenumber_input.getValue(), fields);});
 
+
+		
+		
+		
+		
+		
+		left_layout.createRow(patient_panel);
+		left_layout.createRow(conditn_panel);
+		left_layout.createRow(bed_panel);
+
+		layout.createRow(left_layout);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 	
 		var bed_patient_button = new sap.ui.commons.Button("bed_patient_instruct", {
