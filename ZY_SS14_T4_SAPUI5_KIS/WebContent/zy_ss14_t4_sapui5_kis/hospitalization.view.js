@@ -16,7 +16,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 
 		var layout = new sap.ui.commons.layout.MatrixLayout({
 			id : 'hospitalization_layout',
-			layoutFixed : true,
+			layoutFixed : false,
 			});
 		
 		var left_layout = new sap.ui.commons.layout.MatrixLayout({
@@ -46,11 +46,15 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 		conditn_panel.setTitle(new sap.ui.core.Title({text: "Schritt 2: Diagnose waehlen",				 icon : "sap-icon://electrocardiogram",
 }));
 		
-		var hospi_panel = new sap.ui.commons.Panel("hospi_panel");
-		hospi_panel.setTitle(new sap.ui.core.Title({text: "Schritt 3: Behandlungsplan waehlen"}));
+		var treat_panel = new sap.ui.commons.Panel("treat_panel");
+		treat_panel.setTitle(new sap.ui.core.Title({text: "Schritt 3: Behandlungsplan waehlen"}));
+		
+		var user_panel = new sap.ui.commons.Panel("user_panel");
+		user_panel.setTitle(new sap.ui.core.Title({text: "Schritt 4: Mitarbeiter waehlen"}));
+		
 		
 		var bed_panel = new sap.ui.commons.Panel("bed_panel");
-		bed_panel.setTitle(new sap.ui.core.Title({text: "Schritt 4: Bett waehlen"}));
+		bed_panel.setTitle(new sap.ui.core.Title({text: "Schritt 5: Bett waehlen"}));
 				
 		var insurancenumber_label = new sap.ui.commons.Label({text: "Versichertennummer: "});
 		var insnr_comb_temp = new sap.ui.core.ListItem({text:"{Insurancenumber}", additionalText:"{Lastname}"});
@@ -88,14 +92,13 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 		var patient_panel_layout = new sap.ui.commons.layout.MatrixLayout({
 			layoutFixed : false,
 			});
-		patient_panel_layout.createRow(insurancenumber_label, insurancenumber_input);
+		patient_panel_layout.createRow(insurancenumber_label, insurancenumber_input, patient_lock_button);
 		patient_panel_layout.createRow(firstname_label, firstname_input.setEditable(false));
 		patient_panel_layout.createRow(lastname_label, lastname_input.setEditable(false));
 		patient_panel_layout.createRow(street_label, street_input.setEditable(false));
 		patient_panel_layout.createRow(postalcode_label, postalcode_input.setEditable(false));
 		patient_panel_layout.createRow(city_label, city_input.setEditable(false));
 		patient_panel_layout.createRow(country_label, country_input.setEditable(false));
-		patient_panel_layout.createRow(patient_lock_button, patient_lock_label);
 		patient_panel.addContent(patient_panel_layout);
 
 		// Choose diagnosis
@@ -126,8 +129,131 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 		conditn_panel.addContent(conditn_panel_layout);
 		
 		// Choose Treatmentplan
+		var treat_panel_layout = new sap.ui.commons.layout.MatrixLayout({
+			layoutFixed : false,
+			});
 		
-	
+		var treat_label = new sap.ui.commons.Label({text: "Behandlungsplan:        "});
+		var treat_comb_temp = new sap.ui.core.ListItem({text:"{Name}", key:"{TreatPlanID}", additionalText:"{Duration}"});
+		
+		var treat_input = new sap.ui.commons.ComboBox("Treatment_input",
+				{displaySecondaryValues: true, 
+				items: {path: "/TREATPL",
+				 template: treat_comb_temp,
+				 }});
+
+		var treat_create_button = new sap.ui.commons.Button({
+	        text : "Plan anlegen",
+	        icon : "sap-icon://clinical-order",
+//	        width : "200px",
+	        press : function() {oController.create_treat();
+			}
+	    	
+		});
+		
+		treat_panel_layout.createRow(treat_label, treat_input, treat_create_button);
+//		treat_panel_layout.createRow(treat_create_button);
+		treat_panel.addContent(treat_panel_layout);
+		
+		// Mapping to users (nurses and doctors)
+		
+		var user_panel_layout = new sap.ui.commons.layout.MatrixLayout({
+			height: "200px",
+			layoutFixed : true,
+			});
+		
+		var user_panel_layout_top = new sap.ui.commons.layout.MatrixLayout({
+			layoutFixed : false,
+			});
+		
+		var user_label = new sap.ui.commons.Label({text: "Zustaendig:        "});
+		var user_comb_temp = new sap.ui.core.ListItem({text:"{Username}", key:"{UserID}", additionalText:"{Lastname}"});
+		
+		var user_input = new sap.ui.commons.ComboBox("User_input",
+				{displaySecondaryValues: true, 
+				items: {path: "/USER",
+				 template: user_comb_temp,
+				 }});
+
+		var user_add_button = new sap.ui.commons.Button({
+	        text : "Plan anlegen",
+	        icon : "sap-icon://clinical-order",
+//	        width : "200px",
+	        press : function() {oController.add_user(user_input);
+			}
+	    	
+		});
+		
+		var user_temp_table = new sap.ui.table.Table("user_temp_table",{ 
+			selectionMode: sap.ui.table.SelectionMode.Single,
+			width: "450px",
+			height: "150px",
+			rowSelectionChange: function(oEvent){
+				var currentRowContext = oEvent.getParameter("rowContext").getPath();
+				var model = user_temp_table.getModel();
+				data = model.getProperty(currentRowContext);
+			}
+		});
+		
+		user_temp_table.addColumn(  
+		new sap.ui.table.Column({  
+		label: new sap.ui.commons.Label({text: "Username:"}),  
+		template: new sap.ui.commons.TextField().bindProperty("value", "Username"),  
+		sortProperty: "Username", 
+		}));  
+
+		user_temp_table.addColumn(  
+		new sap.ui.table.Column({  
+		label: new sap.ui.commons.Label({text: "Vorname:"}),  
+		template: new sap.ui.commons.TextField().bindProperty("value", "Firstname"),  
+		sortProperty: "Firstname",
+		
+		}));  
+		
+		user_temp_table.addColumn(  
+		new sap.ui.table.Column({  
+		  label: new sap.ui.commons.Label({text: "Nachname"}),  
+		  template: new sap.ui.commons.TextField().bindProperty("value", "Lastname"),  
+		  sortProperty: "Lastname",
+		 
+		}));  
+		
+		
+		
+		
+		user_panel_layout_top.createRow(user_label, user_input, user_add_button);
+		user_panel_layout.createRow(user_panel_layout_top);
+		user_panel_layout.createRow(user_temp_table);
+		user_panel.addContent(user_panel_layout);
+		
+		
+		var aData = []; 
+		
+		/**
+		*  Set Data model for temp table
+		*/
+		var oModel = new sap.ui.model.json.JSONModel();
+		oModel.setData({modelData: aData});
+		user_temp_table.setModel(oModel);
+		user_temp_table.bindRows("/modelData");
+		
+		
+		
+		// Bed functionalities
+		var bed_panel_layout = new sap.ui.commons.layout.MatrixLayout({
+			layoutFixed : false,
+			});
+		var bed_label = new sap.ui.commons.Label({text: "Bett:        "});
+		var bed_comb_temp = new sap.ui.core.ListItem({text:"{BedID}", key:"{BedID}", additionalText:"{RoomID}"});
+		
+		var bed_input = new sap.ui.commons.ComboBox("Bed_input",
+				{displaySecondaryValues: true, 
+				items: {path: "/BED?$filter=Istaken eq 'FALSE'",
+				 template: bed_comb_temp,
+				 }});
+		bed_panel_layout.createRow(bed_label, bed_input);
+		bed_panel.addContent(bed_panel_layout);
+		
 		/** 
 	   * Create Buttons:
 	   */
@@ -141,9 +267,11 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 		
 		left_layout.createRow(patient_panel);
 		left_layout.createRow(conditn_panel);
+		left_layout.createRow(treat_panel);
+		left_layout.createRow(user_panel);
 		left_layout.createRow(bed_panel);
 
-		layout.createRow(left_layout);
+		layout.createRow(left_layout, right_layout);
 		
 		
 		
