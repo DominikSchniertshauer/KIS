@@ -32,13 +32,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.disease_plan", {
 	    	
 		});
 
-		var update_button = new sap.ui.commons.Button("disease_plan_update", {
-	        text : "Existierenden Behandlungsplan aktualisieren",
-	        icon : "sap-icon://syringe",
-	        press : function() {
-	        	oController.open_update_dialog(data);
-	        }
-		});
+
 		
 		
 		/**
@@ -52,7 +46,6 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.disease_plan", {
 		oToolbarDiseasePlan.setWidth("570px");
 		
 		oToolbarDiseasePlan.addItem(create_button);
-		oToolbarDiseasePlan.addItem(update_button);
 		
 		/**
 		* Define header description
@@ -74,15 +67,29 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.disease_plan", {
 		var panel = new sap.ui.commons.Panel('disease_plan_panel');  
 		panel.setTitle(title); 
 		
+		var titleMedi = new sap.ui.commons.Title('disease_medi_plan_title');     
+		titleMedi.setText('Liste von allen zu einem Behandlungsplan zugeordneteten Medikamenten'); 
+		var panelMedi = new sap.ui.commons.Panel('disease_medi_plan_panel');  
+		panelMedi.setTitle(titleMedi); 
+		
 		 /**
 		 * Create table to display all available medications 
 		 */
-		var disease_plan_table = new sap.ui.table.Table({
+		var disease_plan_table = new sap.ui.table.Table("tblDiseasePlan", {
 				selectionMode: sap.ui.table.SelectionMode.Single,
 				rowSelectionChange: function(oEvent){
 					var currentRowContext = oEvent.getParameter("rowContext").getPath();
-					var model = medication_table.getModel();
+					var model = disease_plan_table.getModel();
 					data = model.getProperty(currentRowContext);
+					
+					
+					var oModel = new sap.ui.model.odata.ODataModel(  
+							sap.ui.getCore().byId("path").getText(), false);  
+					
+					disease_plan_medi_table.setModel(oModel);  
+					disease_plan_medi_table.bindRows("/TREMD?$filter=TreatPlanID eq "+data['TreatPlanID']+" "); 
+					
+					
 				}});  
 		disease_plan_table.addColumn(  
 		     new sap.ui.table.Column({  
@@ -106,6 +113,30 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.disease_plan", {
 			          sortProperty: "Duration"  
 			})); 
   
+		
+		 /**
+		 * Create table to display all available treatment
+		 */
+		var disease_plan_medi_table = new sap.ui.table.Table();  
+		disease_plan_medi_table.addColumn(  
+		     new sap.ui.table.Column({  
+		          label: new sap.ui.commons.Label({text: "Medikament"}),  
+		          template: new sap.ui.commons.TextField().bindProperty("value", "MedicationName"),  
+		          sortProperty: "MedicationName"  
+		}));  
+		
+		disease_plan_medi_table.addColumn(  
+			     new sap.ui.table.Column({  
+			          label: new sap.ui.commons.Label({text: "Beschreibung"}),  
+			          template: new sap.ui.commons.TextField().bindProperty("value", "Description"),  
+			          sortProperty: "Description"  
+			})); 
+		disease_plan_medi_table.addColumn(  
+			     new sap.ui.table.Column({  
+			          label: new sap.ui.commons.Label({text: "Verabreichungsinterval (Stunden)"}),  
+			          template: new sap.ui.commons.TextField().bindProperty("value", "AdministrationInterval"),  
+			          sortProperty: "AdministrationInterval"  
+			})); 
 		/**
 		* Fill table with data: 
 		*/
@@ -115,8 +146,12 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.disease_plan", {
 		disease_plan_table.setModel(oModel);  
 		disease_plan_table.bindRows('/TREATPL');  
 		
-		panel.addContent(disease_plan_table);    
+
+		
+		panel.addContent(disease_plan_table);  
+		panelMedi.addContent(disease_plan_medi_table);
 		layout.createRow(panel);  
+		layout.createRow(panelMedi);
 		
 		return layout;  
 	}
