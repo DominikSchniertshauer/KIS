@@ -11,13 +11,78 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 	sap.ui.getCore().setModel(oModel);
 	},
 
+	create_hospi: function(patient, conditn_input, treat_input, user_temp_table, bed_input){
+		
+		// Setup patients to use them successfully in hospitalization
+		
+		var insnr = patient.Insurancenumber;
+		alert(insnr);
+		var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
+
+		oModel.read("/PATIENT?$filter=Insurancenumber eq '"+insnr+"'" ,undefined, undefined, true,
+				function(data, response){
+			
+			try {
+				if(data.results[0].PatientID != ""){
+					var oEntry = {
+					};	
+					
+					oEntry.Mandt = '001';
+					oEntry.PatientID = data.results[0].PatientID;
+					oEntry.Firstname = patient.Firstname;
+					oEntry.Lastname = patient.Lastname;
+					oEntry.Insurancenumber = patient.Insurancenumber;
+					oEntry.Postalcode = patient.Postalcode;
+					oEntry.City =  patient.City;
+					oEntry.Street =  patient.Street;
+					oEntry.Country = patient.Country;
+					
+					var oParams = {};
+				    oParams.fnSuccess = function(){ };
+				    oParams.fnError = function(){};
+				       
+					
+					oModel.update("/PATIENT(Mandt='001',PatientID="+data.results[0].PatientID+")", oEntry, oParams);
+				}
+				
+				
+			} catch(e) {
+				
+				var oEntry = {
+				};	
+				
+				oEntry.Mandt = '001';
+				oEntry.PatientID = 1;
+				oEntry.Firstname = patient.Firstname;
+				oEntry.Lastname = patient.Lastname;
+				oEntry.Insurancenumber = patient.Insurancenumber;
+				oEntry.Postalcode = patient.Postalcode;
+				oEntry.City =  patient.City;
+				oEntry.Street =  patient.Street;
+				oEntry.Country = patient.Country;
+				
+				var oParams = {};
+			    oParams.fnSuccess = function(){ };
+			    oParams.fnError = function(){};
+			       
+				
+				oModel.create("/PATIENT", oEntry, oParams);
 	
-	add_user: function(user_input){
+			}
+			
+			
+			
+		});
+		
+		
+	},
+	
+	
+	add_user: function(user_input, aData){
 	
 		
 		// Filtern nach Versichertennummer
 		var user_temp_table = sap.ui.getCore().byId("user_temp_table");
-		var aData = []; 
 
 		var oModel2 = new sap.ui.model.json.JSONModel();
 		oModel2.setData({modelData: aData});
@@ -344,7 +409,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 			});
 			 },
 	
-	lock_patient: function(fields){
+	lock_patient: function(fields, patient){
 	var field;	
 	var fields_filled = true;
 	
@@ -374,7 +439,15 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 			}
 			field = sap.ui.getCore().byId("Insurancenumber_input");
 			field.setEnabled(false);
-				
+			
+			patient.Firstname = sap.ui.getCore().byId(fields[0]+"_input").getValue();
+			patient.Lastname = sap.ui.getCore().byId(fields[1]+"_input").getValue();
+			patient.Street = sap.ui.getCore().byId(fields[2]+"_input").getValue();
+			patient.Postalcode = sap.ui.getCore().byId(fields[3]+"_input").getValue();
+			patient.City = sap.ui.getCore().byId(fields[4]+"_input").getValue();
+			patient.Country = sap.ui.getCore().byId(fields[5]+"_input").getValue();
+			patient.Insurancenumber = sap.ui.getCore().byId("Insurancenumber_input").getValue();
+
 		}
 		fixed = true;
 

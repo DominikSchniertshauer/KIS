@@ -84,9 +84,17 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 		var country_input = new sap.ui.commons.TextField("Country_input");
 		
 		var fields = ["Firstname", "Lastname", "Street", "Postalcode", "City", "Country"];
-
 		
-		var patient_lock_button = new sap.ui.commons.Button("Patient_lock_button", {text: "Daten pruefen."}).attachPress(function(){oController.lock_patient(fields);});
+		var patient = []; 
+		patient.Firstname = "";
+		patient.Lastname = "";
+		patient.Street = "";
+		patient.Postalcode = "";
+		patient.City = "";
+		patient.Country = "";
+		
+		
+		var patient_lock_button = new sap.ui.commons.Button("Patient_lock_button", {text: "Daten pruefen."}).attachPress(function(){oController.lock_patient(fields, patient);});
 		var patient_lock_label = new sap.ui.commons.Label("Patient_lock_label", {text: ""});
 
 		var patient_panel_layout = new sap.ui.commons.layout.MatrixLayout({
@@ -174,12 +182,13 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 				items: {path: "/USER",
 				 template: user_comb_temp,
 				 }});
+		var aData = []; 
 
 		var user_add_button = new sap.ui.commons.Button({
 	        text : "Plan anlegen",
 	        icon : "sap-icon://clinical-order",
 //	        width : "200px",
-	        press : function() {oController.add_user(user_input);
+	        press : function() {oController.add_user(user_input, aData);
 			}
 	    	
 		});
@@ -252,8 +261,20 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 				 template: bed_comb_temp,
 				 }});
 		bed_panel_layout.createRow(bed_label, bed_input);
-		bed_panel.addContent(bed_panel_layout);
 		
+		
+		
+		var hospi_create_button = new sap.ui.commons.Button({
+	        text : "Patient einweisen",
+	        icon : "sap-icon://clinical-order",
+//	        width : "200px",
+	        press : function() {oController.create_hospi(patient, conditn_input, treat_input, user_temp_table, bed_input);
+			}
+	    	
+		});
+		bed_panel_layout.createRow(hospi_create_button);
+		bed_panel.addContent(bed_panel_layout);
+
 		/** 
 	   * Create Buttons:
 	   */
