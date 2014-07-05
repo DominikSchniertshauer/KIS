@@ -11,14 +11,16 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 	sap.ui.getCore().setModel(oModel);
 	},
 
-	create_hospi: function(patient, conditn_input, treat_input, user_temp_table, bed_input){
+	create_hospi: function(patient, conditn_input, treat_input, treat_begin_date, user_temp_table, bed_input, hospi_begin_date, hospi_end_date, aData){
 		
 		// Setup patients to use them successfully in hospitalization
+		var patientid;
 		
 		var insnr = patient.Insurancenumber;
 		alert(insnr);
 		var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
 
+		
 		oModel.read("/PATIENT?$filter=Insurancenumber eq '"+insnr+"'" ,undefined, undefined, true,
 				function(data, response){
 			
@@ -29,6 +31,9 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 					
 					oEntry.Mandt = '001';
 					oEntry.PatientID = data.results[0].PatientID;
+					
+					patientid = data.results[0].PatientID;
+					
 					oEntry.Firstname = patient.Firstname;
 					oEntry.Lastname = patient.Lastname;
 					oEntry.Insurancenumber = patient.Insurancenumber;
@@ -62,16 +67,74 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 				oEntry.Country = patient.Country;
 				
 				var oParams = {};
-			    oParams.fnSuccess = function(){ };
+			    oParams.fnSuccess = function(data, response){
+			    	patientid = data['PatientID'];
+			    };
 			    oParams.fnError = function(){};
 			       
 				
 				oModel.create("/PATIENT", oEntry, oParams);
 	
 			}
+		
+			var hospi_entry = {
+			};
+			
+			hospi_entry.Mandt = '001';
+			hospi_entry.HospitaliznID = 1;
+			hospi_entry.TreatPlanID = treat_input.getSelectedKey();
+			hospi_entry.PatientID = patientid;
+			hospi_entry.BedID = bed_input.getValue();
+			hospi_entry.DateBegin = new Date(hospi_begin_date.getValue());
+			hospi_entry.DateEnd = new Date(hospi_end_date.getValue());
+			hospi_entry.StartOfTreatmentPlan = new Date(treat_begin_date.getValue());
+			hospi_entry.TreatmentRating = 0;
+			
+			var oParams = {};
+			oParams.fnSuccess = function(data, response){
+				alert("yea");
+				var patcon_entry = {
+				};	
+				
+				var patcon_params = {};
+				
+				patcon_params.fnSucess = function(data, response){
+						
+					
+					while (aData.length > 0) {
+						var hosuse_entry = {
+						};
+						var getTblData = aData.pop();
+						
+						
+						hosuse_entry.Mandt = '001';
+						hosuse_entry.HospitaliznID = data['HospitaliznID'];
+						hosuse_entry.UserID =  getTblData['UserID'];
+						
+						var oModel2 = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
+
+						oModel2.create("/HOSUSE", hosuse_entry);
+				
+					}
+					
+					
+
+				};
+				
+				patcon_entry.Mandt = '001';
+				patcon_entry.HospitaliznID = data['HospitaliznID'];
+				patcon_entry.ConditionID = conditn_input.getValue();
+				
+				var oModel3 = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
+				oModel3.create("/PATCON", patcon_entry, patcon_params);
+				
+		    };
+		    
+			oModel.create("/HOSPTZN", hospi_entry, oParams);
 			
 			
-			
+		
+
 		});
 		
 		

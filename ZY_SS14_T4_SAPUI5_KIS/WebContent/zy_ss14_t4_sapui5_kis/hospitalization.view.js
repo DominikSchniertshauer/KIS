@@ -159,7 +159,16 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 	    	
 		});
 		
+		var treat_begin_label = new sap.ui.commons.Label({text: "Beginn Behandlungsplan:        "});
+
+		
+		var treat_begin_date = new sap.ui.commons.DatePicker('Treat_begin');
+		treat_begin_date.setYyyymmdd("20140101");
+		treat_begin_date.setLocale("en-US");
+		
 		treat_panel_layout.createRow(treat_label, treat_input, treat_create_button);
+		treat_panel_layout.createRow(treat_begin_label, treat_begin_date);
+		
 //		treat_panel_layout.createRow(treat_create_button);
 		treat_panel.addContent(treat_panel_layout);
 		
@@ -203,6 +212,14 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 				data = model.getProperty(currentRowContext);
 			}
 		});
+		
+//		user_temp_table.addColumn(  
+//				new sap.ui.table.Column({  
+//				label: new sap.ui.commons.Label({text: "UserID:"}),  
+//				template: new sap.ui.commons.TextField().bindProperty("value", "UserID"),  
+//				sortProperty: "UserID", 
+//				}));  
+
 		
 		user_temp_table.addColumn(  
 		new sap.ui.table.Column({  
@@ -268,10 +285,26 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 	        text : "Patient einweisen",
 	        icon : "sap-icon://clinical-order",
 //	        width : "200px",
-	        press : function() {oController.create_hospi(patient, conditn_input, treat_input, user_temp_table, bed_input);
+	        press : function() {oController.create_hospi(patient, conditn_input, treat_input, treat_begin_date, user_temp_table, bed_input, hospi_begin_date, hospi_end_date, aData);
 			}
 	    	
 		});
+		
+		var hospi_end_label = new sap.ui.commons.Label({text: "Beginn Einweisung:        "});
+		var hospi_begin_label = new sap.ui.commons.Label({text: "Ende Einweisung:        "});
+
+		
+		var hospi_begin_date = new sap.ui.commons.DatePicker('Hospi_begin');
+		hospi_begin_date.setYyyymmdd("20140101");
+		hospi_begin_date.setLocale("en-US");
+				
+		var hospi_end_date = new sap.ui.commons.DatePicker('Hospi_end');
+		hospi_end_date.setYyyymmdd("20140101");
+		hospi_end_date.setLocale("en-US");
+		
+		bed_panel_layout.createRow(hospi_begin_label, hospi_begin_date);
+		bed_panel_layout.createRow(hospi_end_label, hospi_end_date);
+
 		bed_panel_layout.createRow(hospi_create_button);
 		bed_panel.addContent(bed_panel_layout);
 
