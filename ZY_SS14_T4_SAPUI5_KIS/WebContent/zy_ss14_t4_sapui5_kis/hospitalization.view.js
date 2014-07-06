@@ -115,7 +115,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 			});
 		
 		var conditn_label = new sap.ui.commons.Label({text: "Krankheit:        "});
-		var conditn_comb_temp = new sap.ui.core.ListItem({text:"{Name}", additionalText:"{Description}"});
+		var conditn_comb_temp = new sap.ui.core.ListItem({text:"{Name}", key:"{ConditionID}", additionalText:"{Description}"});
 		
 		var conditn_input = new sap.ui.commons.ComboBox("Condition_input",
 				{displaySecondaryValues: true, 

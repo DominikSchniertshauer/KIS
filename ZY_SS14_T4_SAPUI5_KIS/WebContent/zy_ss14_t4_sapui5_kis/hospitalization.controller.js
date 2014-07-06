@@ -43,7 +43,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 					oEntry.Country = patient.Country;
 					
 					var oParams = {};
-				    oParams.fnSuccess = function(){ };
+				    oParams.fnSuccess = function(){};
 				    oParams.fnError = function(){};
 				       
 					
@@ -69,6 +69,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 				var oParams = {};
 			    oParams.fnSuccess = function(data, response){
 			    	patientid = data['PatientID'];
+			    	alert(patientid);
 			    };
 			    oParams.fnError = function(){};
 			       
@@ -91,14 +92,18 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 			hospi_entry.TreatmentRating = 0;
 			
 			var oParams = {};
-			oParams.fnSuccess = function(data, response){
-				alert("yea");
+			
+			oParams.success = function(data, response){
+				var hospitaliznID = data['HospitaliznID'];
+				alert(hospitaliznID);
+				
+				
 				var patcon_entry = {
 				};	
 				
 				var patcon_params = {};
 				
-				patcon_params.fnSucess = function(data, response){
+				patcon_params.success = function(data, response){
 						
 					
 					while (aData.length > 0) {
@@ -108,7 +113,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 						
 						
 						hosuse_entry.Mandt = '001';
-						hosuse_entry.HospitaliznID = data['HospitaliznID'];
+						hosuse_entry.HospitaliznID = hospitaliznID;
 						hosuse_entry.UserID =  getTblData['UserID'];
 						
 						var oModel2 = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
@@ -120,16 +125,23 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 					
 
 				};
+				patcon_params.error = function(){
+					alert("fuckyou");
+				};
 				
 				patcon_entry.Mandt = '001';
 				patcon_entry.HospitaliznID = data['HospitaliznID'];
-				patcon_entry.ConditionID = conditn_input.getValue();
+				patcon_entry.ConditionID = conditn_input.getSelectedKey();
 				
 				var oModel3 = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
 				oModel3.create("/PATCON", patcon_entry, patcon_params);
 				
 		    };
 		    
+		    oParams.error  = function(){
+				alert("asdasd");
+			};
+
 			oModel.create("/HOSPTZN", hospi_entry, oParams);
 			
 			
