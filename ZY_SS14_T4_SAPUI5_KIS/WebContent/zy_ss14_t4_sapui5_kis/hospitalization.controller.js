@@ -126,7 +126,6 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 
 				};
 				patcon_params.error = function(){
-					alert("fuckyou");
 				};
 				
 				patcon_entry.Mandt = '001';
