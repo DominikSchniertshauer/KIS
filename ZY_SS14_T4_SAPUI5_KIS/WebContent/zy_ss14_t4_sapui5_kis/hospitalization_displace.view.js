@@ -56,7 +56,9 @@
 		
 		
 		var fields = ["Fname", "Lname"];
-		insurancenumber_input.attachChange(null, function(){ patientID = oController.get_patient(insurancenumber_input.getValue(), fields);});
+		insurancenumber_input.attachChange(null, function(){ 
+			var patientID = oController.get_patient(insurancenumber_input.getValue(), fields);
+			alert(patientID);});
 		
 		var firstname_label = new sap.ui.commons.Label({text: "Vorname: "});
 		var firstname_input = new sap.ui.commons.TextField("Fname_input").setValue("Test");
