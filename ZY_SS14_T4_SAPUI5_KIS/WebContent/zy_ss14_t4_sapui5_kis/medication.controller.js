@@ -55,10 +55,13 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.medication", {
 		    	
 		    	medication_dialog.close(); 		
 		    	
-
-		    
 		    };
-		    oParams.fnError = function(){medication_dialog.open();};
+		    oParams.fnError = function(data, response){
+		    	
+		    	sap.ui.commons.MessageBox.alert(response);
+
+		    	medication_dialog.open()
+		    	;};
 		       
 			
 		    
