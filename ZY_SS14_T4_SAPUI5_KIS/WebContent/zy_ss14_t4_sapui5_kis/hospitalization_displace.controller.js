@@ -51,7 +51,6 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization_displace", {
 				try {
 					if (data.results[0].PatientID != ''){
 						
-					
 						for(var i in fields){
 							field = sap.ui.getCore().byId(fields[i]+"_input");
 							field.setEditable(false);
@@ -68,7 +67,8 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization_displace", {
 							
 						
 						}
-						tmpPatientID = data.results[0].Lastname;
+						tmpPatientID = data.results[0].PatientID;
+						alert(tmpPatientID);
 					}
 					
 				} catch(e) {
