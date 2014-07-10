@@ -43,21 +43,74 @@
         var patient_displace_panel = new sap.ui.commons.Panel("patient_displace_panel");
         patient_displace_panel.setTitle(new sap.ui.core.Title({text: "Patient auswaehlen und entlassen",icon : "sap-icon://wounds-doc"}));    
         
+		var aData = []; 
+		
+		/**
+		 *  Set Data model for temp table
+		 */
+		var oModelInsNr = new sap.ui.model.json.JSONModel();
+		oModelInsNr.setData({modelData: aData});
+        
+		sap.ui.getCore().setModel(oModelInsNr);
+        var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
+		oModel.refreshSecurityToken(null, null);
+        
+        oModel.read("/HOSPTZN?$filter=DateEnd eq datetime'0000-00-00T00:00'" , null, null, true,
+				function(data, response){
+        			
+        			for (var i=0; i < data.results.length; i++) {
+        				
+        				var oEntry = {	
+        				};
+        				oEntry.HospitaliznID = data.results[i].HospitaliznID;
+        				oEntry.TreatPlanID = data.results[i].TreatPlanID;
+        				oEntry.PatientID = data.results[i].PatientID;
+        				oEntry.BedID = data.results[i].BedID;
+        				oEntry.DateBegin = data.results[i].DateBegin;
+        				oEntry.StartOfTreatmentPlan = data.results[i].StartOfTreatmentPlan;
+        				oEntry.TreatmentRating = data.results[i].TreatmentRating;
+        				
+        				 var oModel2 = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
+        					oModel2.refreshSecurityToken(null, null);
+        
+        			        oModel2.read("/PATIENT(Mandt='001',PatientID="+data.results[i].PatientID+")" , null, null, true,
+        							function(data2, response){
+        			        	
+        						var test = {
+        								"Insurancenumber": data2['Insurancenumber'],
+        								"Firstname": data2['Firstname'],
+        								"Lastname": data2['Lastname'],
+        								"HospitalizationID": oEntry.HospitaliznID,
+        								"TreatPlanID": oEntry.TreatPlanID,
+        								"PatientID": oEntry.PatientID, 
+        								"BedID" : oEntry.BedID,
+        								"DateBegin" : oEntry.DateBegin,
+        								"StartOfTreatmentPlan": oEntry.StartOfTreatmentPlan,
+        								"TreatmentRating": oEntry.TreatmentRating,
+        						};
+        						
+        						aData.push(test);
+        						
+        			        });
+        			};
+        				
+        });
+        
+        
         var insurancenumber_label = new sap.ui.commons.Label({text: "Versichertennummer: "});
-        var insnr_comb_temp = new sap.ui.core.ListItem({text:"{HospitaliznID}", additionalText:"{DateBegin}"});
+        var insnr_comb_temp = new sap.ui.core.ListItem({text:"{Insurancenumber}",  key:"{HospitalizationID}", additionalText:"{Lastname}"});
         
-        var insurancenumber_input = new sap.ui.commons.ComboBox("Insurnumber_input",
-                {displaySecondaryValues: true,
-                items: {path: "/HOSPTZN$filter=DateEnd eq datetime'0000-00-00T00:00'",
-                 template: insnr_comb_temp,
-                }});
+        var insurancenumber_input = new sap.ui.commons.ComboBox("Insurnumber_input", {displaySecondaryValues:true});
+        insurancenumber_input.bindItems("/modelData", insnr_comb_temp);
         
         
+        
+
         
         
         var fields = ["Fname", "Lname"];
         insurancenumber_input.attachChange(null, function(){ 
-            var patientID = oController.get_patient(insurancenumber_input.getValue(), fields);
+            oController.get_patient(insurancenumber_input.getValue(), fields);
            });
         
         var firstname_label = new sap.ui.commons.Label({text: "Vorname: "});
@@ -76,8 +129,8 @@
             text : "Patient entlassen",
             icon : "sap-icon://accept",
 //            width : "200px",
-            press : function() {oController.displace_patient(window.tmpPatientID);
-            }
+            press : function() {oController.displace_patient(insurancenumber_input.getSelectedKey(), aData);
+            },
             
         });
         

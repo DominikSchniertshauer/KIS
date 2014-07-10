@@ -87,6 +87,9 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.index", {
 		layout.createRow(line_divider, line_divider3);
 
 		layout.createRow(left_layout, right_layout);
+		
+		
+		
 	    //Attach the panel to the page
 	   // layout.createRow(index_panel);
 	    

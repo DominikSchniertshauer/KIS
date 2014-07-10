@@ -105,7 +105,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.disease_plan", {
 		 *  Set Data model for temp table
 		 */
 		var oModel = new sap.ui.model.json.JSONModel();
-		oModel.setData({modelData: aData});
+		oModel.setData({selec: aData});
 		medication_temp_table.setModel(oModel);
 		medication_temp_table.bindRows("/modelData");
 		
@@ -184,6 +184,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.disease_plan", {
 			oModel.refreshSecurityToken(null, null);
 			
 			// Filtern nach Versichertennummer
+			
 			
 			oModel.read("/MEDICTN(Mandt='001',MedicationID="+medication_input.getSelectedKey()+")" , null, null, true,
 					function(data, response){

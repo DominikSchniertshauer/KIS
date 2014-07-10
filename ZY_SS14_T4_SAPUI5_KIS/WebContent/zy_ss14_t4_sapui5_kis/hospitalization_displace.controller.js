@@ -80,11 +80,45 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization_displace", {
         }
     },
     
-    displace_patient : function (patientID) {
+    displace_patient : function (hospitalizationID, tmpaData) {
         
-    	if (patientID != '') {
-    		var date = new Date();
-    		alert();
+    	if (hospitalizationID != '') {
+			// Übergabewerte für oModel.update Funktion
+			var oEntry = {
+			};	
+			alert("hallo");
+			var getEntry = tmpaData.pop();
+			while (getEntry.HospitalizationID != hospitalizationID) {
+				getEntry=tmpaData.pop();
+			}
+			
+			alert(getEntry.PatientID);
+			
+			var Jetzt = new Date();
+			oEntry.Mandt = '001';
+			oEntry.HospitaliznID = hospitalizationID;
+			oEntry.TreatPlanID = getEntry.TreatPlanID;
+			oEntry.PatientID = getEntry.PatientID;
+			oEntry.BedID = getEntry.BedID;
+			oEntry.DateBegin = getEntry.DateBegin;
+			oEntry.StartOfTreatmentPlan = getEntry.StartOfTreatmentPlan;
+			oEntry.TreatmentRating = getEntry.TreatmentRating;
+			
+			oEntry.DateEnd = Jetzt.getFullYear()+"-"+Jetzt.getMonth()+"-"+Jetzt.getDay+"T"+Jetzt.getHours()+":"+Jetzt.getMinutes();
+			
+			alert(Date());
+			alert(oEntry.DateEnd);
+
+			
+			
+			
+			var oParams = {};
+		    oParams.fnSuccess = function(){ alert("ok")};
+		    oParams.fnError = function(){ alert("error")};
+		       
+	        var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
+			oModel.refreshSecurityToken(null, null);
+			oModel.update("/HOSPTZN(Mandt='001',HospitaliznID="+hospitalizationID+")", oEntry, oParams);
     		
     	}
     	
