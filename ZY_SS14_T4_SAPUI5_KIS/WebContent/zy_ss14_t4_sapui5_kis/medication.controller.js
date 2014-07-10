@@ -51,21 +51,27 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.medication", {
 			
 			
 			var oParams = {};
-		    oParams.fnSuccess = function(){ 
+		    oParams.success = function(){ 
 		    	
 		    	medication_dialog.close(); 		
 		    	
 		    };
-		    oParams.fnError = function(data, response){
-		    	
-		    	sap.ui.commons.MessageBox.alert(response);
+		    oParams.error = function(error){ 
 
-		    	medication_dialog.open()
-		    	;};
-		       
+		    	var message = error.response.body;
+		    	var messages = "Es sind Fehler aufgetreten: \n";
+		    	
+		    	$('errordetail', message).each(function(i){
+		    		messages = $(this).find("message").text() + "\n";
+		    	});
+		    
+		    	sap.ui.commons.MessageBox.alert(messages);
+		    	
+//		    	medication_dialog.open()		    	
+		    };  
 			
 		    
-            oModel.create("/MEDICTN", oEntry, oParams.fnSuccess(), oParams.fnError());
+            oModel.create("/MEDICTN", oEntry, oParams);
 
             var medication_table = sap.ui.getCore().byId("tblMedication");
 			medication_table.bindRows('/MEDICTN'); 

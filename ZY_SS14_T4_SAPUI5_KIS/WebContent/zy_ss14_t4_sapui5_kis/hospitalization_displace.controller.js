@@ -39,17 +39,18 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization_displace", {
 		var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
 
 		var field;
+		var tmpPatientID = null;
 		var oEntry = {
 		};	
 		
 		if(insnr.length == 10){
-			
+		
 			oModel.read("/PATIENT?$filter=Insurancenumber eq '"+insnr+"'" ,undefined, undefined, true,
 					function(data, response){
 			
 				try {
 					if (data.results[0].PatientID != ''){
-
+						
 						for(var i in fields){
 							field = sap.ui.getCore().byId(fields[i]+"_input");
 							field.setEditable(false);
@@ -64,20 +65,19 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization_displace", {
 //								oEntry.Lastname = field.getValue();
 							}
 							
-							oView.patientID = data.results[0].patient_id;
+						
 						}
-
 						tmpPatientID = data.results[0].PatientID;
-						alert(tmpPatientID);
-
 					}
 					
 				} catch(e) {
 					
 				};
 				
-			
+				
 			});
+			
+			return tmpPatientID;
 		}
 	},
 	
