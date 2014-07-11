@@ -65,22 +65,22 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 				 template: insnr_comb_temp,
 				 }});
 	//		
-		var firstname_label = new sap.ui.commons.Label({text: "Vorname: "});
+		var firstname_label = new sap.ui.commons.Label({text: "Vorname: ", width: "150px"});
 		var firstname_input = new sap.ui.commons.TextField("Firstname_input").setValue("Test");
 		
-		var lastname_label = new sap.ui.commons.Label({text: "Nachname: "});
+		var lastname_label = new sap.ui.commons.Label({text: "Nachname: ", width: "150px"});
 		var lastname_input = new sap.ui.commons.TextField("Lastname_input");
 	
-		var postalcode_label = new sap.ui.commons.Label({text: "PLZ: "});
+		var postalcode_label = new sap.ui.commons.Label({text: "PLZ: ", width: "150px"});
 		var postalcode_input = new sap.ui.commons.TextField("Postalcode_input");
 		
-		var city_label = new sap.ui.commons.Label({text: "Stadt: "});
+		var city_label = new sap.ui.commons.Label({text: "Stadt: ", width: "150px"});
 		var city_input = new sap.ui.commons.TextField("City_input");
 		
-		var street_label = new sap.ui.commons.Label({text: "Strasse: "});
+		var street_label = new sap.ui.commons.Label({text: "Strasse: ", width: "150px"});
 		var street_input = new sap.ui.commons.TextField("Street_input");
 		
-		var country_label = new sap.ui.commons.Label({text: "Land: "});
+		var country_label = new sap.ui.commons.Label({text: "Land: ", width: "150px"});
 		var country_input = new sap.ui.commons.TextField("Country_input");
 		
 		var fields = ["Firstname", "Lastname", "Street", "Postalcode", "City", "Country"];
@@ -114,7 +114,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 			layoutFixed : false,
 			});
 		
-		var conditn_label = new sap.ui.commons.Label({text: "Krankheit:        "});
+		var conditn_label = new sap.ui.commons.Label({text: "Krankheit:        ", width: "150px"});
 		var conditn_comb_temp = new sap.ui.core.ListItem({text:"{Name}", key:"{ConditionID}", additionalText:"{Description}"});
 		
 		var conditn_input = new sap.ui.commons.ComboBox("Condition_input",
@@ -141,7 +141,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 			layoutFixed : false,
 			});
 		
-		var treat_label = new sap.ui.commons.Label({text: "Behandlungsplan:        "});
+		var treat_label = new sap.ui.commons.Label({text: "Behandlungsplan:        ", width: "150px"});
 		var treat_comb_temp = new sap.ui.core.ListItem({text:"{Name}", key:"{TreatPlanID}", additionalText:"{Duration}"});
 		
 		var treat_input = new sap.ui.commons.ComboBox("Treatment_input",
@@ -152,6 +152,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 
 		var treat_create_button = new sap.ui.commons.Button({
 	        text : "Plan anlegen",
+	        width: "150px",
 	        icon : "sap-icon://clinical-order",
 //	        width : "200px",
 	        press : function() {oController.create_treat();
@@ -159,7 +160,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 	    	
 		});
 		
-		var treat_begin_label = new sap.ui.commons.Label({text: "Beginn Behandlungsplan:        "});
+		var treat_begin_label = new sap.ui.commons.Label({text: "Beginn Behandlungsplan:        ", width: "150px"});
 
 		
 		var treat_begin_date = new sap.ui.commons.DatePicker('Treat_begin');
@@ -183,7 +184,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 			layoutFixed : false,
 			});
 		
-		var user_label = new sap.ui.commons.Label({text: "Zustaendig:        "});
+		var user_label = new sap.ui.commons.Label({text: "Zustaendig:        ", width: "150px"});
 		var user_comb_temp = new sap.ui.core.ListItem({text:"{Username}", key:"{UserID}", additionalText:"{Lastname}"});
 		
 		var user_input = new sap.ui.commons.ComboBox("User_input",
@@ -269,7 +270,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 		var bed_panel_layout = new sap.ui.commons.layout.MatrixLayout({
 			layoutFixed : false,
 			});
-		var bed_label = new sap.ui.commons.Label({text: "Bett:        "});
+		var bed_label = new sap.ui.commons.Label({text: "Bett:        ", width: "150px"});
 		var bed_comb_temp = new sap.ui.core.ListItem({text:"{BedID}", key:"{BedID}", additionalText:"{RoomID}"});
 		
 		var bed_input = new sap.ui.commons.ComboBox("Bed_input",
@@ -283,15 +284,15 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 		
 		var hospi_create_button = new sap.ui.commons.Button({
 	        text : "Patient einweisen",
-	        icon : "sap-icon://clinical-order",
+	        icon : "sap-icon://sys-enter",
 //	        width : "200px",
 	        press : function() {oController.create_hospi(patient, conditn_input, treat_input, treat_begin_date, user_temp_table, bed_input, hospi_begin_date, hospi_end_date, aData);
 			}
 	    	
 		});
 		
-		var hospi_end_label = new sap.ui.commons.Label({text: "Beginn Einweisung:        "});
-		var hospi_begin_label = new sap.ui.commons.Label({text: "Ende Einweisung:        "});
+		var hospi_end_label = new sap.ui.commons.Label({text: "Beginn Einweisung:        ", width: "150px"});
+		var hospi_begin_label = new sap.ui.commons.Label({text: "Ende Einweisung:        ", width: "150px"});
 
 		
 		var hospi_begin_date = new sap.ui.commons.DatePicker('Hospi_begin');
