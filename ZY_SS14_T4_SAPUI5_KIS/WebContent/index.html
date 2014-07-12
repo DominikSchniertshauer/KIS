@@ -18,7 +18,53 @@
 				
 				// Hauptkomponenten definieren
 			
-					var shell = new sap.ui.ux3.Shell({id: "shell", }); 
+				// Area for notification bar
+					
+					/*.slimNotificationBar {
+					 left : 60px;
+					 right: 100px;
+					}*/
+					var sText = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.";
+
+					function displayListener(oEvent) {
+						var bShow = oEvent.getParameter("show");
+
+						if (bShow) {
+							/*
+							 * Now the application can decide how to display the bar. It can be maximized, default, minimized (please see NotificationBarStatus) 
+							 */
+							var sStatus = sap.ui.ux3.NotificationBarStatus.Default;
+							notification_bar.setVisibleStatus(sStatus);
+						} else {
+							var sStatus = sap.ui.ux3.NotificationBarStatus.None;
+							notification_bar.setVisibleStatus(sStatus);
+						}
+					};
+
+					var now = (new Date()).toUTCString();
+					var oMessage = new sap.ui.core.Message({
+						text : sText,
+						timestamp : now
+					});
+
+					var oNotifier = new sap.ui.ux3.Notifier({
+						title : "The first Notifier"
+					});
+					oNotifier.addMessage(oMessage);
+
+					var notification_bar = new sap.ui.ux3.NotificationBar({
+						display : displayListener,
+						visibleStatus : "None",
+						resizeEnabled : false
+					});
+					notification_bar.addStyleClass("sapUiNotificationBarDemokit");
+					notification_bar.addStyleClass("slimNotificationBar");
+					notification_bar.addNotifier(oNotifier);
+					
+					
+					// End of notification bar
+				
+					var shell = new sap.ui.ux3.Shell({id: "shell", notificationBar : notification_bar }); 
 					var login_view = sap.ui.view({id:"login", viewName:"zy_ss14_t4_sapui5_kis.login",type: sap.ui.core.mvc.ViewType.JS});
 					var index_view = sap.ui.view({id:"index", viewName:"zy_ss14_t4_sapui5_kis.index", type: sap.ui.core.mvc.ViewType.JS});
 					var hospitalization_view = sap.ui.view({id:"hospitalization_new", viewName:"zy_ss14_t4_sapui5_kis.hospitalization", type: sap.ui.core.mvc.ViewType.JS});
