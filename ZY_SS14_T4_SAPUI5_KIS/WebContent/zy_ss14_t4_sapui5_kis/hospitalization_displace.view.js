@@ -49,9 +49,9 @@
 		 *  Set Data model for temp table
 		 */
 		var oModelInsNr = new sap.ui.model.json.JSONModel();
-		oModelInsNr.setData({modelData: aData});
+		oModelInsNr.setData({modelDatas: aData});
         
-		sap.ui.getCore().setModel(oModelInsNr);
+		sap.ui.getCore().setModel(oModelInsNr, "myModel");
         var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
 		oModel.refreshSecurityToken(null, null);
         
@@ -98,10 +98,12 @@
         
         
         var insurancenumber_label = new sap.ui.commons.Label({text: "Versichertennummer: "});
-        var insnr_comb_temp = new sap.ui.core.ListItem({text:"{Insurancenumber}",  key:"{HospitalizationID}", additionalText:"{Lastname}"});
-        
+        var insnr_comb_temp = new sap.ui.core.ListItem();
+        insnr_comb_temp.bindProperty("text", "myModel>Insurancenumber");
+        insnr_comb_temp.bindProperty("key", "myModel>HospitalizationID");
+        insnr_comb_temp.bindProperty("additionalText", "myModel>Lastname");
         var insurancenumber_input = new sap.ui.commons.ComboBox("Insurnumber_input", {displaySecondaryValues:true});
-        insurancenumber_input.bindItems("/modelData", insnr_comb_temp);
+        insurancenumber_input.bindItems("myModel>/modelDatas", insnr_comb_temp);
         
         
         
