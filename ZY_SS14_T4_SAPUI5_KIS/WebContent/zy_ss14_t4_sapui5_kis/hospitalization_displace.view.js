@@ -98,7 +98,7 @@
         
         
         var insurancenumber_label = new sap.ui.commons.Label({text: "Versichertennummer: "});
-        var insnr_comb_temp = new sap.ui.core.ListItem();
+        var insnr_comb_temp = new sap.ui.core.ListItem("insnr_com_temp");
         insnr_comb_temp.bindProperty("text", "myModel>Insurancenumber");
         insnr_comb_temp.bindProperty("key", "myModel>HospitalizationID");
         insnr_comb_temp.bindProperty("additionalText", "myModel>Lastname");
@@ -116,7 +116,7 @@
            });
         
         var firstname_label = new sap.ui.commons.Label({text: "Vorname: "});
-        var firstname_input = new sap.ui.commons.TextField("Fname_input").setValue("Test");
+        var firstname_input = new sap.ui.commons.TextField("Fname_input");
         
         var lastname_label = new sap.ui.commons.Label({text: "Nachname: "});
         var lastname_input = new sap.ui.commons.TextField("Lname_input");
@@ -130,7 +130,6 @@
         var hospi_displace_button = new sap.ui.commons.Button({
             text : "Patient entlassen",
             icon : "sap-icon://accept",
-//            width : "200px",
             press : function() {oController.displace_patient(insurancenumber_input.getSelectedKey(), aData);
             },
             
