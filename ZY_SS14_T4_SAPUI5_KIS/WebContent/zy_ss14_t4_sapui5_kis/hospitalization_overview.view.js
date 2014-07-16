@@ -36,6 +36,13 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization_overview", {
 		
 		var hospi2_table = new sap.ui.table.Table("hospitalization_Overview_Table", {
 			id: "Mandt",
+			selectionMode: sap.ui.table.SelectionMode.Single,
+			rowSelectionChange: function(oEvent){
+				var currentRowContext = oEvent.getParameter("rowContext").getPath();
+				var model = hospi2_table.getModel();
+				data = model.getProperty(currentRowContext);
+				oController.show_patientInfo_dialog(data);
+			}
 		}); 
 
 
