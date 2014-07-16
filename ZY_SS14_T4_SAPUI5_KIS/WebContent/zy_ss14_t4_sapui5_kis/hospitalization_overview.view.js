@@ -34,7 +34,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization_overview", {
 		title.setText('Liste von allen aktuellen Hospitalisierungen');     
 		panel.setTitle(title);  
 		
-		var hospi2_table = new sap.ui.table.Table({
+		var hospi2_table = new sap.ui.table.Table("hospitalization_Overview_Table", {
 			id: "Mandt",
 		}); 
 		hospi2_table.addColumn(  

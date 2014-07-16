@@ -105,7 +105,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.disease_plan", {
 		 *  Set Data model for temp table
 		 */
 		var oModel = new sap.ui.model.json.JSONModel();
-		oModel.setData({selec: aData});
+		oModel.setData({modelData: aData});
 		medication_temp_table.setModel(oModel);
 		medication_temp_table.bindRows("/modelData");
 		
@@ -227,6 +227,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.disease_plan", {
 				oEntry.Mandt 		= '001';
 				oEntry.Name 		= name_input.getValue();
 				oEntry.Isactive 	= 'TRUE';
+				oEntry.Duration		= description_input.getValue();
 				
 				
 				/**

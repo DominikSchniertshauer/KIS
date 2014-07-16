@@ -11,7 +11,18 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 	sap.ui.getCore().setModel(oModel);
 	},
 
-	create_hospi: function(patient, conditn_input, treat_input, treat_begin_date, user_temp_table, bed_input, hospi_begin_date, hospi_end_date, aData){
+	/**
+	 * Function to create a new hospitalisation 
+	 * @param patient
+	 * @param conditn_input
+	 * @param treat_input
+	 * @param treat_begin_date
+	 * @param user_temp_table
+	 * @param bed_input
+	 * @param hospi_begin_date
+	 * @param aData
+	 */
+	create_hospi: function(patient, conditn_input, treat_input, treat_begin_date, user_temp_table, bed_input, hospi_begin_date, aData){
 		
 		// Setup patients to use them successfully in hospitalization
 		var patientid;
@@ -21,17 +32,22 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 		var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
 
 		
+		/**
+		 * Get all Patient informations according to the choosen insurancenumber
+		 */
 		oModel.read("/PATIENT?$filter=Insurancenumber eq '"+insnr+"'" ,undefined, undefined, true,
 				function(data, response){
 			
 			try {
+				/** 
+				 * in case the patient exist... 
+				 */
 				if(data.results[0].PatientID != ""){
 					var oEntry = {
 					};	
 					
 					oEntry.Mandt = '001';
 					oEntry.PatientID = data.results[0].PatientID;
-					
 					patientid = data.results[0].PatientID;
 					
 					oEntry.Firstname = patient.Firstname;
@@ -81,21 +97,26 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 			var hospi_entry = {
 			};
 			
+			/**
+			 * get all informations about the hospitalisation 
+			 */
 			hospi_entry.Mandt = '001';
 			hospi_entry.HospitaliznID = 1;
 			hospi_entry.TreatPlanID = treat_input.getSelectedKey();
+			
 			hospi_entry.PatientID = patientid;
 			hospi_entry.BedID = bed_input.getValue();
 			hospi_entry.DateBegin = new Date(hospi_begin_date.getValue());
-			hospi_entry.DateEnd = new Date(hospi_end_date.getValue());
 			hospi_entry.StartOfTreatmentPlan = new Date(treat_begin_date.getValue());
 			hospi_entry.TreatmentRating = 0;
 			
 			var oParams = {};
-			
+			/**
+			 * functions to call, when the creation of a new hospit. is successful or when something went wrong
+			 */
 			oParams.success = function(data, response){
 				var hospitaliznID = data['HospitaliznID'];
-				alert(hospitaliznID);
+				alert("HospiID : "+hospitaliznID);
 				
 				
 				var patcon_entry = {
@@ -105,7 +126,9 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 				
 				patcon_params.success = function(data, response){
 						
-					
+					/**
+					 * Enter all persons who are in contact with the patient 
+					 */
 					while (aData.length > 0) {
 						var hosuse_entry = {
 						};
@@ -119,7 +142,73 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 						var oModel2 = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
 
 						oModel2.create("/HOSUSE", hosuse_entry);
+						
+						
+						/**
+						 * Change status of a bed to istaken=true
+						 */
+				    	var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
+				    	
+				    	oModel.read("/BED(Mandt='001',BedID="+bed_input.getValue()+")" , null, null, true,
+								function(data, response){
+				            
+				                try {
+									var test = {
+											"Mandt": data['Mandt'],
+											"BedID": data['BedID'],
+											"RoomID" : data['RoomID'],
+											"Isactive" : data['Isactive'],
+											"Istaken" : "TRUE"
+									};
+									
+									var oParams2 = {};
+								    oParams2.fnSuccess = function(){ };
+							    	oParams2.fnError = function(){};
+									var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
+									oModel.refreshSecurityToken(null, null);
+									oModel.update("/BED(Mandt='001',BedID="+data['BedID']+")", test, oParams2);
+									
+									
+
+				                } catch(e) { }
+				                
+
+				    	});
+						
+						
+						/**
+						 * Refresh-procedure for tables 
+						 */
+						var hospi_table = sap.ui.getCore().byId("hospitalization_Overview_Table");
+							
+						var oModel = new sap.ui.model.odata.ODataModel(  
+								sap.ui.getCore().byId("path").getText(), false);  
+						
+						hospi_table.setModel(oModel);  
+						hospi_table.bindRows('/HOSPI'); 
 				
+						
+						/**
+						 * Nill all fields in this View
+						 */
+						
+						sap.ui.getCore().byId("Insurancenumber_input").setValue("");
+						sap.ui.getCore().byId("Firstname_input").setValue("");					
+						sap.ui.getCore().byId("Lastname_input").setValue("");					
+						sap.ui.getCore().byId("Postalcode_input").setValue("");						
+						sap.ui.getCore().byId("City_input").setValue("");	
+						sap.ui.getCore().byId("Street_input").setValue("");					
+						sap.ui.getCore().byId("Country_input").setValue("");
+						
+						
+						
+						sap.ui.getCore().byId("Condition_input").setValue("");
+						sap.ui.getCore().byId("Treatment_input").setValue("");
+						sap.ui.getCore().byId("User_input").setValue("");
+						sap.ui.getCore().byId("Bed_input").setValue("");
+						
+						sap.ui.getCore().byId("user_temp_table").removeAllCustomData();
+						
 					}
 					
 					
@@ -128,6 +217,9 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 				patcon_params.error = function(){
 				};
 				
+				/**
+				 * Information about the condition of a patient
+				 */
 				patcon_entry.Mandt = '001';
 				patcon_entry.HospitaliznID = data['HospitaliznID'];
 				patcon_entry.ConditionID = conditn_input.getSelectedKey();

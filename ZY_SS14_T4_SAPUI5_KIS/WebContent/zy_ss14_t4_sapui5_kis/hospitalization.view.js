@@ -66,7 +66,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 				 }});
 	//		
 		var firstname_label = new sap.ui.commons.Label({text: "Vorname: ", width: "150px"});
-		var firstname_input = new sap.ui.commons.TextField("Firstname_input").setValue("Test");
+		var firstname_input = new sap.ui.commons.TextField("Firstname_input");
 		
 		var lastname_label = new sap.ui.commons.Label({text: "Nachname: ", width: "150px"});
 		var lastname_input = new sap.ui.commons.TextField("Lastname_input");
@@ -85,22 +85,15 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 		
 		var fields = ["Firstname", "Lastname", "Street", "Postalcode", "City", "Country"];
 		
-		var patient = []; 
-		patient.Firstname = "";
-		patient.Lastname = "";
-		patient.Street = "";
-		patient.Postalcode = "";
-		patient.City = "";
-		patient.Country = "";
-		
-		
-		var patient_lock_button = new sap.ui.commons.Button("Patient_lock_button", {text: "Daten pruefen."}).attachPress(function(){oController.lock_patient(fields, patient);});
-		var patient_lock_label = new sap.ui.commons.Label("Patient_lock_label", {text: ""});
 
+	
+	
+
+			
 		var patient_panel_layout = new sap.ui.commons.layout.MatrixLayout({
 			layoutFixed : false,
 			});
-		patient_panel_layout.createRow(insurancenumber_label, insurancenumber_input, patient_lock_button);
+		patient_panel_layout.createRow(insurancenumber_label, insurancenumber_input);
 		patient_panel_layout.createRow(firstname_label, firstname_input.setEditable(false));
 		patient_panel_layout.createRow(lastname_label, lastname_input.setEditable(false));
 		patient_panel_layout.createRow(street_label, street_input.setEditable(false));
@@ -164,7 +157,10 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 
 		
 		var treat_begin_date = new sap.ui.commons.DatePicker('Treat_begin');
-		treat_begin_date.setYyyymmdd("20140101");
+		//treat_begin_date.setYyyymmdd("20140101");
+		//var now = new Date();
+		
+		//treat_begin_date.setYyyymmdd(now.getYear()+now.getMonth()+now.getDate());
 		treat_begin_date.setLocale("en-US");
 		
 		treat_panel_layout.createRow(treat_label, treat_input, treat_create_button);
@@ -195,7 +191,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 		var aData = []; 
 
 		var user_add_button = new sap.ui.commons.Button({
-	        text : "Plan anlegen",
+	        text : "Mitarbeiter zuweisen",
 	        icon : "sap-icon://clinical-order",
 //	        width : "200px",
 	        press : function() {oController.add_user(user_input, aData);
@@ -280,31 +276,37 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 				 }});
 		bed_panel_layout.createRow(bed_label, bed_input);
 		
-		
+		var patient = []; 
+
 		
 		var hospi_create_button = new sap.ui.commons.Button({
 	        text : "Patient einweisen",
 	        icon : "sap-icon://sys-enter",
 //	        width : "200px",
-	        press : function() {oController.create_hospi(patient, conditn_input, treat_input, treat_begin_date, user_temp_table, bed_input, hospi_begin_date, hospi_end_date, aData);
+	        press : function() {
+		    		patient.Firstname = firstname_input.getValue();
+		    		patient.Lastname =  lastname_input.getValue();
+		    		patient.Street = street_input.getValue();
+		    		patient.Postalcode = postalcode_input.getValue();
+		    		patient.City = city_input.getValue();
+		    		patient.Country = country_input.getValue();
+		    		patient.Insurancenumber = insurancenumber_input.getValue();
+	        		
+	        		oController.create_hospi(patient, conditn_input, treat_input, treat_begin_date, user_temp_table, bed_input, hospi_begin_date, aData);
 			}
 	    	
 		});
 		
-		var hospi_end_label = new sap.ui.commons.Label({text: "Beginn Einweisung:        ", width: "150px"});
-		var hospi_begin_label = new sap.ui.commons.Label({text: "Ende Einweisung:        ", width: "150px"});
+		var hospi_begin_label = new sap.ui.commons.Label({text: "Begin Einweisung:        ", width: "150px"});
 
 		
 		var hospi_begin_date = new sap.ui.commons.DatePicker('Hospi_begin');
 		hospi_begin_date.setYyyymmdd("20140101");
 		hospi_begin_date.setLocale("en-US");
 				
-		var hospi_end_date = new sap.ui.commons.DatePicker('Hospi_end');
-		hospi_end_date.setYyyymmdd("20140101");
-		hospi_end_date.setLocale("en-US");
+
 		
 		bed_panel_layout.createRow(hospi_begin_label, hospi_begin_date);
-		bed_panel_layout.createRow(hospi_end_label, hospi_end_date);
 
 		bed_panel_layout.createRow(hospi_create_button);
 		bed_panel.addContent(bed_panel_layout);
