@@ -65,9 +65,10 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.patient", {
 		/**
 		* Place buttons to the form
 		*/		
-		layout.createRow(oToolbarPatient);
+
 		layout.createRow(header_label);
 		layout.createRow(line_divider);
+		layout.createRow(oToolbarPatient);
 	
 		var panel = new sap.ui.commons.Panel('rPannel');              
 		var title = new sap.ui.commons.Title('rTitle');     
