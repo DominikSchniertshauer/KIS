@@ -83,11 +83,11 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 				oEntry.Country = patient.Country;
 				
 				var oParams = {};
-			    oParams.fnSuccess = function(data, response){
+			    oParams.success = function(data, response){
 			    	patientid = data['PatientID'];
 			    	alert(patientid);
 			    };
-			    oParams.fnError = function(){};
+			    oParams.error = function(){};
 			       
 				
 				oModel.create("/PATIENT", oEntry, oParams);
