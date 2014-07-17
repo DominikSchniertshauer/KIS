@@ -56,8 +56,6 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 					var lastname_label = sap.ui.getCore().byId("lastname");
 					var role_image = sap.ui.getCore().byId("role");
 					
-					
-					// Fill fields and tables according to user
 					username_label.setText("Benutzername: "+data.results[0].Username);
 					firstname_label.setText("Vorname: "+data.results[0].Firstname);
 					lastname_label.setText("Familienname: "+data.results[0].Lastname);
@@ -72,25 +70,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 					var id_filter = new sap.ui.model.Filter("UserID", sap.ui.model.FilterOperator.EQ, data.results[0].UserID);
 					hospi_table.setModel(oModel);  
 					hospi_table.bindRows(   {path: "/HOSPI", filters: id_filter });  
-					// end
 					
-					// Fill notification bar according to user
-					var oMessage = new sap.ui.core.Message({
-						text : sText,
-						timestamp : now
-					});
-
-					var oNotifier = new sap.ui.ux3.Notifier({
-						title : "The first Notifier"
-					});
-					oNotifier.addMessage(oMessage);
-					notification_bar.addNotifier(oNotifier);
-					
-					// Hier jetzt eben die Abfragen machen und im Loop
-					// messages hinzufügen
-					
-					//
-
 				}
 				else{
 					alert("Es wurde ein falsches Passwort eingegeben.");
