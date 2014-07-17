@@ -111,8 +111,8 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.patient", {
 						oEntry.Country = country_input.getValue();
 						
 						var oParams = {};
-					    oParams.fnSuccess = function(){ internal_dialog.close();};
-					    oParams.fnError = function(){internal_dialog.open();};
+					    oParams.success = function(){ internal_dialog.close();};
+					    oParams.error = function(){internal_dialog.open();};
 					       
 						
 						oModel.update("/PATIENT(Mandt='001',PatientID="+data.results[0].PatientID+")", oEntry, oParams);
@@ -184,8 +184,8 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.patient", {
 						oEntry.Country = country_input.getValue();
 						
 						var oParams = {};
-					    oParams.fnSuccess = function(){ internal_dialog.close();};
-					    oParams.fnError = function(){internal_dialog.open();};
+					    oParams.success = function(){ internal_dialog.close();};
+					    oParams.error = function(){internal_dialog.open();};
 					       
 						
 						oModel.create("/PATIENT", oEntry, oParams);
