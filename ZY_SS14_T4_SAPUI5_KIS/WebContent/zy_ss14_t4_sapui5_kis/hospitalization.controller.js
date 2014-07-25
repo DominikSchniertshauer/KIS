@@ -28,7 +28,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 		var patientid;
 		
 		var insnr = patient.Insurancenumber;
-		alert(insnr);
+		
 		var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
 
 		
@@ -45,7 +45,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 				if(data.results[0].PatientID != ""){
 					var oEntry = {
 					};	
-					
+
 					oEntry.Mandt = '001';
 					oEntry.PatientID = data.results[0].PatientID;
 					patientid = data.results[0].PatientID;
@@ -85,7 +85,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 				var oParams = {};
 			    oParams.success = function(data, response){
 			    	patientid = data['PatientID'];
-			    	alert(patientid);
+			    
 			    };
 			    oParams.error = function(){};
 			       
@@ -116,7 +116,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 			 */
 			oParams.success = function(data, response){
 				var hospitaliznID = data['HospitaliznID'];
-				alert("HospiID : "+hospitaliznID);
+			
 				
 				
 				var patcon_entry = {
@@ -186,6 +186,13 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 						
 						hospi_table.setModel(oModel);  
 						hospi_table.bindRows('/HOSPI'); 
+						
+						var hospi_table = sap.ui.getCore().byId("hospi");
+						
+						var id_filter = new sap.ui.model.Filter("UserID", sap.ui.model.FilterOperator.EQ, sap.ui.getCore().byId("globalUserID").getText());
+						hospi_table.setModel(oModel);  
+						hospi_table.bindRows(   {path: "/HOSPI", filters: id_filter }); 
+				
 				
 						
 						/**
