@@ -76,7 +76,6 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 					var notification_bar = sap.ui.getCore().byId("notification_bar");
 					var notifier = sap.ui.getCore().byId("notifier");
 					
-					var patient = '';
 					
 					// First define function for successful hospi request
 					var hospi_params = {};
@@ -85,11 +84,13 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 						// If hospi request was successful, request dataset from matching TreatmentplanIDs of
 						// Tremd to get administration intervals
 						var tremd_params = {};
+						
 						tremd_params.success = function(data, results){
+							var patient = patient_data.shift();
 							
 							for(var i = 0; i < data.results.length; i++){
 					    		
-					    		var text = patient_data.shift()+" benoetigt heute "+data.results[i].MedicationName+": alle "+data.results[i].AdministrationInterval+" Stunden.";
+					    		var text = patient+" benoetigt heute "+data.results[i].MedicationName+": alle "+data.results[i].AdministrationInterval+" Stunden.";
 								var now = (new Date()).toUTCString();
 								var oMessage = new sap.ui.core.Message({
 									text : text,
