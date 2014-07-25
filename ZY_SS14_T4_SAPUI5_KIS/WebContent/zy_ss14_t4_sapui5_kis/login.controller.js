@@ -71,6 +71,62 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 					hospi_table.setModel(oModel);  
 					hospi_table.bindRows(   {path: "/HOSPI", filters: id_filter });  
 					
+					// Create Notifications
+					// Get Notification Bar
+					var notification_bar = sap.ui.getCore().byId("notification_bar");
+					var notifier = sap.ui.getCore().byId("notifier");
+					
+					
+					// First define function for successful hospi request
+					var hospi_params = {};
+					hospi_params.success = function(data, results){
+						
+						// If hospi request was successful, request dataset from matching TreatmentplanIDs of
+						// Tremd to get administration intervals
+						var tremd_params = {};
+						
+						tremd_params.success = function(data, results){
+							var patient = patient_data.shift();
+							
+							for(var i = 0; i < data.results.length; i++){
+					    		
+					    		var text = patient+" benoetigt heute "+data.results[i].MedicationName+": alle "+data.results[i].AdministrationInterval+" Stunden.";
+								var now = (new Date()).toUTCString();
+								var oMessage = new sap.ui.core.Message({
+									text : text,
+									timestamp : now
+								});
+								notifier.addMessage(oMessage);
+
+							}
+							
+						};
+						
+						// for each treatmentplan according to logged in user
+						
+						var patient_data = [];
+						
+						
+						// Store Patient names in array to use them in oMessage
+						for(var i = 0; i < data.results.length; i++){
+				    		patient_data.push(data.results[i].Patient) ;
+				    		
+				    	}
+						
+				    	for(var i = 0; i < data.results.length; i++){
+	
+							oModel.read("/TREMD?$filter=TreatPlanID eq "+data.results[i].TreatPlanID, tremd_params);
+							
+				    	}
+				    	
+				    };
+				    hospi_params.error = function(){};
+				       
+//					oModel_hospi = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
+					oModel.read("/HOSPI?$filter=UserID eq "+data.results[0].UserID, hospi_params);
+					//
+					
+					
 				}
 				else{
 					alert("Es wurde ein falsches Passwort eingegeben.");
