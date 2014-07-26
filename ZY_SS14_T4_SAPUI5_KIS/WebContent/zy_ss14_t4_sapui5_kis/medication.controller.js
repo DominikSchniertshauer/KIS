@@ -7,6 +7,11 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.medication", {
 */
 	onInit: function() {
 
+		var oModel = sap.ui.getCore().getModel();  
+		medication_table = sap.ui.getCore().byId("tblMedication");
+		
+		medication_table.setModel(oModel);  
+		medication_table.bindRows('/MEDICTN');
 	},
 	
 	/**
@@ -17,7 +22,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.medication", {
 			layoutFixed : false,
 			});
 		var medication_dialog = new sap.ui.commons.Dialog();
-		var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
+		var oModel = sap.ui.getCore().getModel(); 
 
 		/**
 		* Define fields and a button to insert a medication  
@@ -66,15 +71,11 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.medication", {
 		    	});
 		    
 		    	sap.ui.commons.MessageBox.alert(messages);
-		    	
-//		    	medication_dialog.open()		    	
+		    		    	
 		    };  
-			
-		    
+			    
             oModel.create("/MEDICTN", oEntry, oParams);
 
-            var medication_table = sap.ui.getCore().byId("tblMedication");
-			medication_table.bindRows('/MEDICTN'); 
 
 		});
 
@@ -88,7 +89,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.medication", {
 			layoutFixed : false,
 			});
 		var medication_dialog = new sap.ui.commons.Dialog();
-		var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
+		var oModel = sap.ui.getCore().getModel();
 
 		/**
 		* Define fields and a button to insert a medication  
@@ -131,17 +132,14 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.medication", {
 			    oParams.fnError = function(){medication_dialog.open();};
 			       
 				
-				//oModel.update("/MEDICTN", oEntry, null, oParams.fnSuccess(), oParams.fnError());
 				oModel.update("/MEDICTN(Mandt='001',MedicationID="+data['MedicationID']+")", oEntry, oParams);
 				
-				var medication_table = sap.ui.getCore().byId("tblMedication");
-				medication_table.bindRows('/MEDICTN'); 
-
+				
 			});		
 
 
 		medication_dialog.addContent(medication_layout);
-		
+	
 		medication_dialog.open();
 	}
 

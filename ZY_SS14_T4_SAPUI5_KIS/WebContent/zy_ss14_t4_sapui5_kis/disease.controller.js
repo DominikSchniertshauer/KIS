@@ -51,18 +51,18 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.disease", {
 			
 			
 			var oParams = {};
-		    oParams.fnSuccess = function(){ 
+		    oParams.success = function(){ 
 		    	
 		    	disease_dialog.close(); 		
 		    	
 
 		    
 		    };
-		    oParams.fnError = function(){disease_dialog.open();};
+		    oParams.error = function(){disease_dialog.open();};
 		       
 			
 		    
-            oModel.create("/CONDITN", oEntry, oParams.fnSuccess(), oParams.fnError());
+            oModel.create("/CONDITN", oEntry, oParams);
             var disease_table = sap.ui.getCore().byId("tblDisease");
 			disease_table.bindRows('/CONDITN'); 
 

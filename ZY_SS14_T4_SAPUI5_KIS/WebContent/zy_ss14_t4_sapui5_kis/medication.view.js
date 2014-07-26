@@ -107,11 +107,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.medication", {
 		/**
 		* Fill table with data: 
 		*/
-		var oModel = new sap.ui.model.odata.ODataModel(  
-				sap.ui.getCore().byId("path").getText(), false);  
-		
-		medication_table.setModel(oModel);  
-		medication_table.bindRows('/MEDICTN');  
+  
 		
 		panel.addContent(medication_table);    
 		layout.createRow(panel);  
