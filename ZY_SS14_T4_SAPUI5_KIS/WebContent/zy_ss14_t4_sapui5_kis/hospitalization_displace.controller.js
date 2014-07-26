@@ -91,7 +91,6 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization_displace", {
 				getEntry=tmpaData.pop();
 			}
 			
-			
 			var Jetzt = new Date();
 			oEntry.Mandt = '001';
 			oEntry.HospitaliznID = hospitalizationID;
@@ -144,7 +143,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization_displace", {
 					        var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
 							oModel.refreshSecurityToken(null, null);
 					        
-					        oModel.read("/HOSPTZN?$filter=DateEnd eq datetime'0000-00-00T00:00'" , null, null, true,
+					        oModel.read("/HOSPTZN?$filter=DateEnd eq datetime'0000-00-00T00:00'" , null, null, false,
 									function(data, response){
 					        			
 					        			for (var i=0; i < data.results.length; i++) {
@@ -162,7 +161,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization_displace", {
 					        				 var oModel2 = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
 					        					oModel2.refreshSecurityToken(null, null);
 					        
-					        			        oModel2.read("/PATIENT(Mandt='001',PatientID="+data.results[i].PatientID+")" , null, null, true,
+					        			        oModel2.read("/PATIENT(Mandt='001',PatientID="+data.results[i].PatientID+")" , null, null, false,
 					        							function(data2, response){
 					        			        	
 					        						var test = {
