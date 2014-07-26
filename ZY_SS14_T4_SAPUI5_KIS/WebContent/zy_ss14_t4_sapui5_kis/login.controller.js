@@ -102,7 +102,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 									
 									if (interval %  data.results[i].AdministrationInterval == 0){
 										var text = patient+" benoetigt heute "+data.results[i].MedicationName+" um "+interval+" Uhr.";
-										var now = (new Date()).toUTCString();
+										var now = (new Date());
 										var oMessage = new sap.ui.core.Message({
 											text : text,
 											timestamp : now
