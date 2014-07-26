@@ -12,7 +12,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 		
 		var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
 		sap.ui.getCore().setModel(oModel);
-		
+
 	},
 	
 	validateLogin: function(username, password){
@@ -90,13 +90,28 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 							
 							for(var i = 0; i < data.results.length; i++){
 					    		
-					    		var text = patient+" benoetigt heute "+data.results[i].MedicationName+": alle "+data.results[i].AdministrationInterval+" Stunden.";
-								var now = (new Date()).toUTCString();
-								var oMessage = new sap.ui.core.Message({
-									text : text,
-									timestamp : now
-								});
-								notifier.addMessage(oMessage);
+								var hours = new Date();
+								hours = hours.getHours();
+								
+								// Check for next 4 hours
+								for (var interval = hours; interval < hours + 4; interval++){
+									
+									// If current time (+1, +2, +3..) is divisible by administration intervall,
+									// set notification (e.g. 18 o clock is divisible by Interval "9" --> set notification
+									// for 18 o clock, but not for 17:00 or 19:00
+									
+									if (interval %  data.results[i].AdministrationInterval == 0){
+										var text = patient+" benoetigt heute "+data.results[i].MedicationName+" um "+interval+" Uhr.";
+										var now = (new Date());
+										var oMessage = new sap.ui.core.Message({
+											text : text,
+											timestamp : now
+										});
+										notifier.addMessage(oMessage);
+									}
+								}
+								
+					    		
 
 							}
 							
