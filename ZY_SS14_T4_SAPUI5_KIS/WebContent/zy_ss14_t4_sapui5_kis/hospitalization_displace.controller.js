@@ -80,7 +80,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization_displace", {
         }
     },
     
-    displace_patient : function (hospitalizationID, tmpaData) {
+    displace_patient : function (hospitalizationID, tmpaData, rating) {
         
     	if (hospitalizationID != '') {
 			// Übergabewerte für oModel.update Funktion
@@ -99,7 +99,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization_displace", {
 			oEntry.BedID = getEntry.BedID;
 			oEntry.DateBegin = getEntry.DateBegin;
 			oEntry.StartOfTreatmentPlan = getEntry.StartOfTreatmentPlan;
-			oEntry.TreatmentRating = getEntry.TreatmentRating;
+			oEntry.TreatmentRating = rating;
 			
 			oEntry.DateEnd = Jetzt.getFullYear()+"-"+(Jetzt.getMonth()+1)+"-"+Jetzt.getDate()+"T"+Jetzt.getHours()+":"+Jetzt.getMinutes();
 			

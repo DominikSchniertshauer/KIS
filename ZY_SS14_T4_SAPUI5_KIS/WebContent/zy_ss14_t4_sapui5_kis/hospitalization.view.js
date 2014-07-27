@@ -116,14 +116,6 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 				 template: conditn_comb_temp,
 				 }});
 		
-		var conditn_create_button = new sap.ui.commons.Button({
-	        text : "Diagnose neu anlegen",
-	        icon : "sap-icon://electrocardiogram",
-	        width : "150px",
-	        press : function() {open_create_dialog();
-			}
-	    	
-		});
 		//conditn_input.attachChange((function(){  oController.check_conditn_exists(conditn_input.getValue());}));
 
 		conditn_panel_layout.createRow(conditn_label, conditn_input);
@@ -157,11 +149,11 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 
 		
 		var treat_begin_date = new sap.ui.commons.DatePicker('Treat_begin');
+		treat_begin_date.setLocale("en-US");
+		
 		//treat_begin_date.setYyyymmdd("20140101");
 		//var now = new Date();
 		
-		//treat_begin_date.setYyyymmdd(now.getYear()+now.getMonth()+now.getDate());
-		treat_begin_date.setLocale("en-US");
 		
 		treat_panel_layout.createRow(treat_label, treat_input, treat_create_button);
 		treat_panel_layout.createRow(treat_begin_label, treat_begin_date);
@@ -269,7 +261,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 		var bed_label = new sap.ui.commons.Label({text: "Bett:        ", width: "150px"});
 		var bed_comb_temp = new sap.ui.core.ListItem({text:"{BedID}", key:"{BedID}", additionalText:"{RoomID}"});
 		
-		var bed_input = new sap.ui.commons.ComboBox("Bed_input",
+		var bed_input = new sap.ui.commons.DropdownBox("Bed_input",
 				{displaySecondaryValues: true, 
 				items: {path: "/BED?$filter=Istaken eq 'FALSE'",
 				 template: bed_comb_temp,
@@ -301,8 +293,9 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 
 		
 		var hospi_begin_date = new sap.ui.commons.DatePicker('Hospi_begin');
-		hospi_begin_date.setYyyymmdd("20140101");
 		hospi_begin_date.setLocale("en-US");
+		hospi_begin_date.setYyyymmdd(new Date().getFullYear().toString()+"-"+(new Date().getMonth()+1).toString()+"-"+new Date().getDate().toString());
+		treat_begin_date.setYyyymmdd(new Date().getFullYear().toString()+"-"+(new Date().getMonth()+1).toString()+"-"+new Date().getDate().toString());
 				
 
 		

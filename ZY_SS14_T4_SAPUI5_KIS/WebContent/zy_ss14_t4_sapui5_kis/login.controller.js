@@ -135,7 +135,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 						
 				    	for(var i = 0; i < data.results.length; i++){
 	
-							oModel.read("/TREMD?$filter=TreatPlanID eq "+data.results[i].TreatPlanID, tremd_params);
+							oModel.read("/TREMD?$filter=TreatPlanID eq "+data.results[i].TreatPlanID, tremd_params,null,false);
 							
 				    	}
 				    	
