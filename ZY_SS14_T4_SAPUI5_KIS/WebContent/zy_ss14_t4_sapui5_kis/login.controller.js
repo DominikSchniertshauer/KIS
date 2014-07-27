@@ -21,6 +21,14 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 	
 	validateLogin: function(username, password){
 		
+		if ((username == '') || (password == ''))
+		{
+	    	var messages = "Bitte geben Sie einen Benutzernamen sowie Passwort ein. \n";
+	    	
+	    	sap.ui.commons.MessageBox.alert(messages);
+	    	return;
+		}
+		
 		var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
 		oModel.refreshSecurityToken(null, null);
 
@@ -30,6 +38,16 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 
 				
 			function(data, response){
+				
+			if (typeof data.results[0] == "undefined") {
+				var messages = "Login fehlgeschlagen. \n";
+				sap.ui.commons.MessageBox.alert(messages);
+				return;
+			};
+		    	
+		    	
+	
+			
 				if(password == data.results[0].Password){
 					
 					shell.setAppTitle("Angemeldet als: "+data.results[0].Username);
