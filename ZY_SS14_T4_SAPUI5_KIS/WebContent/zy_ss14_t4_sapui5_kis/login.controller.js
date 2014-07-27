@@ -40,7 +40,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 			function(data, response){
 				
 			if (typeof data.results[0] == "undefined") {
-				var messages = "Login fehlgeschlagen. \n";
+				var messages = "User nicht vorhanden. \n";
 				sap.ui.commons.MessageBox.alert(messages);
 				return;
 			};
@@ -89,8 +89,81 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 					
 					if (data.results[0].RoleID == 1)
 						role_image.setSrc("images/doctor.png");
-					if (data.results[0].RoleID == 2)
+					if (data.results[0].RoleID == 2){
 						role_image.setSrc("images/nurse.png");
+						
+						// Create Notifications
+						// Get Notification Bar
+						var notification_bar = sap.ui.getCore().byId("notification_bar");
+						var notifier = sap.ui.getCore().byId("notifier");
+						
+						
+						// First define function for successful hospi request
+						var hospi_params = {};
+						hospi_params.success = function(data, results){
+							
+							// If hospi request was successful, request dataset from matching TreatmentplanIDs of
+							// Tremd to get administration intervals
+							var tremd_params = {};
+							
+							tremd_params.success = function(data, results){
+								var patient = patient_data.shift();
+								
+								for(var i = 0; i < data.results.length; i++){
+						    		
+									var hours = new Date();
+									hours = hours.getHours();
+									
+									// Check for next 4 hours
+									for (var interval = hours; interval < hours + 4; interval++){
+										
+										// If current time (+1, +2, +3..) is divisible by administration intervall,
+										// set notification (e.g. 18 o clock is divisible by Interval "9" --> set notification
+										// for 18 o clock, but not for 17:00 or 19:00
+										
+										if (interval %  data.results[i].AdministrationInterval == 0){
+											var text = patient+" benoetigt heute "+data.results[i].MedicationName+" um "+interval+" Uhr.";
+											var now = (new Date());
+											var oMessage = new sap.ui.core.Message({
+												text : text,
+												timestamp : now
+											});
+											notifier.addMessage(oMessage);
+										}
+									}
+									
+						    		
+
+								}
+								
+							};
+							
+							// for each treatmentplan according to logged in user
+							
+							var patient_data = [];
+							
+							
+							// Store Patient names in array to use them in oMessage
+							for(var i = 0; i < data.results.length; i++){
+					    		patient_data.push(data.results[i].Patient) ;
+					    		
+					    	}
+							
+					    	for(var i = 0; i < data.results.length; i++){
+		
+								oModel.read("/TREMD?$filter=TreatPlanID eq "+data.results[i].TreatPlanID, tremd_params,null,false);
+								
+					    	}
+					    	
+					    };
+					    hospi_params.error = function(){};
+					       
+//						oModel_hospi = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
+						oModel.read("/HOSPI?$filter=UserID eq "+data.results[0].UserID, hospi_params);
+						//
+						
+					}
+					
 					
 					var hospi_table = sap.ui.getCore().byId("hospi");
 	
@@ -98,75 +171,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 					hospi_table.setModel(oModel);  
 					hospi_table.bindRows(   {path: "/HOSPI", filters: id_filter });  
 					
-					// Create Notifications
-					// Get Notification Bar
-					var notification_bar = sap.ui.getCore().byId("notification_bar");
-					var notifier = sap.ui.getCore().byId("notifier");
 					
-					
-					// First define function for successful hospi request
-					var hospi_params = {};
-					hospi_params.success = function(data, results){
-						
-						// If hospi request was successful, request dataset from matching TreatmentplanIDs of
-						// Tremd to get administration intervals
-						var tremd_params = {};
-						
-						tremd_params.success = function(data, results){
-							var patient = patient_data.shift();
-							
-							for(var i = 0; i < data.results.length; i++){
-					    		
-								var hours = new Date();
-								hours = hours.getHours();
-								
-								// Check for next 4 hours
-								for (var interval = hours; interval < hours + 4; interval++){
-									
-									// If current time (+1, +2, +3..) is divisible by administration intervall,
-									// set notification (e.g. 18 o clock is divisible by Interval "9" --> set notification
-									// for 18 o clock, but not for 17:00 or 19:00
-									
-									if (interval %  data.results[i].AdministrationInterval == 0){
-										var text = patient+" benoetigt heute "+data.results[i].MedicationName+" um "+interval+" Uhr.";
-										var now = (new Date());
-										var oMessage = new sap.ui.core.Message({
-											text : text,
-											timestamp : now
-										});
-										notifier.addMessage(oMessage);
-									}
-								}
-								
-					    		
-
-							}
-							
-						};
-						
-						// for each treatmentplan according to logged in user
-						
-						var patient_data = [];
-						
-						
-						// Store Patient names in array to use them in oMessage
-						for(var i = 0; i < data.results.length; i++){
-				    		patient_data.push(data.results[i].Patient) ;
-				    		
-				    	}
-						
-				    	for(var i = 0; i < data.results.length; i++){
-	
-							oModel.read("/TREMD?$filter=TreatPlanID eq "+data.results[i].TreatPlanID, tremd_params,null,false);
-							
-				    	}
-				    	
-				    };
-				    hospi_params.error = function(){};
-				       
-//					oModel_hospi = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
-					oModel.read("/HOSPI?$filter=UserID eq "+data.results[0].UserID, hospi_params);
-					//
 					
 					
 				}
