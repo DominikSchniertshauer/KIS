@@ -256,8 +256,16 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.disease_plan", {
 					}
 					disease_plan_dialog.close(); 
 	            };
-	            mParameters.error = function(){alert("not");};
+	            mParameters.error = function(){
+	            	
+			    	var messages = "Es sind Fehler aufgetreten: \n";
+			    	sap.ui.commons.MessageBox.alert(messages);
+			    	
+	            };
 
+	            
+
+			       
 			    
 			       
 				var oModel = sap.ui.getCore().getModel();  
