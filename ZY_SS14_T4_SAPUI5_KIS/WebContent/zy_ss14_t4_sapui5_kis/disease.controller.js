@@ -7,6 +7,12 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.disease", {
 */
 	onInit: function() {
 
+		var oModel = sap.ui.getCore().getModel();  
+		disease_table = sap.ui.getCore().byId("tblDisease");
+		
+		disease_table.setModel(oModel);  
+		disease_table.bindRows('/CONDITN');
+		
 	},
 	
 	/**
@@ -17,7 +23,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.disease", {
 			layoutFixed : false,
 			});
 		var disease_dialog = new sap.ui.commons.Dialog();
-		var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
+		var oModel = sap.ui.getCore().getModel();  
 
 		/**
 		* Define fields and a button to insert a disease 
@@ -63,8 +69,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.disease", {
 			
 		    
             oModel.create("/CONDITN", oEntry, oParams);
-            var disease_table = sap.ui.getCore().byId("tblDisease");
-			disease_table.bindRows('/CONDITN'); 
+
 
 		});
 
@@ -78,7 +83,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.disease", {
 			layoutFixed : false,
 			});
 		var disease_dialog = new sap.ui.commons.Dialog();
-		var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
+		var oModel = sap.ui.getCore().getModel();  
 
 		/**
 		* Define fields and a button to insert a disease  
@@ -121,8 +126,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.disease", {
 				
 				//oModel.update("/MEDICTN", oEntry, null, oParams.fnSuccess(), oParams.fnError());
 				oModel.update("/CONDITN(Mandt='001',ConditionID="+data['ConditionID']+")", oEntry, oParams);
-				var disease_table = sap.ui.getCore().byId("tblDisease");
-				disease_table.bindRows('/CONDITN'); 
+
 
 			});		
 
