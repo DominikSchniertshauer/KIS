@@ -12,10 +12,22 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 		
 		var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
 		sap.ui.getCore().setModel(oModel);
+		
+		
+		
+
 
 	},
 	
 	validateLogin: function(username, password){
+		
+		if ((username == '') || (password == ''))
+		{
+	    	var messages = "Bitte geben Sie einen Benutzernamen sowie Passwort ein. \n";
+	    	
+	    	sap.ui.commons.MessageBox.alert(messages);
+	    	return;
+		}
 		
 		var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
 		oModel.refreshSecurityToken(null, null);
@@ -26,6 +38,16 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 
 				
 			function(data, response){
+				
+			if (typeof data.results[0] == "undefined") {
+				var messages = "Login fehlgeschlagen. \n";
+				sap.ui.commons.MessageBox.alert(messages);
+				return;
+			};
+		    	
+		    	
+	
+			
 				if(password == data.results[0].Password){
 					
 					var userid = new sap.ui.commons.Label("globalUserID");
@@ -37,7 +59,8 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 					shell.addWorksetItem(new sap.ui.ux3.NavigationItem("hospitalization_nav", {key:"hospitalization",text:"Krankenhausaufenthalt",
 						subItems:[new sap.ui.ux3.NavigationItem("hospitalization_overview_nav", {key:"hospitalization_overview",text:"Uebersicht"}),
 						          new sap.ui.ux3.NavigationItem("hospitalization_new_nav", {key:"hospitalization_new",text:"Patient einweisen"}),
-						          new sap.ui.ux3.NavigationItem("hospitalization_displace_nav", {key:"hospitalization_displace",text:"Patient entlassen"})
+						          new sap.ui.ux3.NavigationItem("hospitalization_displace_nav", {key:"hospitalization_displace",text:"Patient entlassen"}),
+						          new sap.ui.ux3.NavigationItem("hospitalization_disease_nav", {key:"hospitalization_disease",text:"Aktuell zu behandelnde Krankenheiten"})
 								 ]}));
 					shell.addWorksetItem(new sap.ui.ux3.NavigationItem("aktuelles_nav", {key:"patient",text:"Verwaltung", 
 						subItems:[new sap.ui.ux3.NavigationItem("patient_nav", {key:"patient",text:"PATIENT"}),

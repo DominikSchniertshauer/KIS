@@ -122,14 +122,23 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.medication", {
 				
 				
 				var oParams = {};
-			    oParams.fnSuccess = function(){ 
+			    oParams.success = function(){ 
 			    	
 			    	medication_dialog.close(); 		
 			    	
- 
-			    
 			    };
-			    oParams.fnError = function(){medication_dialog.open();};
+			    oParams.error = function(error){ 
+
+			    	var message = error.response.body;
+			    	var messages = "Es sind Fehler aufgetreten: \n";
+			    	
+			    	$('errordetail', message).each(function(i){
+			    		messages = $(this).find("message").text() + "\n";
+			    	});
+			    
+			    	sap.ui.commons.MessageBox.alert(messages);
+			    		    	
+			    };  
 			       
 				
 				oModel.update("/MEDICTN(Mandt='001',MedicationID="+data['MedicationID']+")", oEntry, oParams);
