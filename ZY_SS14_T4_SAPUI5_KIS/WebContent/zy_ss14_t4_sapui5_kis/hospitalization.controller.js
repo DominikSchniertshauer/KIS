@@ -22,19 +22,109 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 	 * @param hospi_begin_date
 	 * @param aData
 	 */
+	
+	
+	
 	create_hospi: function(patient, conditn_input, treat_input, treat_begin_date, user_temp_table, bed_input, hospi_begin_date, aData){
+		
+		// Define function for completion checks
+		// Is used for every try of create hospi
+		function check_data(patient, conditn_input, treat_input, treat_begin_date, user_temp_table, bed_input, hospi_begin_date, aData){
+			var valid = true; 
+			var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
+
+			// Check patient data 
+			if(patient.Insurancenumber == "" || patient.Firstname == "" || patient.Lastname == "" || patient.Postalcode == "" || patient.City == "" || patient.Street == "" || patient.Country == ""){
+				valid = false;
+				
+				jQuery.sap.require("sap.ui.commons.MessageBox");
+				
+				sap.ui.commons.MessageBox.show("Patientendaten unvollstaendig.",
+						sap.ui.commons.MessageBox.Icon.ERROR,
+						"Fehlermeldung");
+			} 
+			
+			
+			// Check if condition exists
+			name = conditn_input.getValue();
+			oModel.read("/CONDITN?$filter=Name eq '"+name+"'" ,undefined, undefined, true,
+					function(data, response){
+				
+				try{
+					if (data.results[0].ConditionID != ''){
+								
+				
+					}
+				} catch(e) {
+					valid = false;
+					jQuery.sap.require("sap.ui.commons.MessageBox");
+					sap.ui.commons.MessageBox.show("Krankheit nicht vorhanden.",
+							sap.ui.commons.MessageBox.Icon.ERROR,
+							"Fehlermeldung");
+				}
+			
+			});
+
+			// Check for vadility of treatment tab
+			if (treat_input.getSelectedKey() == "" ){
+				valid = false;
+				jQuery.sap.require("sap.ui.commons.MessageBox");
+				sap.ui.commons.MessageBox.show("Behandlungsplan nicht vorhanden.",
+						sap.ui.commons.MessageBox.Icon.ERROR,
+						"Fehlermeldung");
+			}
+			if(new Date(treat_begin_date.getValue()).getDate() < new Date().getDate() || treat_begin_date.getValue() ==""){
+				valid = false;
+				jQuery.sap.require("sap.ui.commons.MessageBox");
+				sap.ui.commons.MessageBox.show("Start des Behandlungsplans ungueltig.",
+						sap.ui.commons.MessageBox.Icon.ERROR,
+						"Fehlermeldung");
+			}
+
+			// Check if valid users are assigned
+			
+			if(aData.length == 0){
+				valid = false;
+			
+				jQuery.sap.require("sap.ui.commons.MessageBox");
+				sap.ui.commons.MessageBox.show("Zuordnung zu Mitarbeitern fehlerhaft.",
+						sap.ui.commons.MessageBox.Icon.ERROR,
+						"Fehlermeldung");
+			}
+			
+			// Check for vadility of hospitalizazion date
+			alert(new Date(hospi_begin_date.getValue()).getDate());
+			if(new Date(hospi_begin_date.getValue()).getDate() < new Date().getDate() || hospi_begin_date.getValue() ==""){
+				valid = false;
+				jQuery.sap.require("sap.ui.commons.MessageBox");
+				sap.ui.commons.MessageBox.show("Start der Einweisung ungueltig.",
+						sap.ui.commons.MessageBox.Icon.ERROR,
+						"Fehlermeldung");
+			}
+			
+			if(new Date(treat_begin_date.getValue()).getDate() < new Date(hospi_begin_date.getValue()).getDate() ){
+				valid = false;
+				jQuery.sap.require("sap.ui.commons.MessageBox");
+				sap.ui.commons.MessageBox.show("Behandlungsplan darf nicht vor der Einweisung starten.",
+						sap.ui.commons.MessageBox.Icon.ERROR,
+						"Fehlermeldung");
+			}
+			return valid;
+		};
 		
 		// Setup patients to use them successfully in hospitalization
 		var patientid;
 		
 		var insnr = patient.Insurancenumber;
 		
-		var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
 
 		
 		/**
 		 * Get all Patient informations according to the choosen insurancenumber
 		 */
+		var valid = check_data(patient, conditn_input, treat_input, treat_begin_date, user_temp_table, bed_input, hospi_begin_date, aData);
+		
+		if(valid){
 		oModel.read("/PATIENT?$filter=Insurancenumber eq '"+insnr+"'" ,undefined, undefined, true,
 				function(data, response){
 			
@@ -59,8 +149,8 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 					oEntry.Country = patient.Country;
 					
 					var oParams = {};
-				    oParams.fnSuccess = function(){};
-				    oParams.fnError = function(){};
+				    oParams.success = function(){};
+				    oParams.error = function(){};
 				       
 					
 					oModel.update("/PATIENT(Mandt='001',PatientID="+data.results[0].PatientID+")", oEntry, oParams);
@@ -237,16 +327,20 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 		    };
 		    
 		    oParams.error  = function(){
-				alert("asdasd");
 			};
 
+			// Check if data is correct
+			
+			
 			oModel.create("/HOSPTZN", hospi_entry, oParams);
+
+			
 			
 			
 		
 
 		});
-		
+		}
 		
 	},
 	

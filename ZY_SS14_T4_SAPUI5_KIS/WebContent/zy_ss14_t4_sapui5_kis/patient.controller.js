@@ -116,7 +116,9 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.patient", {
 					       
 						
 						oModel.update("/PATIENT(Mandt='001',PatientID="+data.results[0].PatientID+")", oEntry, oParams);
-						});
+						var patient_table = sap.ui.getCore().byId("tblPatient");
+						patient_table.bindRows('/PATIENT'); 
+					});
 					
 					internal_dialog.addContent(internal_layout);
 					
@@ -189,6 +191,8 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.patient", {
 					       
 						
 						oModel.create("/PATIENT", oEntry, oParams);
+						var patient_table = sap.ui.getCore().byId("tblPatient");
+						patient_table.bindRows('/PATIENT'); 
 					});
 					
 					internal_dialog.addContent(internal_layout);
