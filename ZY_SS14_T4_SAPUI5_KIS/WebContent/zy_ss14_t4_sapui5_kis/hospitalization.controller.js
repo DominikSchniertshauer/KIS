@@ -283,9 +283,9 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 						
 						var hospi_table = sap.ui.getCore().byId("hospi");
 						
-//						var id_filter = new sap.ui.model.Filter("UserID", sap.ui.model.FilterOperator.EQ, sap.ui.getCore().byId("globalUserID").getText());
-//						hospi_table.setModel(oModel);  
-//						hospi_table.bindRows(   {path: "/HOSPI", filters: id_filter }); 
+						var id_filter = new sap.ui.model.Filter("UserID", sap.ui.model.FilterOperator.EQ, sap.ui.getCore().byId("globalUserID").getText());
+						hospi_table.setModel(oModel);  
+						hospi_table.bindRows(   {path: "/HOSPI", filters: id_filter }); 
 //				
 				
 						

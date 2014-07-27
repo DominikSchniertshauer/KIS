@@ -28,6 +28,10 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 			function(data, response){
 				if(password == data.results[0].Password){
 					
+					var userid = new sap.ui.commons.Label("globalUserID");
+					userid.setText(data.results[0].UserID);
+					
+					
 					shell.setAppTitle("Angemeldet als: "+data.results[0].Username);
 					shell.addWorksetItem(new sap.ui.ux3.NavigationItem("index_nav", {key:"index",text:"HOME"}));
 					shell.addWorksetItem(new sap.ui.ux3.NavigationItem("hospitalization_nav", {key:"hospitalization",text:"Krankenhausaufenthalt",
