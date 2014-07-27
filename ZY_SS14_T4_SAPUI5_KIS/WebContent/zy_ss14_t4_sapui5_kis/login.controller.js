@@ -12,6 +12,10 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 		
 		var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
 		sap.ui.getCore().setModel(oModel);
+		
+		
+		
+
 
 	},
 	
@@ -33,7 +37,8 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 					shell.addWorksetItem(new sap.ui.ux3.NavigationItem("hospitalization_nav", {key:"hospitalization",text:"Krankenhausaufenthalt",
 						subItems:[new sap.ui.ux3.NavigationItem("hospitalization_overview_nav", {key:"hospitalization_overview",text:"Uebersicht"}),
 						          new sap.ui.ux3.NavigationItem("hospitalization_new_nav", {key:"hospitalization_new",text:"Patient einweisen"}),
-						          new sap.ui.ux3.NavigationItem("hospitalization_displace_nav", {key:"hospitalization_displace",text:"Patient entlassen"})
+						          new sap.ui.ux3.NavigationItem("hospitalization_displace_nav", {key:"hospitalization_displace",text:"Patient entlassen"}),
+						          new sap.ui.ux3.NavigationItem("hospitalization_disease_nav", {key:"hospitalization_disease",text:"Aktuell zu behandelnde Krankenheiten"})
 								 ]}));
 					shell.addWorksetItem(new sap.ui.ux3.NavigationItem("aktuelles_nav", {key:"patient",text:"Verwaltung", 
 						subItems:[new sap.ui.ux3.NavigationItem("patient_nav", {key:"patient",text:"PATIENT"}),

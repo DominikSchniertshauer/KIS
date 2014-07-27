@@ -261,7 +261,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.disease_plan", {
 			    
 			       
 				var oModel = sap.ui.getCore().getModel();  
-				oModel.refreshSecurityToken(null, null);		
+				
 			
 		        oModel.create("/TREATPL", oEntry, mParameters);
 		        
