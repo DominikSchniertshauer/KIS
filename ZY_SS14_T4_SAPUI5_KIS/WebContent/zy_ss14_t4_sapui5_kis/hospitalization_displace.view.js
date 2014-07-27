@@ -122,6 +122,11 @@
         var lastname_label = new sap.ui.commons.Label({text: "Nachname: "});
         var lastname_input = new sap.ui.commons.TextField("Lname_input");
         
+        var rating_label = new sap.ui.commons.Label({text: "Bewertung: "});
+        var rating_input = new sap.ui.commons.RatingIndicator("hospi_rating", {
+        	maxValue: 5,
+        	visualMode: sap.ui.commons.RatingIndicatorVisualMode.Full
+        });
         
         var patient_displace_panel_layout = new sap.ui.commons.layout.MatrixLayout({
             layoutFixed : false,
@@ -132,7 +137,7 @@
             text : "Patient entlassen",
             icon : "sap-icon://accept",
             press : function() {
-            	oController.displace_patient(insurancenumber_input.getSelectedKey(), aData);
+            	oController.displace_patient(insurancenumber_input.getSelectedKey(), aData, String(rating_input.getValue()));
             },
             
         });
@@ -140,6 +145,7 @@
         patient_displace_panel_layout.createRow(insurancenumber_label, insurancenumber_input);
         patient_displace_panel_layout.createRow(firstname_label, firstname_input.setEditable(false));
         patient_displace_panel_layout.createRow(lastname_label, lastname_input.setEditable(false));
+        patient_displace_panel_layout.createRow(rating_label, rating_input);
         patient_displace_panel_layout.createRow(hospi_displace_button);
         patient_displace_panel.addContent(patient_displace_panel_layout);
         

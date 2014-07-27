@@ -294,8 +294,8 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 		
 		var hospi_begin_date = new sap.ui.commons.DatePicker('Hospi_begin');
 		hospi_begin_date.setLocale("en-US");
-		hospi_begin_date.setValue(new Date());
-		treat_begin_date.setValue(new Date().getDate());
+		hospi_begin_date.setYyyymmdd(new Date().getFullYear().toString()+"-"+(new Date().getMonth()+1).toString()+"-"+new Date().getDate().toString());
+		treat_begin_date.setYyyymmdd(new Date().getFullYear().toString()+"-"+(new Date().getMonth()+1).toString()+"-"+new Date().getDate().toString());
 				
 
 		

@@ -93,8 +93,8 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 			}
 			
 			// Check for vadility of hospitalizazion date
-			alert(new Date(hospi_begin_date.getValue()).getDate());
-			if(new Date(hospi_begin_date.getValue()).getDate() < new Date().getDate() || hospi_begin_date.getValue() ==""){
+
+			if(new Date(hospi_begin_date.getValue()).toDateString() < new Date().toDateString() || hospi_begin_date.getValue() ==""){
 				valid = false;
 				jQuery.sap.require("sap.ui.commons.MessageBox");
 				sap.ui.commons.MessageBox.show("Start der Einweisung ungueltig.",
@@ -102,7 +102,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 						"Fehlermeldung");
 			}
 			
-			if(new Date(treat_begin_date.getValue()).getDate() < new Date(hospi_begin_date.getValue()).getDate() ){
+			if(new Date(treat_begin_date.getValue()).toDateString() < new Date(hospi_begin_date.getValue()).toDateString() ){
 				valid = false;
 				jQuery.sap.require("sap.ui.commons.MessageBox");
 				sap.ui.commons.MessageBox.show("Behandlungsplan darf nicht vor der Einweisung starten.",
