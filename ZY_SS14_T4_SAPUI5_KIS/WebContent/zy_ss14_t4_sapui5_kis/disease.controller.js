@@ -61,10 +61,19 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.disease", {
 		    	
 		    	disease_dialog.close(); 		
 		    	
-
-		    
 		    };
-		    oParams.error = function(){disease_dialog.open();};
+		    oParams.error = function(error){ 
+
+		    	var message = error.response.body;
+		    	var messages = "Es sind Fehler aufgetreten: \n";
+		    	
+		    	$('errordetail', message).each(function(i){
+		    		messages = $(this).find("message").text() + "\n";
+		    	});
+		    
+		    	sap.ui.commons.MessageBox.alert(messages);
+		    		    	
+		    };  
 		       
 			
 		    
@@ -116,12 +125,23 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.disease", {
 				
 				
 				var oParams = {};
-			    oParams.fnSuccess = function(){ 
+			    oParams.success = function(){ 
 			    	
 			    	disease_dialog.close(); 		
-	
+			    	
 			    };
-			    oParams.fnError = function(){disease_dialog.open();};
+			    oParams.error = function(error){ 
+
+			    	var message = error.response.body;
+			    	var messages = "Es sind Fehler aufgetreten: \n";
+			    	
+			    	$('errordetail', message).each(function(i){
+			    		messages = $(this).find("message").text() + "\n";
+			    	});
+			    
+			    	sap.ui.commons.MessageBox.alert(messages);
+			    		    	
+			    };  
 			       
 				
 				//oModel.update("/MEDICTN", oEntry, null, oParams.fnSuccess(), oParams.fnError());
