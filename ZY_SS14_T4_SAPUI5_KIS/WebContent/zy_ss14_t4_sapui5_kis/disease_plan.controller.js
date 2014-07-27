@@ -5,9 +5,14 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.disease_plan", {
 * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
 * @memberOf zy_ss14_t4_sapui5_kis.disease_plan
 */
-//	onInit: function() {
-//
-//	},
+	onInit: function() {
+
+		var oModel = sap.ui.getCore().getModel();  
+		medication_table = sap.ui.getCore().byId("tblDiseasePlan");
+		
+		medication_table.setModel(oModel);  
+		medication_table.bindRows('/TREATPL');
+	},
 
 /**
 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
@@ -23,8 +28,6 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.disease_plan", {
 			layoutFixed : false,
 			});
 		var disease_plan_dialog = new sap.ui.commons.Dialog();
-		var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
-		
 		
 		/**
 		*  Create Panels
@@ -247,7 +250,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.disease_plan", {
 						oEntry.TreatPlanID = data['TreatPlanID'];
 						oEntry.MedicationID = getTblData['MedicationID'];
 						oEntry.AdministrationInterval = getTblData['Interval'];
-						var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
+						var oModel = sap.ui.getCore().getModel();  
 						oModel.create("/TREMED", oEntry);
 				
 					}
@@ -257,14 +260,11 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.disease_plan", {
 
 			    
 			       
-				var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
+				var oModel = sap.ui.getCore().getModel();  
 				oModel.refreshSecurityToken(null, null);		
 			
 		        oModel.create("/TREATPL", oEntry, mParameters);
 		        
-		        
-				var medication_table = sap.ui.getCore().byId("tblDiseasePlan");
-				medication_table.bindRows('/TREATPL'); 
 
 		});
 

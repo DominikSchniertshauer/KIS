@@ -8,10 +8,10 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.medication", {
 	onInit: function() {
 
 		var oModel = sap.ui.getCore().getModel();  
-		medication_table = sap.ui.getCore().byId("tblMedication");
+		disease_plan_table = sap.ui.getCore().byId("tblMedication");
 		
-		medication_table.setModel(oModel);  
-		medication_table.bindRows('/MEDICTN');
+		disease_plan_table.setModel(oModel);  
+		disease_plan_table.bindRows('/MEDICTN');
 	},
 	
 	/**

@@ -73,7 +73,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.disease_plan", {
 		panelMedi.setTitle(titleMedi); 
 		
 		 /**
-		 * Create table to display all available medications 
+		 * Create table to display all available treatment plans 
 		 */
 		var disease_plan_table = new sap.ui.table.Table("tblDiseasePlan", {
 				selectionMode: sap.ui.table.SelectionMode.Single,
@@ -83,8 +83,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.disease_plan", {
 					data = model.getProperty(currentRowContext);
 					
 					
-					var oModel = new sap.ui.model.odata.ODataModel(  
-							sap.ui.getCore().byId("path").getText(), false);  
+					var oModel = sap.ui.getCore().getModel();  
 					
 					disease_plan_medi_table.setModel(oModel);  
 					disease_plan_medi_table.bindRows("/TREMD?$filter=TreatPlanID eq "+data['TreatPlanID']+" "); 
@@ -140,12 +139,12 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.disease_plan", {
 		/**
 		* Fill table with data: 
 		*/
-		var oModel = new sap.ui.model.odata.ODataModel(  
-				sap.ui.getCore().byId("path").getText(), false);  
-		
-		disease_plan_table.setModel(oModel);  
-		disease_plan_table.bindRows('/TREATPL');  
-		
+//		var oModel = new sap.ui.model.odata.ODataModel(  
+//				sap.ui.getCore().byId("path").getText(), false);  
+//		
+//		disease_plan_table.setModel(oModel);  
+//		disease_plan_table.bindRows('/TREATPL');  
+//		
 
 		
 		panel.addContent(disease_plan_table);  
