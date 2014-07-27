@@ -104,11 +104,6 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.disease", {
 		/**
 		* Fill table with data: 
 		*/
-		var oModel = new sap.ui.model.odata.ODataModel(  
-				sap.ui.getCore().byId("path").getText(), false);  
-		
-		disease_table.setModel(oModel);  
-		disease_table.bindRows('/CONDITN');  
 		
 		panel.addContent(disease_table);    
 		layout.createRow(panel);  
