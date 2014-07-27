@@ -29,6 +29,9 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 		
 		// Define function for completion checks
 		// Is used for every try of create hospi
+		var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
+
+		
 		function check_data(patient, conditn_input, treat_input, treat_begin_date, user_temp_table, bed_input, hospi_begin_date, aData){
 			var valid = true; 
 			var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
@@ -123,8 +126,8 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 		 * Get all Patient informations according to the choosen insurancenumber
 		 */
 		var valid = check_data(patient, conditn_input, treat_input, treat_begin_date, user_temp_table, bed_input, hospi_begin_date, aData);
-		
 		if(valid){
+
 		oModel.read("/PATIENT?$filter=Insurancenumber eq '"+insnr+"'" ,undefined, undefined, true,
 				function(data, response){
 			
@@ -252,8 +255,9 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 									};
 									
 									var oParams2 = {};
-								    oParams2.fnSuccess = function(){ };
-							    	oParams2.fnError = function(){};
+								    oParams2.success = function(){
+								    };
+							    	oParams2.error = function(){};
 									var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
 									oModel.refreshSecurityToken(null, null);
 									oModel.update("/BED(Mandt='001',BedID="+data['BedID']+")", test, oParams2);
@@ -279,10 +283,10 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 						
 						var hospi_table = sap.ui.getCore().byId("hospi");
 						
-						var id_filter = new sap.ui.model.Filter("UserID", sap.ui.model.FilterOperator.EQ, sap.ui.getCore().byId("globalUserID").getText());
-						hospi_table.setModel(oModel);  
-						hospi_table.bindRows(   {path: "/HOSPI", filters: id_filter }); 
-				
+//						var id_filter = new sap.ui.model.Filter("UserID", sap.ui.model.FilterOperator.EQ, sap.ui.getCore().byId("globalUserID").getText());
+//						hospi_table.setModel(oModel);  
+//						hospi_table.bindRows(   {path: "/HOSPI", filters: id_filter }); 
+//				
 				
 						
 						/**
