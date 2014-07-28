@@ -51,7 +51,16 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.index", {
 		var firstname_label = new sap.ui.commons.Label("firstname",{text:""});
 		var lastname_label = new sap.ui.commons.Label("lastname",{text:""});
 		
-		var hospi_table = new sap.ui.table.Table("hospi"); 
+		var hospi_table = new sap.ui.table.Table("hospi", {
+			id: "Mandt",
+			selectionMode: sap.ui.table.SelectionMode.Single,
+			rowSelectionChange: function(oEvent){
+				var currentRowContext = oEvent.getParameter("rowContext").getPath();
+				var model = hospi_table.getModel();
+				data = model.getProperty(currentRowContext);
+				oController.show_patientInfo_dialog(data);
+			}
+		}); 
 		hospi_table.setTitle("Zugeordnete Patienten");
 		hospi_table.addColumn(  
 		     new sap.ui.table.Column({  
