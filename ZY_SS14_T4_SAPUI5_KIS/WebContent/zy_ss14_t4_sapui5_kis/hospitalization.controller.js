@@ -256,6 +256,8 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 									
 									var oParams2 = {};
 								    oParams2.success = function(){
+										$.growl.notice({ title: "Meldung", message: "Patient erfolgreich eingewiesen!" });
+
 										var aData = []; 
 										
 										/**
@@ -307,7 +309,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 								        			};
 								        				
 								        });
-								        
+
 						
 								        var getinsnr_com_temp = sap.ui.getCore().byId("insnr_com_temp");
 								        getinsnr_com_temp.bindProperty("text", "myModel>Insurancenumber");
@@ -319,7 +321,6 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 								    
 								    	
 								    	
-										$.growl.notice({ title: "Meldung", message: "Patient erfolgreich eingewiesen!" });
 
 								    	
 								    };
