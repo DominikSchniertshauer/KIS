@@ -57,7 +57,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.medication", {
 			
 			var oParams = {};
 		    oParams.success = function(){ 
-				$.growl.notice({ title: "Meldung", message: "Eingabe erfolgreich!" });
+				$.growl.notice({ title: "Meldung", message: "Medikament erfolgreich angelegt!" });
 
 		    	medication_dialog.close(); 		
 		    	
@@ -128,7 +128,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.medication", {
 			    	
 			    	medication_dialog.close(); 	
 			    	
-					$.growl.notice({ title: "Meldung", message: "Eingabe erfolgreich!" });
+					$.growl.notice({ title: "Meldung", message: "Medikament erfolgreich angepasst!" });
 
 			    	
 			    	

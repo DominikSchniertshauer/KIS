@@ -58,7 +58,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.disease", {
 			
 			var oParams = {};
 		    oParams.success = function(){ 
-				$.growl.notice({ title: "Meldung", message: "Eingabe erfolgreich!" });
+				$.growl.notice({ title: "Meldung", message: "Krankheit erfolgreich angelegt!" });
 
 		    	disease_dialog.close(); 		
 		    	
@@ -127,7 +127,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.disease", {
 				
 				var oParams = {};
 			    oParams.success = function(){ 
-					$.growl.notice({ title: "Meldung", message: "Eingabe erfolgreich!" });
+					$.growl.notice({ title: "Meldung", message: "Krankheit erfolgreich angepasst!" });
 
 			    	disease_dialog.close(); 		
 			    	

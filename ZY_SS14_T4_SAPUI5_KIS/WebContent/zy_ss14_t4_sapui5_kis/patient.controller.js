@@ -112,7 +112,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.patient", {
 						
 						var oParams = {};
 					    oParams.success = function(){ 
-							$.growl.notice({ title: "Meldung", message: "Eingabe erfolgreich!" });
+							$.growl.notice({ title: "Meldung", message: "Patient erfolgreich angepasst!" });
 					    	internal_dialog.close();};
 					    	
 					    oParams.error = function(){
@@ -202,7 +202,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.patient", {
 						
 						var oParams = {};
 					    oParams.success = function(){ 
-							$.growl.notice({ title: "Meldung", message: "Eingabe erfolgreich!" });
+							$.growl.notice({ title: "Meldung", message: "Patient erfolgreich angelegt!" });
 					    	internal_dialog.close();};
 					    oParams.error = function(){internal_dialog.open();};
 					       
@@ -286,7 +286,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.patient", {
 				
 				var oParams = {};
 			    oParams.fnSuccess = function(){ 
-					$.growl.notice({ title: "Meldung", message: "Eingabe erfolgreich!" });
+					$.growl.notice({ title: "Meldung", message: "Patient erfolgreich angepasst!" });
 
 			    	patient_dialog.close(); 		
 	

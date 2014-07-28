@@ -197,7 +197,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization_displace", {
 					        getLname_input.setValue("");
 					        getInsurnumber_input.bindItems("myModel>/modelDatas", getinsnr_com_temp);
 							
-					        $.growl.notice({ title: "Meldung", message: "Eingabe erfolgreich!" });
+					        $.growl.notice({ title: "Meldung", message: "Patient erfolgreich entlassen!" });
 
 		                } catch(e) {
 		                    

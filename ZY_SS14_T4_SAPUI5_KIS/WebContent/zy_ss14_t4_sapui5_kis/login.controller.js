@@ -20,7 +20,6 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 	},
 	
 	validateLogin: function(username, password){
-		$.growl.notice({ title: "Meldung", message: "Eingabe erfolgreich!" });
 
 		if ((username == '') || (password == ''))
 		{

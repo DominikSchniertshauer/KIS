@@ -257,7 +257,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 									var oParams2 = {};
 								    oParams2.success = function(){
 								    	
-										$.growl.notice({ title: "Meldung", message: "Eingabe erfolgreich!" });
+										$.growl.notice({ title: "Meldung", message: "Patient erfolgreich eingewiesen!" });
 
 								    	
 								    };
