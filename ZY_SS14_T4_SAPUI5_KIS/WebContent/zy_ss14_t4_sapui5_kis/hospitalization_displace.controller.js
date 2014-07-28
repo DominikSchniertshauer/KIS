@@ -206,6 +206,15 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization_displace", {
 							hospi_table.setModel(oModel);  
 							hospi_table.bindRows('/HOSOV'); 
 							
+							
+							var hospi_disease_table = sap.ui.getCore().byId("tblHospiDisease");
+							
+							var oModel = sap.ui.getCore().getModel();  
+							
+							hospi_disease_table.setModel(oModel);  
+							hospi_disease_table.bindRows('/HOSDE'); 
+							
+							
 							var hospi_table = sap.ui.getCore().byId("hospi");
 							
 							var id_filter = new sap.ui.model.Filter("UserID", sap.ui.model.FilterOperator.EQ, sap.ui.getCore().byId("globalUserID").getText());

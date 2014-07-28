@@ -327,7 +327,6 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 								    oParams2.async = false;
 							    	oParams2.error = function(){};
 									var oModel = sap.ui.getCore().getModel(); 
-									oModel.refreshSecurityToken(null, null);
 									oModel.update("/BED(Mandt='001',BedID="+data['BedID']+")", test, oParams2);
 									oModel.read("/BED?$filter=Istaken eq 'FALSE'");
 									var bed_input = sap.ui.getCore().byId("Bed_input");
@@ -355,6 +354,13 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 						
 						hospi_table.setModel(oModel);  
 						hospi_table.bindRows('/HOSOV'); 
+						
+						var hospi_disease_table = sap.ui.getCore().byId("tblHospiDisease");
+						
+						var oModel = sap.ui.getCore().getModel();  
+						
+						hospi_disease_table.setModel(oModel);  
+						hospi_disease_table.bindRows('/HOSDE'); 
 						
 						var hospi_table = sap.ui.getCore().byId("hospi");
 						
@@ -436,7 +442,6 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 		user_temp_table.bindRows("/modelData");
 		
 		var oModel = sap.ui.getCore().getModel(); 
-		oModel.refreshSecurityToken(null, null);
 		oModel.read("/USER(Mandt='001',UserID="+user_input.getSelectedKey()+")" , null, null, true,
 				function(data, response){
 

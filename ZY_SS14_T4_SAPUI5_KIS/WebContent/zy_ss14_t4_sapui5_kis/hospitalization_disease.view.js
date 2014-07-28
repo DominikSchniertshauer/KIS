@@ -64,8 +64,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization_disease", {
 
 
   
-		var oModel = new sap.ui.model.odata.ODataModel(  
-				sap.ui.getCore().byId("path").getText(), false);  
+		var oModel = sap.ui.getCore().getModel();  
 		
 		
 		
