@@ -57,7 +57,8 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.medication", {
 			
 			var oParams = {};
 		    oParams.success = function(){ 
-		    	
+				$.growl.notice({ title: "Meldung", message: "Eingabe erfolgreich!" });
+
 		    	medication_dialog.close(); 		
 		    	
 		    };
@@ -70,7 +71,8 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.medication", {
 		    		messages = $(this).find("message").text() + "\n";
 		    	});
 		    
-		    	sap.ui.commons.MessageBox.alert(messages);
+		    	sap.ui.commons.MessageBox.alert(messages,sap.ui.commons.MessageBox.Icon.ERROR,
+		    			"Fehlermeldung");
 		    		    	
 		    };  
 			    
@@ -124,7 +126,11 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.medication", {
 				var oParams = {};
 			    oParams.success = function(){ 
 			    	
-			    	medication_dialog.close(); 		
+			    	medication_dialog.close(); 	
+			    	
+					$.growl.notice({ title: "Meldung", message: "Eingabe erfolgreich!" });
+
+			    	
 			    	
 			    };
 			    oParams.error = function(error){ 

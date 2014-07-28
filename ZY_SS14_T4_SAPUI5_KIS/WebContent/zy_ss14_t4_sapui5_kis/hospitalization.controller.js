@@ -256,12 +256,22 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 									
 									var oParams2 = {};
 								    oParams2.success = function(){
+								    	
+										$.growl.notice({ title: "Meldung", message: "Eingabe erfolgreich!" });
+
+								    	
 								    };
+								    oParams2.async = false;
 							    	oParams2.error = function(){};
 									var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
 									oModel.refreshSecurityToken(null, null);
 									oModel.update("/BED(Mandt='001',BedID="+data['BedID']+")", test, oParams2);
+									oModel.read("/BED?$filter=Istaken eq 'FALSE'");
+									var bed_input = sap.ui.getCore().byId("Bed_input");
 									
+							    	var oFilter = new sap.ui.model.Filter("Istaken", sap.ui.model.FilterOperator.EQ, "FALSE");
+									
+							    	bed_input.bindItems("/BED", bed_comb_temp, null, [oFilter]);
 									
 
 				                } catch(e) { }

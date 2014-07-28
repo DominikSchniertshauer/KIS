@@ -109,7 +109,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization_displace", {
 			
 			
 			var oParams = {};
-		    oParams.fnSuccess = function(){ 
+		    oParams.success = function(){ 
 		    	var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
 		    	oModel.read("/BED(Mandt='001',BedID="+oEntry.BedID+")" , null, null, true,
 						function(data, response){
@@ -196,7 +196,9 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization_displace", {
 					        getFname_input.setValue("");
 					        getLname_input.setValue("");
 					        getInsurnumber_input.bindItems("myModel>/modelDatas", getinsnr_com_temp);
-					       
+							
+					        $.growl.notice({ title: "Meldung", message: "Eingabe erfolgreich!" });
+
 		                } catch(e) {
 		                    
 		                };

@@ -13,9 +13,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.login", {
 	* @memberOf zy_ss14_t4_sapui5_kis.login
 	*/ 
 	createContent : function(oController) {
-		
-		
-		
+			
 		var layout = new sap.ui.commons.layout.AbsoluteLayout({width:"340px",height:"150px"});
 		layout.addStyleClass("CustomStyle");
 

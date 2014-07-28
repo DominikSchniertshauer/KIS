@@ -262,6 +262,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.disease_plan", {
 						oModel.create("/TREMED", oEntry);
 				
 					}
+					$.growl.notice({ title: "Meldung", message: "Eingabe erfolgreich!" });
 					disease_plan_dialog.close(); 
 	            };
 	            mParameters.error = function(){

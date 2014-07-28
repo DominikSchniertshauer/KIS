@@ -111,7 +111,10 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.patient", {
 						oEntry.Country = country_input.getValue();
 						
 						var oParams = {};
-					    oParams.success = function(){ internal_dialog.close();};
+					    oParams.success = function(){ 
+							$.growl.notice({ title: "Meldung", message: "Eingabe erfolgreich!" });
+					    	internal_dialog.close();};
+					    	
 					    oParams.error = function(){
 					    	var message = error.response.body;
 					    	var messages = "Es sind Fehler aufgetreten: \n";
@@ -134,13 +137,15 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.patient", {
 					
 					internal_dialog.open();
 					
-				}} catch(e) {
+				}} 
+				// Catch, if patient doesn't exist --> create patient
+				catch(e) {
 					var internal_layout = new sap.ui.commons.layout.MatrixLayout({
 						layoutFixed : false,
 						});
 					var internal_dialog = new sap.ui.commons.Dialog();
 
-					// Dialog definieren und Felder mit Ergebniswerten füllen
+					// Define dialog and fill in required fields
 					
 					
 					var firstname_label = new sap.ui.commons.Label({text: "Vorname: "});
@@ -196,7 +201,9 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.patient", {
 						oEntry.Country = country_input.getValue();
 						
 						var oParams = {};
-					    oParams.success = function(){ internal_dialog.close();};
+					    oParams.success = function(){ 
+							$.growl.notice({ title: "Meldung", message: "Eingabe erfolgreich!" });
+					    	internal_dialog.close();};
 					    oParams.error = function(){internal_dialog.open();};
 					       
 						
@@ -279,7 +286,8 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.patient", {
 				
 				var oParams = {};
 			    oParams.fnSuccess = function(){ 
-			    	
+					$.growl.notice({ title: "Meldung", message: "Eingabe erfolgreich!" });
+
 			    	patient_dialog.close(); 		
 	
 			    };

@@ -261,11 +261,13 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 		var bed_label = new sap.ui.commons.Label({text: "Bett:        ", width: "150px"});
 		var bed_comb_temp = new sap.ui.core.ListItem({text:"{BedID}", key:"{BedID}", additionalText:"{RoomID}"});
 		
+
 		var bed_input = new sap.ui.commons.DropdownBox("Bed_input",
 				{displaySecondaryValues: true, 
-				items: {path: "/BED?$filter=Istaken eq 'FALSE'",
-				 template: bed_comb_temp,
-				 }});
+				});
+		var oFilter = new sap.ui.model.Filter("Istaken", sap.ui.model.FilterOperator.EQ, "FALSE");
+		bed_input.bindItems("/BED", bed_comb_temp, null, [oFilter]);
+		
 		bed_panel_layout.createRow(bed_label, bed_input);
 		
 		var patient = []; 

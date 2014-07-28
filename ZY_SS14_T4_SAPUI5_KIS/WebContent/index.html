@@ -4,6 +4,8 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
 		
+	
+		
 
 		<script src="resources/sap-ui-core.js"
 				id="sap-ui-bootstrap"
@@ -11,9 +13,15 @@
 			
 				data-sap-ui-theme="sap_goldreflection">
 		</script>
+		
+		<script src="js/jquery.growl.js"></script>
+		<link href="css/jquery.growl.css" rel="stylesheet" type="text/css" />
+				
+	
 		<!-- add sap.ui.table,sap.ui.ux3 and/or other libraries to 'data-sap-ui-libs' if required -->
 
 		<script>
+		
 				sap.ui.localResources("zy_ss14_t4_sapui5_kis");
 				
 				// Hauptkomponenten definieren
@@ -24,7 +32,7 @@
 					 left : 60px;
 					 right: 100px;
 					}*/
-
+					
 					function displayListener(oEvent) {
 						var bShow = oEvent.getParameter("show");
 
@@ -46,7 +54,6 @@
 				//		text : sText,
 				//		timestamp : now
 				//	});
-
 					var notifier = new sap.ui.ux3.Notifier("notifier",{
 						title : "Erinnerungen:"
 					});
@@ -62,7 +69,8 @@
 					notification_bar.addNotifier(notifier);
 					
 					
-					// End of notification bar
+					
+					 //End of notification bar
 				
 					var shell = new sap.ui.ux3.Shell({id: "shell", notificationBar : notification_bar }); 
 					var login_view = sap.ui.view({id:"login", viewName:"zy_ss14_t4_sapui5_kis.login",type: sap.ui.core.mvc.ViewType.JS});
@@ -93,5 +101,6 @@
 	</head>
 	<body class="sapUiBody" role="application">
 		<div id="content"></div>
+		
 	</body>
 </html>
