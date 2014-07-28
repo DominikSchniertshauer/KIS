@@ -36,7 +36,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization_displace", {
 //    }
     
     get_patient: function(insnr, fields){
-        var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
+        var oModel = sap.ui.getCore().getModel(); 
 
         var field;
         var oEntry = {
@@ -110,7 +110,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization_displace", {
 			
 			var oParams = {};
 		    oParams.success = function(){ 
-		    	var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
+		    	var oModel = sap.ui.getCore().getModel(); 
 		    	oModel.read("/BED(Mandt='001',BedID="+oEntry.BedID+")" , null, null, true,
 						function(data, response){
 		            
@@ -140,8 +140,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization_displace", {
 							oModelInsNr.setData({modelDatas: aData});
 					   
 							sap.ui.getCore().setModel(oModelInsNr, "myModel");
-					        var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
-							oModel.refreshSecurityToken(null, null);
+					        var oModel = sap.ui.getCore().getModel(); 
 					        
 					        oModel.read("/HOSPTZN?$filter=DateEnd eq datetime'0000-00-00T00:00'" , null, null, false,
 									function(data, response){

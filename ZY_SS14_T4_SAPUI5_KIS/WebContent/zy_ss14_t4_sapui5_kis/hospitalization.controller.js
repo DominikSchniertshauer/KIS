@@ -29,12 +29,12 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 		
 		// Define function for completion checks
 		// Is used for every try of create hospi
-		var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
+		var oModel = sap.ui.getCore().getModel(); 
 
 		
 		function check_data(patient, conditn_input, treat_input, treat_begin_date, user_temp_table, bed_input, hospi_begin_date, aData){
 			var valid = true; 
-			var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
+			var oModel = sap.ui.getCore().getModel(); 
 
 			// Check patient data 
 			if(patient.Insurancenumber == "" || patient.Firstname == "" || patient.Lastname == "" || patient.Postalcode == "" || patient.City == "" || patient.Street == "" || patient.Country == ""){
@@ -232,7 +232,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 						hosuse_entry.HospitaliznID = hospitaliznID;
 						hosuse_entry.UserID =  getTblData['UserID'];
 						
-						var oModel2 = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
+						var oModel2 = sap.ui.getCore().getModel(); 
 
 						oModel2.create("/HOSUSE", hosuse_entry);
 						
@@ -240,7 +240,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 						/**
 						 * Change status of a bed to istaken=true
 						 */
-				    	var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
+				    	var oModel = sap.ui.getCore().getModel(); 
 				    	
 				    	oModel.read("/BED(Mandt='001',BedID="+bed_input.getValue()+")" , null, null, true,
 								function(data, response){
@@ -256,6 +256,68 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 									
 									var oParams2 = {};
 								    oParams2.success = function(){
+										var aData = []; 
+										
+										/**
+										 *  Update Combobox in Hospitalization-Displace
+										 */
+										var oModelInsNr = new sap.ui.model.json.JSONModel();
+										oModelInsNr.setData({modelDatas: aData});
+								   
+										sap.ui.getCore().setModel(oModelInsNr, "myModel");
+								        var oModel = sap.ui.getCore().getModel(); 
+								        
+								        oModel.read("/HOSPTZN?$filter=DateEnd eq datetime'0000-00-00T00:00'" , null, null, false,
+												function(data, response){
+								        			
+								        			for (var i=0; i < data.results.length; i++) {
+								        				
+								        				var oEntry = {	
+								        				};
+								        				oEntry.HospitaliznID = data.results[i].HospitaliznID;
+								        				oEntry.TreatPlanID = data.results[i].TreatPlanID;
+								        				oEntry.PatientID = data.results[i].PatientID;
+								        				oEntry.BedID = data.results[i].BedID;
+								        				oEntry.DateBegin = data.results[i].DateBegin;
+								        				oEntry.StartOfTreatmentPlan = data.results[i].StartOfTreatmentPlan;
+								        				oEntry.TreatmentRating = data.results[i].TreatmentRating;
+								        				
+								        				 var oModel2 = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
+								        					oModel2.refreshSecurityToken(null, null);
+								        
+								        			        oModel2.read("/PATIENT(Mandt='001',PatientID="+data.results[i].PatientID+")" , null, null, false,
+								        							function(data2, response){
+								        			        	
+								        						var test = {
+								        								"Insurancenumber": data2['Insurancenumber'],
+								        								"Firstname": data2['Firstname'],
+								        								"Lastname": data2['Lastname'],
+								        								"HospitalizationID": oEntry.HospitaliznID,
+								        								"TreatPlanID": oEntry.TreatPlanID,
+								        								"PatientID": oEntry.PatientID, 
+								        								"BedID" : oEntry.BedID,
+								        								"DateBegin" : oEntry.DateBegin,
+								        								"StartOfTreatmentPlan": oEntry.StartOfTreatmentPlan,
+								        								"TreatmentRating": oEntry.TreatmentRating,
+								        						};
+								        						
+								        						aData.push(test);
+								        						
+								        			        });
+								        			};
+								        				
+								        });
+								        
+						
+								        var getinsnr_com_temp = sap.ui.getCore().byId("insnr_com_temp");
+								        getinsnr_com_temp.bindProperty("text", "myModel>Insurancenumber");
+								        getinsnr_com_temp.bindProperty("key", "myModel>HospitalizationID");
+								        getinsnr_com_temp.bindProperty("additionalText", "myModel>Lastname");
+								       
+								        getInsurnumber_input.setValue("");
+								        getInsurnumber_input.bindItems("myModel>/modelDatas", getinsnr_com_temp);
+								    
+								    	
 								    	
 										$.growl.notice({ title: "Meldung", message: "Patient erfolgreich eingewiesen!" });
 
@@ -263,7 +325,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 								    };
 								    oParams2.async = false;
 							    	oParams2.error = function(){};
-									var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
+									var oModel = sap.ui.getCore().getModel(); 
 									oModel.refreshSecurityToken(null, null);
 									oModel.update("/BED(Mandt='001',BedID="+data['BedID']+")", test, oParams2);
 									oModel.read("/BED?$filter=Istaken eq 'FALSE'");
@@ -272,6 +334,9 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 							    	var oFilter = new sap.ui.model.Filter("Istaken", sap.ui.model.FilterOperator.EQ, "FALSE");
 									
 							    	bed_input.bindItems("/BED", bed_comb_temp, null, [oFilter]);
+							    	
+							    	
+	
 									
 
 				                } catch(e) { }
@@ -285,8 +350,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 						 */
 						var hospi_table = sap.ui.getCore().byId("hospitalization_Overview_Table");
 							
-						var oModel = new sap.ui.model.odata.ODataModel(  
-								sap.ui.getCore().byId("path").getText(), false);  
+						var oModel = sap.ui.getCore().getModel();  
 						
 						hospi_table.setModel(oModel);  
 						hospi_table.bindRows('/HOSPI'); 
@@ -370,7 +434,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 		user_temp_table.setModel(oModel2);
 		user_temp_table.bindRows("/modelData");
 		
-		var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
+		var oModel = sap.ui.getCore().getModel(); 
 		oModel.refreshSecurityToken(null, null);
 		oModel.read("/USER(Mandt='001',UserID="+user_input.getSelectedKey()+")" , null, null, true,
 				function(data, response){
@@ -399,7 +463,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 			layoutFixed : false,
 			});
 		var disease_plan_dialog = new sap.ui.commons.Dialog();
-		var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
+		var oModel = sap.ui.getCore().getModel(); 
 		
 		
 		/**
@@ -557,8 +621,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 			/**
 			 * define Data model
 			 */
-			var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
-			oModel.refreshSecurityToken(null, null);
+			var oModel = sap.ui.getCore().getModel(); 
 			
 			// Filtern nach Versichertennummer
 			
@@ -643,8 +706,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 
 			    
 			       
-				var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
-				oModel.refreshSecurityToken(null, null);		
+				var oModel = sap.ui.getCore().getModel(); 	
 			
 		        oModel.create("/TREATPL", oEntry, mParameters);
 		        
@@ -661,7 +723,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 	
 	check_conditn_exists: function(name){
 		
-		var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
+		var oModel = sap.ui.getCore().getModel(); 
 
 		var field;
 		var oEntry = {
@@ -755,7 +817,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 	},
 	
 	create_patient: function(insnr, fields){
-		var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
+		var oModel = sap.ui.getCore().getModel(); 
 
 		var field;
 		var oEntry = {

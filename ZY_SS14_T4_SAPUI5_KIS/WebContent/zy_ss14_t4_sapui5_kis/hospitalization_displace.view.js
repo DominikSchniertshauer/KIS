@@ -52,8 +52,7 @@
 		oModelInsNr.setData({modelDatas: aData});
         
 		sap.ui.getCore().setModel(oModelInsNr, "myModel");
-        var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
-		oModel.refreshSecurityToken(null, null);
+        var oModel = sap.ui.getCore().getModel(); 
         
         oModel.read("/HOSPTZN?$filter=DateEnd eq datetime'0000-00-00T00:00'" , null, null, false,
 				function(data, response){
@@ -70,8 +69,7 @@
         				oEntry.StartOfTreatmentPlan = data.results[i].StartOfTreatmentPlan;
         				oEntry.TreatmentRating = data.results[i].TreatmentRating;
         				
-        				 var oModel2 = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
-        					oModel2.refreshSecurityToken(null, null);
+        				 var oModel2 = sap.ui.getCore().getModel(); 
         
         			        oModel2.read("/PATIENT(Mandt='001',PatientID="+data.results[i].PatientID+")" , null, null, false,
         							function(data2, response){
@@ -147,8 +145,8 @@
         		oModelInsNr.setData({modelDatas: aData});
                 
         		sap.ui.getCore().setModel(oModelInsNr, "myModel");
-                var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
-        		oModel.refreshSecurityToken(null, null);
+                var oModel = sap.ui.getCore().getModel(); 
+
                 
                 oModel.read("/HOSPTZN?$filter=DateEnd eq datetime'0000-00-00T00:00'" , null, null, false,
         				function(data, response){
@@ -165,8 +163,7 @@
                 				oEntry.StartOfTreatmentPlan = data.results[i].StartOfTreatmentPlan;
                 				oEntry.TreatmentRating = data.results[i].TreatmentRating;
                 				
-                				 var oModel2 = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
-                					oModel2.refreshSecurityToken(null, null);
+                				 var oModel2 = sap.ui.getCore().getModel(); 
                 
                 			        oModel2.read("/PATIENT(Mandt='001',PatientID="+data.results[i].PatientID+")" , null, null, false,
                 							function(data2, response){
