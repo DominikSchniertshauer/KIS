@@ -112,7 +112,17 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.patient", {
 						
 						var oParams = {};
 					    oParams.success = function(){ internal_dialog.close();};
-					    oParams.error = function(){internal_dialog.open();};
+					    oParams.error = function(){
+					    	var message = error.response.body;
+					    	var messages = "Es sind Fehler aufgetreten: \n";
+					    	
+					    	$('errordetail', message).each(function(i){
+					    		messages = $(this).find("message").text() + "\n";
+					    	});
+					    
+					    	sap.ui.commons.MessageBox.alert(messages,sap.ui.commons.MessageBox.Icon.ERROR,
+					    			"Fehlermeldung");
+					    	internal_dialog.open();};
 					       
 						
 						oModel.update("/PATIENT(Mandt='001',PatientID="+data.results[0].PatientID+")", oEntry, oParams);

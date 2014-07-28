@@ -23,15 +23,17 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.disease_plan", {
 	   /** 
 	   * Create Buttons:
 	   */
-		var create_button = new sap.ui.commons.Button("disease_plan_create", {
-	        text : "Neuen Behandlungsplan anlegen",
-	        icon : "sap-icon://syringe",
-	        press : function() { 
-	        	oController.open_create_dialog();
-			}
-	    	
-		});
-
+		
+		
+		
+			var create_button = new sap.ui.commons.Button("disease_plan_create", {
+		        text : "Neuen Behandlungsplan anlegen",
+		        icon : "sap-icon://syringe",
+		        press : function() { 
+		        	oController.open_create_dialog();
+				}
+		    	
+			});
 
 		
 		

@@ -20,7 +20,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 	},
 	
 	validateLogin: function(username, password){
-		
+
 		if ((username == '') || (password == ''))
 		{
 	    	var messages = "Bitte geben Sie einen Benutzernamen sowie Passwort ein. \n";
@@ -49,6 +49,9 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 	
 			
 				if(password == data.results[0].Password){
+					// Set global roleid variable
+					
+				
 					
 					var userid = new sap.ui.commons.Label("globalUserID");
 					userid.setText(data.results[0].UserID);
@@ -56,18 +59,9 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 					
 					shell.setAppTitle("Angemeldet als: "+data.results[0].Username);
 					shell.addWorksetItem(new sap.ui.ux3.NavigationItem("index_nav", {key:"index",text:"HOME"}));
-					shell.addWorksetItem(new sap.ui.ux3.NavigationItem("hospitalization_nav", {key:"hospitalization",text:"Krankenhausaufenthalt",
-						subItems:[new sap.ui.ux3.NavigationItem("hospitalization_overview_nav", {key:"hospitalization_overview",text:"Uebersicht"}),
-						          new sap.ui.ux3.NavigationItem("hospitalization_new_nav", {key:"hospitalization_new",text:"Patient einweisen"}),
-						          new sap.ui.ux3.NavigationItem("hospitalization_displace_nav", {key:"hospitalization_displace",text:"Patient entlassen"}),
-						          new sap.ui.ux3.NavigationItem("hospitalization_disease_nav", {key:"hospitalization_disease",text:"Aktuell zu behandelnde Krankenheiten"})
-								 ]}));
-					shell.addWorksetItem(new sap.ui.ux3.NavigationItem("aktuelles_nav", {key:"patient",text:"Verwaltung", 
-						subItems:[new sap.ui.ux3.NavigationItem("patient_nav", {key:"patient",text:"PATIENT"}),
-						          new sap.ui.ux3.NavigationItem("disease_nav", {key:"disease",text:"KRANKHEITEN"}),
-						          new sap.ui.ux3.NavigationItem("disease_plan_nav", {key:"disease_plan",text:"BEHANDLUNGSPLAENE"}),
-						          new sap.ui.ux3.NavigationItem("medication_nav", {key:"medication",text:"MEDIKAMENTE"})
-						          ]}));					
+					
+					
+						
 
 				
 					
@@ -87,10 +81,54 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 					firstname_label.setText("Vorname: "+data.results[0].Firstname);
 					lastname_label.setText("Familienname: "+data.results[0].Lastname);
 					
-					if (data.results[0].RoleID == 1)
+					
+					
+					
+					// For doctor specific view
+					if (data.results[0].RoleID == 1){
 						role_image.setSrc("images/doctor.png");
+
+						// menu bar
+						
+						shell.addWorksetItem(new sap.ui.ux3.NavigationItem("hospitalization_nav", {key:"hospitalization",text:"Krankenhausaufenthalt",
+							subItems:[new sap.ui.ux3.NavigationItem("hospitalization_overview_nav", {key:"hospitalization_overview",text:"Uebersicht"}),
+							          new sap.ui.ux3.NavigationItem("hospitalization_new_nav", {key:"hospitalization_new",text:"Patient einweisen"}),
+							          new sap.ui.ux3.NavigationItem("hospitalization_displace_nav", {key:"hospitalization_displace",text:"Patient entlassen"}),
+							          new sap.ui.ux3.NavigationItem("hospitalization_disease_nav", {key:"hospitalization_disease",text:"Aktuell zu behandelnde Krankenheiten"})
+									 ]}));
+						
+						shell.addWorksetItem(new sap.ui.ux3.NavigationItem("aktuelles_nav", {key:"patient",text:"Verwaltung", 
+							subItems:[new sap.ui.ux3.NavigationItem("patient_nav", {key:"patient",text:"PATIENT"}),
+							          new sap.ui.ux3.NavigationItem("disease_nav", {key:"disease",text:"KRANKHEITEN"}),
+							          new sap.ui.ux3.NavigationItem("disease_plan_nav", {key:"disease_plan",text:"BEHANDLUNGSPLAENE"}),
+							          new sap.ui.ux3.NavigationItem("medication_nav", {key:"medication",text:"MEDIKAMENTE"})
+							          ]}));			
+						
+					}
+					
+					// For nurse specific view
 					if (data.results[0].RoleID == 2){
+						
+						
 						role_image.setSrc("images/nurse.png");
+						
+						
+						// delete button for creating treatment plans
+						var create_button = sap.ui.getCore().byId("disease_plan_create");
+						create_button.setVisible(false);
+						
+						
+						// menu bar
+						
+						shell.addWorksetItem(new sap.ui.ux3.NavigationItem("hospitalization_nav", {key:"hospitalization",text:"Krankenhausaufenthalt",
+							subItems:[new sap.ui.ux3.NavigationItem("hospitalization_overview_nav", {key:"hospitalization_overview",text:"Uebersicht"}),
+							          new sap.ui.ux3.NavigationItem("hospitalization_new_nav", {key:"hospitalization_new",text:"Patient einweisen"}),
+									 ]}));
+						
+						shell.addWorksetItem(new sap.ui.ux3.NavigationItem("aktuelles_nav", {key:"patient",text:"Verwaltung", 
+							subItems:[
+							          new sap.ui.ux3.NavigationItem("disease_plan_nav", {key:"disease_plan",text:"BEHANDLUNGSPLAENE"}),
+							          ]}));	
 						
 						// Create Notifications
 						// Get Notification Bar
