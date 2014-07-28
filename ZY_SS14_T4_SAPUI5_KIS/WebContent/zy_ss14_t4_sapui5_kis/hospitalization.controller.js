@@ -354,7 +354,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 						var oModel = sap.ui.getCore().getModel();  
 						
 						hospi_table.setModel(oModel);  
-						hospi_table.bindRows('/HOSPI'); 
+						hospi_table.bindRows('/HOSOV'); 
 						
 						var hospi_table = sap.ui.getCore().byId("hospi");
 						

@@ -55,8 +55,8 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization_overview", {
 		hospi2_table.addColumn(  
 			     new sap.ui.table.Column({  
 			          label: new sap.ui.commons.Label({text: "Patient"}),  
-			          template: new sap.ui.commons.TextField().bindProperty("value", "Patient"),  
-			          sortProperty: "Patient"  
+			          template: new sap.ui.commons.TextField().bindProperty("value", "Lastname"),  
+			          sortProperty: "Lastname"  
 			}));  
 		hospi2_table.addColumn(  
 			     new sap.ui.table.Column({  
@@ -72,21 +72,20 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization_overview", {
 		}));  
 		hospi2_table.addColumn(  
 			     new sap.ui.table.Column({  
-			          label: new sap.ui.commons.Label({text: "Employee"}),  
-			          template: new sap.ui.commons.TextField().bindProperty("value", "Employee"),  
-			          sortProperty: "Employee"  
+			          label: new sap.ui.commons.Label({text: "Zimmer"}),  
+			          template: new sap.ui.commons.TextField().bindProperty("value", "RoomID"),  
+			          sortProperty: "RoomID"  
 			}));  
 
 
 
   
-		var oModel = new sap.ui.model.odata.ODataModel(  
-				sap.ui.getCore().byId("path").getText(), false);  
+		var oModel = sap.ui.getCore().getModel();    
 		
 		
 		
 		hospi2_table.setModel(oModel);  
-		hospi2_table.bindRows('/HOSPI');  
+		hospi2_table.bindRows('/HOSOV');  
 		
 		panel.addContent(hospi2_table);    
 		layout.createRow(panel);  

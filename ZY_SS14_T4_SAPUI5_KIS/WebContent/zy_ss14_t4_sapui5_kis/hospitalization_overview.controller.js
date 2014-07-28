@@ -40,7 +40,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization_overview", {
 			layoutFixed : false,
 			});
 		var patientInfo_dialog = new sap.ui.commons.Dialog();
-		var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
+		var oModel = sap.ui.getCore().getModel();  
 		
 	
 		/**
@@ -50,8 +50,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization_overview", {
 		patient_panel_pop.setTitle(new sap.ui.core.Title({text: "Informationen zum Patienten",icon : "sap-icon://wounds-doc"}));
 		
 		
-		var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
-		oModel.refreshSecurityToken(null, null);
+		var oModel = sap.ui.getCore().getModel();  
 		
 		// Filtern nach Versichertennummer
 		oModel.read("/PATIENT(Mandt='001',PatientID="+data['PatientID']+")" ,undefined, undefined, true,
@@ -152,8 +151,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization_overview", {
 			          sortProperty: "AdministrationInterval"  
 			})); 
 		
-		var oModel = new sap.ui.model.odata.ODataModel(  
-				sap.ui.getCore().byId("path").getText(), false);  
+		var oModel = sap.ui.getCore().getModel();  
 		
 		disease_plan_medi_table.setModel(oModel);  
 		disease_plan_medi_table.bindRows("/TREMD?$filter=TreatPlanID eq "+data['TreatPlanID']+" "); 
@@ -199,8 +197,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization_overview", {
 				 
 				}));  
 		
-		var oModel = new sap.ui.model.odata.ODataModel(  
-				sap.ui.getCore().byId("path").getText(), false);  
+		var oModel = sap.ui.getCore().getModel();  
 		
 		user_temp_table.setModel(oModel);  
 		user_temp_table.bindRows("/HOUSE?$filter=HospitaliznID eq "+data['HospitaliznID']+" "); 

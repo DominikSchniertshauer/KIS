@@ -123,8 +123,8 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization_displace", {
 									"Istaken" : "FALSE"
 							};
 		                    
-					        var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
-							oModel.refreshSecurityToken(null, null);
+					        var oModel = sap.ui.getCore().getModel();  
+					        
 							oModel.update("/BED(Mandt='001',BedID="+oEntry.BedID+")", test, oParams2);
 							
 							var getInsurnumber_input = sap.ui.getCore().byId("Insurnumber_input");
@@ -157,8 +157,8 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization_displace", {
 					        				oEntry.StartOfTreatmentPlan = data.results[i].StartOfTreatmentPlan;
 					        				oEntry.TreatmentRating = data.results[i].TreatmentRating;
 					        				
-					        				 var oModel2 = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
-					        					oModel2.refreshSecurityToken(null, null);
+					        				 var oModel2 = sap.ui.getCore().getModel(); 
+					        			
 					        
 					        			        oModel2.read("/PATIENT(Mandt='001',PatientID="+data.results[i].PatientID+")" , null, null, false,
 					        							function(data2, response){
@@ -196,6 +196,23 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization_displace", {
 					        getLname_input.setValue("");
 					        getInsurnumber_input.bindItems("myModel>/modelDatas", getinsnr_com_temp);
 							
+							/**
+							 * Refresh-procedure for tables 
+							 */
+							var hospi_table = sap.ui.getCore().byId("hospitalization_Overview_Table");
+								
+							var oModel = sap.ui.getCore().getModel();  
+							
+							hospi_table.setModel(oModel);  
+							hospi_table.bindRows('/HOSOV'); 
+							
+							var hospi_table = sap.ui.getCore().byId("hospi");
+							
+							var id_filter = new sap.ui.model.Filter("UserID", sap.ui.model.FilterOperator.EQ, sap.ui.getCore().byId("globalUserID").getText());
+							hospi_table.setModel(oModel);  
+							hospi_table.bindRows(   {path: "/HOSPI", filters: id_filter }); 
+							
+					        
 					        $.growl.notice({ title: "Meldung", message: "Patient erfolgreich entlassen!" });
 
 					        
@@ -217,8 +234,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization_displace", {
 		    };
 		    oParams.fnError = function(){ };
 		       
-	        var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
-			oModel.refreshSecurityToken(null, null);
+	        var oModel = sap.ui.getCore().getModel();  
 			oModel.update("/HOSPTZN(Mandt='001',HospitaliznID="+hospitalizationID+")", oEntry, oParams);
     		
     	}
