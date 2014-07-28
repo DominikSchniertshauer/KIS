@@ -199,6 +199,9 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization_displace", {
 							
 					        $.growl.notice({ title: "Meldung", message: "Patient erfolgreich entlassen!" });
 
+					        
+					        
+					        
 		                } catch(e) {
 		                    
 		                };

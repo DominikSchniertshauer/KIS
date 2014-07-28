@@ -158,6 +158,8 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.patient", {
 		patient_table.bindRows('/PATIENT');  
 		
 		panel.addContent(patient_table);    
+		
+		
 		layout.createRow(panel);  
 		
 		return layout;  

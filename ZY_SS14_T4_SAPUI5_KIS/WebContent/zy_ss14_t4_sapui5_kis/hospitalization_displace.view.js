@@ -137,6 +137,62 @@
             text : "Patient entlassen",
             icon : "sap-icon://accept",
             press : function() {
+            	
+            	aData = []; 
+        		
+        		/**
+        		 *  Set Data model for temp table
+        		 */
+        		var oModelInsNr = new sap.ui.model.json.JSONModel();
+        		oModelInsNr.setData({modelDatas: aData});
+                
+        		sap.ui.getCore().setModel(oModelInsNr, "myModel");
+                var oModel = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
+        		oModel.refreshSecurityToken(null, null);
+                
+                oModel.read("/HOSPTZN?$filter=DateEnd eq datetime'0000-00-00T00:00'" , null, null, false,
+        				function(data, response){
+                			
+                			for (var i=0; i < data.results.length; i++) {
+                				
+                				var oEntry = {	
+                				};
+                				oEntry.HospitaliznID = data.results[i].HospitaliznID;
+                				oEntry.TreatPlanID = data.results[i].TreatPlanID;
+                				oEntry.PatientID = data.results[i].PatientID;
+                				oEntry.BedID = data.results[i].BedID;
+                				oEntry.DateBegin = data.results[i].DateBegin;
+                				oEntry.StartOfTreatmentPlan = data.results[i].StartOfTreatmentPlan;
+                				oEntry.TreatmentRating = data.results[i].TreatmentRating;
+                				
+                				 var oModel2 = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
+                					oModel2.refreshSecurityToken(null, null);
+                
+                			        oModel2.read("/PATIENT(Mandt='001',PatientID="+data.results[i].PatientID+")" , null, null, false,
+                							function(data2, response){
+                			        	
+                						var test = {
+                								"Insurancenumber": data2['Insurancenumber'],
+                								"Firstname": data2['Firstname'],
+                								"Lastname": data2['Lastname'],
+                								"HospitalizationID": oEntry.HospitaliznID,
+                								"TreatPlanID": oEntry.TreatPlanID,
+                								"PatientID": oEntry.PatientID, 
+                								"BedID" : oEntry.BedID,
+                								"DateBegin" : oEntry.DateBegin,
+                								"StartOfTreatmentPlan": oEntry.StartOfTreatmentPlan,
+                								"TreatmentRating": oEntry.TreatmentRating,
+                								
+                						};
+                						
+                						aData.push(test);
+                						
+                			        });
+                			};
+                				
+                });
+                
+            	
             	oController.displace_patient(insurancenumber_input.getSelectedKey(), aData, String(rating_input.getValue()));
             },
             
