@@ -129,7 +129,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.index", {
 		var disease_plan_medi_table = new sap.ui.table.Table({
 			title: "Zu verabreichende Medikamente",
 			width: "480px",
-			visibleRowCount: 5,
+			visibleRowCount: 4,
 		});  
 		disease_plan_medi_table.addColumn(  
 		     new sap.ui.table.Column({  
@@ -165,7 +165,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.index", {
 			title: "Zugeordnetes Personal",
 			selectionMode: sap.ui.table.SelectionMode.Single,
 			width: "480px",
-			visibleRowCount: 5,
+			visibleRowCount: 4,
 		});
 		
 		user_temp_table.addColumn(  
