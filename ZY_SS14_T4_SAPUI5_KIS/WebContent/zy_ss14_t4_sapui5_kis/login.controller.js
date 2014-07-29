@@ -148,7 +148,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 								var patient = patient_data.shift();
 								
 								for(var i = 0; i < data.results.length; i++){
-						    		
+//						    		alert(patient+" "+data.results[i].MedicationName);
 									var hours = new Date();
 									hours = hours.getHours();
 									
@@ -183,12 +183,12 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 							
 							// Store Patient names in array to use them in oMessage
 							for(var i = 0; i < data.results.length; i++){
-					    		patient_data.push(data.results[i].Patient) ;
+					    		
 					    		
 					    	}
 							
 					    	for(var i = 0; i < data.results.length; i++){
-		
+					    		patient_data.push(data.results[i].Patient) ;
 								oModel.read("/TREMD?$filter=TreatPlanID eq "+data.results[i].TreatPlanID, tremd_params,null,false);
 								
 					    	}
@@ -214,12 +214,24 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 					
 				}
 				else{
-					alert("Es wurde ein falsches Passwort eingegeben.");
+					jQuery.sap.require("sap.ui.commons.MessageBox");
+			    	sap.ui.commons.MessageBox.show("Es wurde ein falsches Passwort eingegeben.", sap.ui.commons.MessageBox.Icon.ERROR,
+			    			"Fehlermeldung");
+					
 				}
 			// Funktion falls Request fehlgeschlagen - Annahme: Request ist wegen falschem
 			// Usernamen fehlgeschlagen
-			},function(err){
-				sap.ui.commons.MessageBox.alert(err.message);
+			},function(error){
+				var message = error.response.body;
+		    	var messages = "Es sind Fehler aufgetreten: \n";
+		    	
+		    	$('errordetail', message).each(function(i){
+		    		messages = $(this).find("message").text() + "\n";
+		    	});
+		    
+		    	jQuery.sap.require("sap.ui.commons.MessageBox");
+		    	sap.ui.commons.MessageBox.alert(messages, sap.ui.commons.MessageBox.Icon.ERROR,
+		    			"Fehlermeldung");
 			}
 				 );
 		
