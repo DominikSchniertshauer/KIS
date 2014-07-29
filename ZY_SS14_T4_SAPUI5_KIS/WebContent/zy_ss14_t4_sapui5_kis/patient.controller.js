@@ -42,7 +42,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.patient", {
 							 
 				} else {
 					jQuery.sap.require("sap.ui.commons.MessageBox");
-			    	sap.ui.commons.MessageBox.alert("Versicherungsnummer muss 10 Zeichen lang sein", sap.ui.commons.MessageBox.Icon.ERROR,
+			    	sap.ui.commons.MessageBox.show("Versicherungsnummer muss 10 Zeichen lang sein", sap.ui.commons.MessageBox.Icon.ERROR,
 			    			"Fehlermeldung");
 				}
 			}}));
@@ -138,7 +138,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.patient", {
 					    	});
 					    
 					    	jQuery.sap.require("sap.ui.commons.MessageBox");
-					    	sap.ui.commons.MessageBox.alert(messages, sap.ui.commons.MessageBox.Icon.ERROR,
+					    	sap.ui.commons.MessageBox.show(messages, sap.ui.commons.MessageBox.Icon.ERROR,
 					    			"Fehlermeldung");
 					    	internal_dialog.open();};
 					       
@@ -238,7 +238,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.patient", {
 					    	});
 					    
 					    	jQuery.sap.require("sap.ui.commons.MessageBox");
-					    	sap.ui.commons.MessageBox.alert(messages, sap.ui.commons.MessageBox.Icon.ERROR,
+					    	sap.ui.commons.MessageBox.show(messages, sap.ui.commons.MessageBox.Icon.ERROR,
 					    			"Fehlermeldung");
 					    	
 					    };
@@ -337,7 +337,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.patient", {
 			    	});
 			    
 			    	jQuery.sap.require("sap.ui.commons.MessageBox");
-			    	sap.ui.commons.MessageBox.alert(messages, sap.ui.commons.MessageBox.Icon.ERROR,
+			    	sap.ui.commons.MessageBox.show(messages, sap.ui.commons.MessageBox.Icon.ERROR,
 			    			"Fehlermeldung");
 			    };
 			       
