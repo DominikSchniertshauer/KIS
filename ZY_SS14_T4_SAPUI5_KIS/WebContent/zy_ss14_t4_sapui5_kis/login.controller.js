@@ -106,6 +106,9 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 						
 					}
 					
+					var patient_data = [];
+					var patient = '';
+					
 					// For nurse specific view
 					if (data.results[0].RoleID == 2){
 						
@@ -143,12 +146,12 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 							// If hospi request was successful, request dataset from matching TreatmentplanIDs of
 							// Tremd to get administration intervals
 							var tremd_params = {};
-							
+							tremd_params.async = false;
 							tremd_params.success = function(data, results){
-								var patient = patient_data.shift();
+								patient = patient_data.shift();
 								
 								for(var i = 0; i < data.results.length; i++){
-//						    		alert(patient+" "+data.results[i].MedicationName);
+						    		alert(patient+" "+data.results[i].MedicationName);
 									var hours = new Date();
 									hours = hours.getHours();
 									
@@ -178,18 +181,15 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 							
 							// for each treatmentplan according to logged in user
 							
-							var patient_data = [];
-							
+						
 							
 							// Store Patient names in array to use them in oMessage
-							for(var i = 0; i < data.results.length; i++){
-					    		
-					    		
-					    	}
+							
 							
 					    	for(var i = 0; i < data.results.length; i++){
 					    		patient_data.push(data.results[i].Patient) ;
-								oModel.read("/TREMD?$filter=TreatPlanID eq "+data.results[i].TreatPlanID, tremd_params,null,false);
+					    		
+								oModel.read("/TREMD?$filter=TreatPlanID eq "+data.results[i].TreatPlanID, tremd_params);
 								
 					    	}
 					    	
