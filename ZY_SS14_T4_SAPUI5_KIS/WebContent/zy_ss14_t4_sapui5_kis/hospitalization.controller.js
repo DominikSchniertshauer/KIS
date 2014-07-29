@@ -112,6 +112,8 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 						sap.ui.commons.MessageBox.Icon.ERROR,
 						"Fehlermeldung");
 			}
+			
+
 			return valid;
 		};
 		
@@ -139,6 +141,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 					var oEntry = {
 					};	
 
+		
 					oEntry.Mandt = '001';
 					oEntry.PatientID = data.results[0].PatientID;
 					patientid = data.results[0].PatientID;
@@ -849,39 +852,64 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 				
 				try {
 					if (data.results[0].PatientID != ''){
-					
-					for(var i in fields){
-						field = sap.ui.getCore().byId(fields[i]+"_input");
-						field.setEditable(true);
-						
-						if(fields[i] == 'Firstname'){
-							field.setValue(data.results[0].Firstname);
-//							oEntry.Firstname = field.getValue();
+						var valid = true;
+						/**
+						 * Check if patient is not in table hospit
+						 */
+						var oModel2 = sap.ui.getCore().getModel();
+						oModel2.read("/HOSOV", undefined, undefined, false, function(data3, response3) {
+							for (var i=0; i < data3.results.length; i++) {
+								if (data3.results[i].PatientID == data.results[0].PatientID) {
+									
+									for(var i in fields){
+										field = sap.ui.getCore().byId(fields[i]+"_input");
+										field.setEditable(false);
+										field.setValue("");
+									}
+									Insurancenumber_input = sap.ui.getCore().byId("Insurancenumber_input");
+									Insurancenumber_input.setValue("");
+									
+									var messages = "Patient befindet sich bereits im Krankenhaus. \n Bitte waehlen Sie einen anderen Patienten aus. \n";
+									sap.ui.commons.MessageBox.alert(messages);
+									valid = false;
+									return;
+								}
+							}
+						});
+					if (valid) {
+						for(var i in fields){
+							field = sap.ui.getCore().byId(fields[i]+"_input");
+							field.setEditable(true);
+							
+							if(fields[i] == 'Firstname'){
+								field.setValue(data.results[0].Firstname);
+	//							oEntry.Firstname = field.getValue();
+							}
+							
+							if(fields[i] == 'Lastname'){
+								field.setValue(data.results[0].Lastname);
+	//							oEntry.Lastname = field.getValue();
+							}
+							
+							if(fields[i] == 'Street'){
+								field.setValue(data.results[0].Street);
+	//							oEntry.Street = field.getValue();
+							}
+							if(fields[i] == 'Postalcode'){
+								field.setValue(data.results[0].Postalcode);
+	//							oEntry.City = field.getValue();
+							}
+							if(fields[i] == 'City'){
+								field.setValue(data.results[0].City);
+	//							oEntry.City = field.getValue();
+							}
+							if(fields[i] == 'Country'){
+								field.setValue(data.results[0].Country);
+	//							oEntry.City = field.getValue();
+							}
+							
 						}
-						
-						if(fields[i] == 'Lastname'){
-							field.setValue(data.results[0].Lastname);
-//							oEntry.Lastname = field.getValue();
-						}
-						
-						if(fields[i] == 'Street'){
-							field.setValue(data.results[0].Street);
-//							oEntry.Street = field.getValue();
-						}
-						if(fields[i] == 'Postalcode'){
-							field.setValue(data.results[0].Postalcode);
-//							oEntry.City = field.getValue();
-						}
-						if(fields[i] == 'City'){
-							field.setValue(data.results[0].City);
-//							oEntry.City = field.getValue();
-						}
-						if(fields[i] == 'Country'){
-							field.setValue(data.results[0].Country);
-//							oEntry.City = field.getValue();
-						}
-						
-						}
+					}
 						
 					}
 
