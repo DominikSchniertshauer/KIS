@@ -57,11 +57,11 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 		bed_panel.setTitle(new sap.ui.core.Title({text: "Schritt 5: Bett waehlen"}));
 				
 		var insurancenumber_label = new sap.ui.commons.Label({text: "Versichertennummer: "});
-		var insnr_comb_temp = new sap.ui.core.ListItem({text:"{Insurancenumber}", additionalText:"{Lastname}"});
+		var insnr_comb_temp = new sap.ui.core.ListItem("EinweisComboTemp", {text:"{Insurancenumber}", additionalText:"{Lastname}"});
 		
 		var insurancenumber_input = new sap.ui.commons.ComboBox("Insurancenumber_input",
 				{displaySecondaryValues: true,
-				items: {path: "/PATIENT",
+				items: {path: "/PACOM",
 				 template: insnr_comb_temp,
 				 }});
 	//		

@@ -48,7 +48,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization_overview", {
 
 		hospi2_table.addColumn(  
 			     new sap.ui.table.Column({  
-			          label: new sap.ui.commons.Label({text: "HospiID"}),  
+			          label: new sap.ui.commons.Label({text: "Krankenhausaufenthalt Nr."}),  
 			          template: new sap.ui.commons.TextField().bindProperty("value", "HospitaliznID"),  
 			          sortProperty: "HospitaliznID"  
 			}));  

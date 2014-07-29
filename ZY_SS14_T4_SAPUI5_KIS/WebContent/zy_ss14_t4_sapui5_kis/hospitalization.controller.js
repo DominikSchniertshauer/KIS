@@ -369,6 +369,11 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 						hospi_table.bindRows(   {path: "/HOSPI", filters: id_filter }); 
 //				
 				
+						var Insurancenumber_input = sap.ui.getCore().byId("Insurancenumber_input");
+						var insnr_comb_temp = sap.ui.getCore().byId("EinweisComboTemp");
+				        insnr_comb_temp.bindProperty("text", "Insurancenumber");
+				        insnr_comb_temp.bindProperty("additionalText", "Lastname");
+						Insurancenumber_input.bindItems("/PACOM", insnr_comb_temp);
 						
 						/**
 						 * Nill all fields in this View
