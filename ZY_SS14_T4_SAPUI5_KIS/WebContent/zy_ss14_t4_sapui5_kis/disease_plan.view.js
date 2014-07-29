@@ -28,7 +28,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.disease_plan", {
 		
 			var create_button = new sap.ui.commons.Button("disease_plan_create", {
 		        text : "Neuen Behandlungsplan anlegen",
-		        icon : "sap-icon://syringe",
+		        icon : "sap-icon://clinical-order",
 		        press : function() { 
 		        	oController.open_create_dialog();
 				}

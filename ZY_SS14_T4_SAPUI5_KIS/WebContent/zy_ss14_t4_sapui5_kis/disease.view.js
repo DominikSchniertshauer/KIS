@@ -25,7 +25,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.disease", {
 	   */
 		var create_button = new sap.ui.commons.Button("disease_create", {
 	        text : "Neue Krankheit anlegen",
-	        icon : "sap-icon://syringe",
+	        icon : "sap-icon://accidental-leave",
 	        press : function() { 
 	        	oController.open_create_dialog();
 			}
@@ -34,7 +34,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.disease", {
 
 		var update_button = new sap.ui.commons.Button("disease_update", {
 	        text : "Existierende Krankheit aktualisieren",
-	        icon : "sap-icon://syringe",
+	        icon : "sap-icon://accidental-leave",
 	        press : function() {
 	        	oController.open_update_dialog(data);
 	        }
