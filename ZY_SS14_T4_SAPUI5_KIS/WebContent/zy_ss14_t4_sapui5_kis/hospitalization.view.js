@@ -47,14 +47,14 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 }));
 		
 		var treat_panel = new sap.ui.commons.Panel("treat_panel");
-		treat_panel.setTitle(new sap.ui.core.Title({text: "Schritt 3: Behandlungsplan waehlen"}));
+		treat_panel.setTitle(new sap.ui.core.Title({text: "Schritt 3: Behandlungsplan waehlen", icon : "sap-icon://clinical-order"}));
 		
 		var user_panel = new sap.ui.commons.Panel("user_panel");
-		user_panel.setTitle(new sap.ui.core.Title({text: "Schritt 4: Mitarbeiter waehlen"}));
+		user_panel.setTitle(new sap.ui.core.Title({text: "Schritt 4: Mitarbeiter waehlen", icon : "sap-icon://nurse"}));
 		
 		
 		var bed_panel = new sap.ui.commons.Panel("bed_panel");
-		bed_panel.setTitle(new sap.ui.core.Title({text: "Schritt 5: Bett waehlen"}));
+		bed_panel.setTitle(new sap.ui.core.Title({text: "Schritt 5: Bett waehlen", icon : "sap-icon://bed"}));
 				
 		var insurancenumber_label = new sap.ui.commons.Label({text: "Versichertennummer: "});
 		var insnr_comb_temp = new sap.ui.core.ListItem("EinweisComboTemp", {text:"{Insurancenumber}", additionalText:"{Lastname}"});
@@ -184,7 +184,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.hospitalization", {
 
 		var user_add_button = new sap.ui.commons.Button({
 	        text : "Mitarbeiter zuweisen",
-	        icon : "sap-icon://clinical-order",
+	        icon : "sap-icon://nurse",
 //	        width : "200px",
 	        press : function() {oController.add_user(user_input, aData);
 			}
