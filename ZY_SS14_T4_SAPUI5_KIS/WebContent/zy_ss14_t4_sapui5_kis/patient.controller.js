@@ -204,7 +204,16 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.patient", {
 					    oParams.success = function(){ 
 							$.growl.notice({ title: "Meldung", message: "Patient erfolgreich angelegt!" });
 					    	internal_dialog.close();};
-					    oParams.error = function(){internal_dialog.open();};
+					    oParams.error = function(){
+					    	var message = error.response.body;
+					    	var messages = "Es sind Fehler aufgetreten: \n";
+					    	
+					    	$('errordetail', message).each(function(i){
+					    		messages = $(this).find("message").text() + "\n";
+					    	});
+					    
+					    	sap.ui.commons.MessageBox.alert(messages);
+					    };
 					       
 						
 						oModel.create("/PATIENT", oEntry, oParams);
@@ -285,13 +294,22 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.patient", {
 				
 				
 				var oParams = {};
-			    oParams.fnSuccess = function(){ 
+			    oParams.success = function(){ 
 					$.growl.notice({ title: "Meldung", message: "Patient erfolgreich angepasst!" });
 
 			    	patient_dialog.close(); 		
 	
 			    };
-			    oParams.fnError = function(){patient_dialog.open();};
+			    oParams.error = function(){
+			    	var message = error.response.body;
+			    	var messages = "Es sind Fehler aufgetreten: \n";
+			    	
+			    	$('errordetail', message).each(function(i){
+			    		messages = $(this).find("message").text() + "\n";
+			    	});
+			    
+			    	sap.ui.commons.MessageBox.alert(messages);
+			    };
 			       
 				
 				//oModel.update("/MEDICTN", oEntry, null, oParams.fnSuccess(), oParams.fnError());
