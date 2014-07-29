@@ -30,9 +30,23 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.patient", {
 		patient_create_layout.createRow(input);
 		patient_create_layout.createRow(new sap.ui.commons.Button({text: "OK", 
 			
-			press:function(){lookup_insnr(input.getValue());
-							 patient_create_dialog.close();}}));
-
+			press:function(){
+				var ins = input.getValue();
+				var check = ins.toString();
+				
+				
+				// Check if insurancenumber is length 10
+				if (check.length == 10){
+				lookup_insnr(input.getValue());
+							 patient_create_dialog.close();
+							 
+				} else {
+					jQuery.sap.require("sap.ui.commons.MessageBox");
+			    	sap.ui.commons.MessageBox.alert("Versicherungsnummer muss 10 Zeichen lang sein", sap.ui.commons.MessageBox.Icon.ERROR,
+			    			"Fehlermeldung");
+				}
+			}}));
+			
 		
 		patient_create_dialog.addContent(patient_create_layout);
 
@@ -115,7 +129,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.patient", {
 							$.growl.notice({ title: "Meldung", message: "Patient erfolgreich angepasst!" });
 					    	internal_dialog.close();};
 					    	
-					    oParams.error = function(){
+					    oParams.error = function(error){
 					    	var message = error.response.body;
 					    	var messages = "Es sind Fehler aufgetreten: \n";
 					    	
@@ -123,7 +137,8 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.patient", {
 					    		messages = $(this).find("message").text() + "\n";
 					    	});
 					    
-					    	sap.ui.commons.MessageBox.alert(messages,sap.ui.commons.MessageBox.Icon.ERROR,
+					    	jQuery.sap.require("sap.ui.commons.MessageBox");
+					    	sap.ui.commons.MessageBox.alert(messages, sap.ui.commons.MessageBox.Icon.ERROR,
 					    			"Fehlermeldung");
 					    	internal_dialog.open();};
 					       
@@ -213,7 +228,8 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.patient", {
 					    	
 							$.growl.notice({ title: "Meldung", message: "Patient erfolgreich angelegt!" });
 					    	internal_dialog.close();};
-					    oParams.error = function(){
+					    oParams.error = function(error){
+					    	
 					    	var message = error.response.body;
 					    	var messages = "Es sind Fehler aufgetreten: \n";
 					    	
@@ -221,7 +237,10 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.patient", {
 					    		messages = $(this).find("message").text() + "\n";
 					    	});
 					    
-					    	sap.ui.commons.MessageBox.alert(messages);
+					    	jQuery.sap.require("sap.ui.commons.MessageBox");
+					    	sap.ui.commons.MessageBox.alert(messages, sap.ui.commons.MessageBox.Icon.ERROR,
+					    			"Fehlermeldung");
+					    	
 					    };
 					       
 						
@@ -309,7 +328,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.patient", {
 			    	patient_dialog.close(); 		
 	
 			    };
-			    oParams.error = function(){
+			    oParams.error = function(error){
 			    	var message = error.response.body;
 			    	var messages = "Es sind Fehler aufgetreten: \n";
 			    	
@@ -317,7 +336,9 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.patient", {
 			    		messages = $(this).find("message").text() + "\n";
 			    	});
 			    
-			    	sap.ui.commons.MessageBox.alert(messages);
+			    	jQuery.sap.require("sap.ui.commons.MessageBox");
+			    	sap.ui.commons.MessageBox.alert(messages, sap.ui.commons.MessageBox.Icon.ERROR,
+			    			"Fehlermeldung");
 			    };
 			       
 				
