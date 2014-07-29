@@ -25,7 +25,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.medication", {
 	   */
 		var create_button = new sap.ui.commons.Button("medication_create", {
 	        text : "Neues Medikament anlegen",
-	        icon : "sap-icon://syringe",
+	        icon : "sap-icon://pharmacy",
 	        press : function() { 
 	        	oController.open_create_dialog();
 			}
@@ -34,7 +34,7 @@ sap.ui.jsview("zy_ss14_t4_sapui5_kis.medication", {
 
 		var update_button = new sap.ui.commons.Button("medication_update", {
 	        text : "Existierendes Medikament aendern",
-	        icon : "sap-icon://syringe",
+	        icon : "sap-icon://pharmacy",
 	        press : function() {
 	        	oController.open_update_dialog(data);
 	        }
