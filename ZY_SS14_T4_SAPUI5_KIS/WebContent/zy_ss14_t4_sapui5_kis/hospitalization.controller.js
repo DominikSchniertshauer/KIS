@@ -674,6 +674,14 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 				oEntry.Isactive 	= 'TRUE';
 				oEntry.Duration   	= description_input.getValue();
 				
+				if ((oEntry.Name == '')||(oEntry.Duration == '') || (aData.length <1)) 
+				{
+					var messages = "Bitte alle Felder ausfuellen \n";
+
+					sap.ui.commons.MessageBox.alert(messages);
+					return;
+				}
+				
 				/**
 				 * When the treatment plan is created successful... 
 				 */
