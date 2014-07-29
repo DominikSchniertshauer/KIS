@@ -36,13 +36,13 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.disease_plan", {
 		disease_plan_panel_pop.setTitle(new sap.ui.core.Title({text: "Schritt 1: Informationen zum Behandlungsplan eintragen",icon : "sap-icon://wounds-doc"}));
 		
 		var medication_panel_pop = new sap.ui.commons.Panel();
-		medication_panel_pop.setTitle(new sap.ui.core.Title({text: "Schritt 2: Medikamente hinzufuegen"}));
+		medication_panel_pop.setTitle(new sap.ui.core.Title({text: "Schritt 2: Medikamente hinzufuegen",icon : "sap-icon://pharmacy"}));
 		
 		var medication_table_panel_pop = new sap.ui.commons.Panel();
-		medication_table_panel_pop.setTitle(new sap.ui.core.Title({text: "Schritt 3: Uebersicht ueber die eingefuegten Medikamente"}));
+		medication_table_panel_pop.setTitle(new sap.ui.core.Title({text: "Schritt 3: Uebersicht ueber die eingefuegten Medikamente", icon : "sap-icon://pharmacy"}));
 		
 		var close_panel_pop = new sap.ui.commons.Panel();
-		close_panel_pop.setTitle(new sap.ui.core.Title({text: "Schritt 4: Behandlungsplan anlegen"}));
+		close_panel_pop.setTitle(new sap.ui.core.Title({text: "Schritt 4: Behandlungsplan anlegen" ,icon : "sap-icon://accept"}));
 
 		/**
 		* Define fields and a button to insert a disease 
