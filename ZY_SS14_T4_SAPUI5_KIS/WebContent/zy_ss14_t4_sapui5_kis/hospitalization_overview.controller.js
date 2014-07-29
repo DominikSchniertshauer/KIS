@@ -128,8 +128,8 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization_overview", {
 		 */
 		var disease_plan_medi_table = new sap.ui.table.Table({
 			title: "Zu verabreichende Medikamente",
-			width: "480px",
-			visibleRowCount: 5,
+			width: "650px",
+			visibleRowCount: 3,
 		});  
 		disease_plan_medi_table.addColumn(  
 		     new sap.ui.table.Column({  
@@ -163,20 +163,20 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization_overview", {
 		var user_temp_table = new sap.ui.table.Table({ 
 			title: "Zugeordnetes Personal",
 			selectionMode: sap.ui.table.SelectionMode.Single,
-			width: "480px",
-			visibleRowCount: 5,
+			width: "650px",
+			visibleRowCount: 3,
 		});
 		
 		user_temp_table.addColumn(  
 		new sap.ui.table.Column({  
-		label: new sap.ui.commons.Label({text: "Username:"}),  
+		label: new sap.ui.commons.Label({text: "Username"}),  
 		template: new sap.ui.commons.TextField().bindProperty("value", "Username"),  
 		sortProperty: "Username", 
 		}));  
 
 		user_temp_table.addColumn(  
 		new sap.ui.table.Column({  
-		label: new sap.ui.commons.Label({text: "Vorname:"}),  
+		label: new sap.ui.commons.Label({text: "Vorname"}),  
 		template: new sap.ui.commons.TextField().bindProperty("value", "Firstname"),  
 		sortProperty: "Firstname",
 		
