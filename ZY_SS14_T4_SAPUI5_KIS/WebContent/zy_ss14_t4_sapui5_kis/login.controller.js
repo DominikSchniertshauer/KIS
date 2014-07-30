@@ -94,7 +94,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 							subItems:[new sap.ui.ux3.NavigationItem("hospitalization_overview_nav", {key:"hospitalization_overview",text:"Uebersicht"}),
 							          new sap.ui.ux3.NavigationItem("hospitalization_new_nav", {key:"hospitalization_new",text:"Patient einweisen"}),
 							          new sap.ui.ux3.NavigationItem("hospitalization_displace_nav", {key:"hospitalization_displace",text:"Patient entlassen"}),
-							          new sap.ui.ux3.NavigationItem("hospitalization_disease_nav", {key:"hospitalization_disease",text:"Aktuell zu behandelnde Krankenheiten"})
+							          new sap.ui.ux3.NavigationItem("hospitalization_disease_nav", {key:"hospitalization_disease",text:"Aktuell zu behandelnde Krankheiten"})
 									 ]}));
 						
 						shell.addWorksetItem(new sap.ui.ux3.NavigationItem("aktuelles_nav", {key:"patient",text:"Verwaltung", 
