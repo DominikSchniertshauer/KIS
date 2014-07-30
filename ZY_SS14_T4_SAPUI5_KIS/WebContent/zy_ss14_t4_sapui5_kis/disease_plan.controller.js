@@ -236,7 +236,12 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.disease_plan", {
 					{
 						var messages = "Bitte alle Felder ausfuellen \n";
 
-						sap.ui.commons.MessageBox.alert(messages);
+				    
+				    	jQuery.sap.require("sap.ui.commons.MessageBox");
+				    	sap.ui.commons.MessageBox.show(messages, sap.ui.commons.MessageBox.Icon.ERROR, "Fehlermeldung");
+						
+						
+						
 						return;
 					}
 				
@@ -267,8 +272,15 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.disease_plan", {
 	            };
 	            mParameters.error = function(){
 	            	
+			    	var message = error.response.body;
 			    	var messages = "Es sind Fehler aufgetreten: \n";
-			    	sap.ui.commons.MessageBox.alert(messages);
+			    	
+			    	$('errordetail', message).each(function(i){
+			    		messages = $(this).find("message").text() + "\n";
+			    	});
+			    
+			    	jQuery.sap.require("sap.ui.commons.MessageBox");
+			    	sap.ui.commons.MessageBox.show(messages, sap.ui.commons.MessageBox.Icon.ERROR, "Fehlermeldung");
 			    	
 	            };
 

@@ -72,7 +72,8 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.disease", {
 		    		messages = $(this).find("message").text() + "\n";
 		    	});
 		    
-		    	sap.ui.commons.MessageBox.alert(messages);
+		    	jQuery.sap.require("sap.ui.commons.MessageBox");
+		    	sap.ui.commons.MessageBox.show(messages, sap.ui.commons.MessageBox.Icon.ERROR, "Fehlermeldung");
 		    		    	
 		    };  
 		       
@@ -141,7 +142,8 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.disease", {
 			    		messages = $(this).find("message").text() + "\n";
 			    	});
 			    
-			    	sap.ui.commons.MessageBox.alert(messages);
+			    	jQuery.sap.require("sap.ui.commons.MessageBox");
+			    	sap.ui.commons.MessageBox.show(messages, sap.ui.commons.MessageBox.Icon.ERROR, "Fehlermeldung");
 			    		    	
 			    };  
 			       

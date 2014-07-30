@@ -70,10 +70,9 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.medication", {
 		    	$('errordetail', message).each(function(i){
 		    		messages = $(this).find("message").text() + "\n";
 		    	});
-		    	
+		    
 		    	jQuery.sap.require("sap.ui.commons.MessageBox");
-		    	sap.ui.commons.MessageBox.alert(messages,sap.ui.commons.MessageBox.Icon.ERROR,
-		    			"Fehlermeldung");
+		    	sap.ui.commons.MessageBox.show(messages, sap.ui.commons.MessageBox.Icon.ERROR, "Fehlermeldung");
 		    		    	
 		    };  
 			    
@@ -144,8 +143,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.medication", {
 			    	});
 			    
 			    	jQuery.sap.require("sap.ui.commons.MessageBox");
-			    	sap.ui.commons.MessageBox.alert(messages, sap.ui.commons.MessageBox.Icon.ERROR,
-			    			"Fehlermeldung");
+			    	sap.ui.commons.MessageBox.show(messages, sap.ui.commons.MessageBox.Icon.ERROR, "Fehlermeldung");
 			    		    	
 			    };  
 			       

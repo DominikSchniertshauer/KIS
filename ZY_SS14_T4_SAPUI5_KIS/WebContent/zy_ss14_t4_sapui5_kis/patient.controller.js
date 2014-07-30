@@ -138,8 +138,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.patient", {
 					    	});
 					    
 					    	jQuery.sap.require("sap.ui.commons.MessageBox");
-					    	sap.ui.commons.MessageBox.show(messages, sap.ui.commons.MessageBox.Icon.ERROR,
-					    			"Fehlermeldung");
+					    	sap.ui.commons.MessageBox.show(messages, sap.ui.commons.MessageBox.Icon.ERROR, "Fehlermeldung");
 					    	internal_dialog.open();};
 					       
 						

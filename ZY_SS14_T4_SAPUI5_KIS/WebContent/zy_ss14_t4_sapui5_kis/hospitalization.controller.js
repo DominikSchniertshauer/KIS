@@ -687,7 +687,9 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 				{
 					var messages = "Bitte alle Felder ausfuellen \n";
 
-					sap.ui.commons.MessageBox.alert(messages);
+			    	jQuery.sap.require("sap.ui.commons.MessageBox");
+			    	sap.ui.commons.MessageBox.show(messages, sap.ui.commons.MessageBox.Icon.ERROR, "Fehlermeldung");
+					
 					return;
 				}
 				
