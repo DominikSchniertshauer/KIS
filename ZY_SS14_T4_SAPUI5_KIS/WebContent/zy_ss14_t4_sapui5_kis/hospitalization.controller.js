@@ -400,6 +400,79 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.hospitalization", {
 						
 						sap.ui.getCore().byId("user_temp_table").removeAllCustomData();
 						
+						var notification_bar = sap.ui.getCore().byId("notification_bar");
+						var notifier = sap.ui.getCore().byId("notifier");
+						
+						var patient_data = [];
+						var patient = '';
+						
+						notifier.destroyMessages();
+						
+						//Update notification bar
+						
+						var userid = sap.ui.getCore().byId("globalUserID");
+						userid = userid.getText();
+						
+						var hospi_params = {};
+						hospi_params.success = function(data, results){
+							
+							// If hospi request was successful, request dataset from matching TreatmentplanIDs of
+							// Tremd to get administration intervals
+							var tremd_params = {};
+							tremd_params.async = false;
+							tremd_params.success = function(data, results){
+								patient = patient_data.shift();
+								
+								for(var i = 0; i < data.results.length; i++){
+//						    		alert(patient+" "+data.results[i].MedicationName);
+									var hours = new Date();
+									hours = hours.getHours();
+									
+									// Check for next 4 hours
+									for (var interval = hours; interval < hours + 4; interval++){
+										
+										// If current time (+1, +2, +3..) is divisible by administration intervall,
+										// set notification (e.g. 18 o clock is divisible by Interval "9" --> set notification
+										// for 18 o clock, but not for 17:00 or 19:00
+										
+										if (interval %  data.results[i].AdministrationInterval == 0){
+											var text = patient+" benoetigt heute "+data.results[i].MedicationName+" um "+interval+" Uhr.";
+											var now = (new Date());
+											var oMessage = new sap.ui.core.Message({
+												text : text,
+												timestamp : now
+											});
+											notifier.addMessage(oMessage);
+										}
+									}
+									
+						    		
+
+								}
+								
+							};
+							
+							// for each treatmentplan according to logged in user
+							
+						
+							
+							// Store Patient names in array to use them in oMessage
+							
+							
+					    	for(var i = 0; i < data.results.length; i++){
+					    		patient_data.push(data.results[i].Patient) ;
+					    		
+								oModel.read("/TREMD?$filter=TreatPlanID eq "+data.results[i].TreatPlanID, tremd_params);
+								
+					    	}
+					    	
+					    };
+					    hospi_params.error = function(){};
+					       
+//						oModel_hospi = new sap.ui.model.odata.ODataModel( sap.ui.getCore().byId("path").getText(),false);
+						oModel.read("/HOSPI?$filter=UserID eq "+userid, hospi_params);
+					
+						
 					}
 					
 					

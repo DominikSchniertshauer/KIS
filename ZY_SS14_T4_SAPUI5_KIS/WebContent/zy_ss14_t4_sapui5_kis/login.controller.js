@@ -151,7 +151,7 @@ sap.ui.controller("zy_ss14_t4_sapui5_kis.login", {
 								patient = patient_data.shift();
 								
 								for(var i = 0; i < data.results.length; i++){
-						    		alert(patient+" "+data.results[i].MedicationName);
+//						    		alert(patient+" "+data.results[i].MedicationName);
 									var hours = new Date();
 									hours = hours.getHours();
 									
